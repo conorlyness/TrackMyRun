@@ -1,0 +1,15 @@
+<div class="home-content">
+    <div class="centerDiv">
+        <h1 class="title">Log Run</h1>
+        <div class="datePickerContainer">
+            <mat-form-field appearance="fill" class="datePicker" >
+                <mat-label class="chooseDateText">Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" readonly [(ngModel)]="selectedDate" >
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker [startAt]="currentDate"></mat-datepicker>
+              </mat-form-field>
+        </div>
+
+    </div>
+
+</div>

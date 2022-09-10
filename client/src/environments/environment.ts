@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  getAllRunsUrl: 'http://localhost:3001/allRuns',
+  getSpecificRuns: 'http://localhost:3001/specificRuns',
+  logNewRun: 'http://localhost:3001/logRun',
 };
 
 /*

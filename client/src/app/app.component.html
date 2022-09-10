@@ -1,0 +1,21 @@
+<mat-toolbar>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span>Track My Run</span>
+</mat-toolbar>
+
+<mat-drawer-container class="example-container">
+  <mat-drawer #drawer mode="over" class="sidenav">
+    <button class="runLog">
+      View Run Log
+    </button>
+    <span class="spacer"></span>
+    <button class="gallery">
+      Gallery
+    </button>
+  </mat-drawer>
+  <mat-drawer-content>
+    <router-outlet class="mainBody"></router-outlet>
+  </mat-drawer-content>
+</mat-drawer-container>

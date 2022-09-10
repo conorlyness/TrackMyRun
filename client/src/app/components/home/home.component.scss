@@ -1,0 +1,46 @@
+.home-content {
+    height: calc(100vh - 64px);
+    background-color: #41766f
+}
+
+.centerDiv {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 600px;
+    width: 500px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 5px 10px #F2AA4CFF;
+    background-color: rgba(16, 24, 32, 0.582);
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 46px;
+    padding-top: 5px;
+    color: #F2AA4CFF;
+}
+
+.datePicker {
+    color: #F2AA4CFF !important;
+    width: 350px;
+}
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+.chooseDateText {
+    color: white
+}
+
+.datePickerContainer {
+    text-align: center;
+    padding-top: 50px;
+}
+
+

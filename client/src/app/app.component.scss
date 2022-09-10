@@ -1,0 +1,38 @@
+.example-spacer {
+    flex: 1 1 auto;
+  }
+
+.sidenav {
+    width: 250px;
+    background-color: #101820FF;
+}
+
+.runLog{
+    width: 100%;
+    height: 50px;
+    color:  #F2AA4CFF;
+    background-color: #101820FF;
+    margin-bottom: 10px;
+}
+
+.runLog:hover {
+    background-color: rgb(37, 55, 73);
+}
+
+.gallery{
+    width: 100%;
+    height: 50px;
+    color:  #F2AA4CFF;
+    background-color: #101820FF;
+}
+
+.gallery:hover {
+    background-color: rgb(37, 55, 73);
+}
+
+mat-toolbar {
+    background-color:#101820FF;
+    color: #F2AA4CFF;
+}
+
+
