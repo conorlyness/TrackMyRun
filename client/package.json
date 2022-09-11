@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "server-start": "cd ../server && npm start",
+    "startAll": "concurrently \"npm run server-start\" \"ng s -o\""
   },
   "private": true,
   "dependencies": {
@@ -20,7 +22,9 @@
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
+    "concurrently": "^7.4.0",
     "moment": "^2.29.4",
+    "ngx-pagination": "^6.0.2",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
