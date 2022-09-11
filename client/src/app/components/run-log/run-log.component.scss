@@ -1,4 +1,144 @@
 .log-content {
-    height: calc(100vh - 64px);
+    min-height: calc(100vh - 64px);
     background-color: #41766f
+}
+
+.rangeTitle {
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 46px;
+    padding-top: 25px;
+    padding-bottom: 20px;
+    color: #F2AA4CFF;
+}
+
+.dateRange {
+    padding-top: 10px;
+    text-align: center;
+    display: flex;
+
+}
+
+.chooseRangeLabel {
+    color: white
+}
+
+::ng-deep .mat-form-field-underline {
+    display: none;
+}
+
+.datePicker {
+    color: #F2AA4CFF !important;
+    width: 350px;
+    font-size: 20px;
+}
+
+::ng-deep .mat-date-range-input-separator {
+    color: white !important;
+}
+
+.searchBtn{
+    margin-left: 10px;
+    width: 160px;
+    height: 50px !important;
+    background:#F2AA4CFF;
+    color:rgb(16, 24, 32);
+    border:none;
+    position:relative;
+    height:60px;
+    font-size:1.6em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+.searchBtn:hover{
+    background:rgba(16, 24, 32, 0.582);
+    color:#F2AA4CFF;
+}
+
+.searchBtn:before,.searchBtn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgba(16, 24, 32, 0.582);
+    transition:400ms ease all;
+}
+
+.searchBtn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.searchBtn:hover:before,.searchBtn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+.resultsTable {
+    margin: 0 auto;
+    width: 1750px;
+    height: 600px;
+    position: relative;
+    overflow: auto;
+}
+
+table {
+    width: 100%;
+    box-shadow: 5px 10px #F2AA4CFF;
+}
+
+::ng-deep tr.mat-footer-row,
+tr.mat-row {
+   border: 1px solid #e7e7e7;
+   font-weight: bold;
+   height: 60px !important;
+}
+
+::ng-deep tr {
+    font-weight: bold;
+    font-size: 30px;
+}
+
+table th {
+    font-style: italic;
+    color: #F2AA4CFF !important;
+    background-color:  #101820FF;
+}
+
+.tableNotes {
+    word-wrap: break-word;
+    max-width: 15ch;
+}
+.datePickerContent {
+    margin: auto;
+}
+
+.dateRangeSearch  {
+    display: inline;
+}
+
+.paginationControls {
+    text-align: center;
+}
+
+.totalMiles {
+    color: #F2AA4CFF !important;
+    background-color:  #101820FF;
+    text-align: center;
+    width: 450px;
+    height: 75px;
+    margin: 0 auto;
+}
+
+.mileage {
+    padding-top: 10px;
+    font-weight: bold;
+    font-size: 20px;
 }
