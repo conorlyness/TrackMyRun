@@ -30,6 +30,18 @@
     background-color: rgb(37, 55, 73);
 }
 
+.logRun {
+    width: 100%;
+    height: 50px;
+    color:  #F2AA4CFF;
+    background-color: #101820FF;
+    margin-bottom: 10px;
+}
+
+.logRun:hover {
+    background-color: rgb(37, 55, 73);
+}
+
 mat-toolbar {
     background-color:#101820FF;
     color: #F2AA4CFF;

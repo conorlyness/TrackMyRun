@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './components/home/home.component';
+import { HomeComponent, RunInfoDialog } from './components/home/home.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
@@ -15,12 +15,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatNativeDateModule, MAT_DATE_LOCALE} from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
 import {MaterialExampleModule} from '../material.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {MatDialogModule} from '@angular/material/dialog';
+import { RunLogComponent } from './components/run-log/run-log.component';
+import { GalleryComponent } from './components/gallery/gallery.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    RunInfoDialog,
+    RunLogComponent,
+    GalleryComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +43,10 @@ import { FormsModule } from '@angular/forms';
     MatNativeDateModule,
     MatInputModule,
     MaterialExampleModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MatSnackBarModule,
+    MatDialogModule
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent]

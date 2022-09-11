@@ -1,0 +1,15 @@
+    <div class="dialogWrapper">
+        <h1 class="confrimTitle">Confirm Run</h1>
+        <p class="areTheseCorrect"> Are the following details correct?</p>
+        <p class="dateTitle"> Run Date:</p>
+        <p class="dateText">{{data.date}}</p>
+        <p class="distanceTitle"> Distance:</p>
+        <p class="distanceText">{{data.distance}} Miles</p>
+        <p class="notesTitle"> Notes: </p>
+        <p class="notesText"> {{data.notes}}</p>
+        <div class="dialogButtons">
+            <button mat-button class="confirmBtn" [mat-dialog-close]="data">Confirm</button>
+            <button mat-button class="cancelBtn" (click)="onNoClick()">Cancel</button>
+        </div>
+    </div>
+

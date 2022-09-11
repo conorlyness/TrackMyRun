@@ -7,11 +7,13 @@
 
 <mat-drawer-container class="example-container">
   <mat-drawer #drawer mode="over" class="sidenav">
-    <button class="runLog">
+    <button class="logRun" (click)="loadLogRun()">
+      Log Run
+    </button>
+    <button class="runLog" (click)="loadRunLog()">
       View Run Log
     </button>
-    <span class="spacer"></span>
-    <button class="gallery">
+    <button class="gallery" (click)="loadGallery()">
       Gallery
     </button>
   </mat-drawer>

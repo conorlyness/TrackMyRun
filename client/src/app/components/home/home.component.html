@@ -2,12 +2,21 @@
     <div class="centerDiv">
         <h1 class="title">Log Run</h1>
         <div class="datePickerContainer">
-            <mat-form-field appearance="fill" class="datePicker" >
+            <mat-form-field appearance="fill" class="datePicker">
                 <mat-label class="chooseDateText">Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" readonly [(ngModel)]="selectedDate" >
+                <input matInput [matDatepicker]="picker" readonly [formControl]="date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker [startAt]="currentDate"></mat-datepicker>
+                <mat-datepicker #picker  [startAt]="currentDate"></mat-datepicker>
               </mat-form-field>
+              <mat-form-field appearance="fill" class="distance">
+                <mat-label class="chooseDateText">Distance (Miles)</mat-label>
+              <input matInput [(ngModel)]="distance" class="distanceInput" pattern="[0-9]+">
+            </mat-form-field>
+            <mat-form-field appearance="fill" class="notes">
+                <mat-label class="chooseDateText">Run notes</mat-label>
+              <input matInput [(ngModel)]="notes" class="notesInput">
+            </mat-form-field>
+            <button (click)="confirmSelection()"  class="logBtn">Log it!</button>
         </div>
 
     </div>

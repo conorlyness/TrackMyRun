@@ -28,6 +28,7 @@
 .datePicker {
     color: #F2AA4CFF !important;
     width: 350px;
+    font-size: 20px;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -43,4 +44,146 @@
     padding-top: 50px;
 }
 
+.distance {
+    color: #F2AA4CFF !important;
+    width: 350px;
+    font-size: 20px;
+}
 
+.notes {
+    padding-bottom: 80px;
+    color: #F2AA4CFF !important;
+    width: 350px;
+    font-size: 20px;
+}
+
+.logBtn{
+    width: 300px;
+    height: 40px;
+    background:#F2AA4CFF;
+    color:rgb(16, 24, 32);
+    border:none;
+    position:relative;
+    height:60px;
+    font-size:1.6em;
+    padding:0 2em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+  }
+  .logBtn:hover{
+    background:rgba(16, 24, 32, 0.582);
+    color:#F2AA4CFF;
+  }
+  .logBtn:before,.logBtn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgba(16, 24, 32, 0.582);
+    transition:400ms ease all;
+  }
+  .logBtn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+  }
+  .logBtn:hover:before,.logBtn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+  }
+
+  .confirmBtn {
+    font-size: 22px;
+    background-color: #101820FF;
+    color: #F2AA4CFF;
+    margin-right: 40px;
+  }
+
+  .cancelBtn {
+    font-size: 22px;
+    background-color: #101820FF;
+    color: #F2AA4CFF;
+  }
+
+  .confirmBtn:hover {
+    font-size: 22px;
+    background-color: #F2AA4CFF;
+    color: #101820FF;;
+  }
+
+  .cancelBtn:hover {
+    font-size: 22px;
+    background-color: #F2AA4CFF;
+    color: #101820FF;
+  }
+
+  ::ng-deep .mat-dialog-container {
+    background-color: #41766f;
+    text-align: center;
+    font-size: 30px;
+}
+
+.confrimTitle {
+    text-align: center;
+    font-weight: bold;
+    font-size: 46px;
+    padding-top: 5px;
+    color: #F2AA4CFF;
+}
+
+.areTheseCorrect {
+    padding-top: 5px;
+    padding-bottom: 10px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
+.notesTitle {
+    padding-top: 5px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.distanceTitle {
+    padding-top: 5px;
+    font-weight: bold;
+    font-style: italic;
+}
+
+.dateTitle {
+    padding-top: 5px;
+    font-weight: bold;
+    font-style: italic;
+
+}
+
+.distanceText {
+    text-align: center;
+    word-wrap:break-word;
+    line-height: 1.6;
+    color: #F2AA4CFF;
+}
+
+.notesText {
+    text-align: center;
+    word-wrap:break-word;
+    line-height: 1.6;
+    padding-bottom: 50px;
+    color: #F2AA4CFF;
+}
+
+.dateText {
+    text-align: center;
+    word-wrap:break-word;
+    line-height: 1.6;
+    color: #F2AA4CFF;
+}
+
+.dialogWrapper {
+    overflow: auto;
+}
