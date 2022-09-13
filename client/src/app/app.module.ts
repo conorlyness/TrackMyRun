@@ -25,6 +25,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
+import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { MatCardModule } from '@angular/material/card';
     RunInfoDialog,
     RunLogComponent,
     GalleryComponent,
+    EditDialogComponent,
   ],
   imports: [
     BrowserModule,

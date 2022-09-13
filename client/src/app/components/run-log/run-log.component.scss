@@ -1,7 +1,29 @@
 .log-content {
     min-height: calc(100vh - 64px);
-    background-color: #41766f
+    background: linear-gradient(213deg, #246655, #245966);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 21s ease infinite;
+    -moz-animation: AnimationName 21s ease infinite;
+    animation: AnimationName 21s ease infinite;
 }
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
 
 .rangeTitle {
     text-align: center;
@@ -10,7 +32,7 @@
     font-size: 46px;
     padding-top: 25px;
     padding-bottom: 20px;
-    color: #F2AA4CFF;
+    color: white;
 }
 
 .dateRange {
@@ -29,7 +51,7 @@
 }
 
 .datePicker {
-    color: #F2AA4CFF !important;
+    color: white!important;
     width: 350px;
     font-size: 20px;
 }
@@ -42,8 +64,8 @@
     margin-left: 10px;
     width: 160px;
     height: 50px !important;
-    background:#F2AA4CFF;
-    color:rgb(16, 24, 32);
+    background:#101820FF;
+    color:white;
     border:none;
     position:relative;
     height:60px;
@@ -51,11 +73,13 @@
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
+
+    
 }
 
 .searchBtn:hover{
-    background:rgba(16, 24, 32, 0.582);
-    color:#F2AA4CFF;
+    background:white;
+    color:#101820FF;
 }
 
 .searchBtn:before,.searchBtn:after{
@@ -91,15 +115,18 @@
 
 table {
     width: 100%;
-    box-shadow: 5px 10px #F2AA4CFF;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 ::ng-deep tr.mat-footer-row,
 tr.mat-row {
    border: 1px solid #e7e7e7;
    font-weight: bold;
-   height: 60px !important;
+   height: 70px !important;
 }
+.mat-row:hover {
+    background-color: rgba(26, 184, 63, 0.562);
+  }
 
 ::ng-deep tr {
     font-weight: bold;
@@ -108,7 +135,7 @@ tr.mat-row {
 
 table th {
     font-style: italic;
-    color: #F2AA4CFF !important;
+    color: white !important;
     background-color:  #101820FF;
 }
 
@@ -129,15 +156,21 @@ table th {
 }
 
 .totalMiles {
-    color: #F2AA4CFF !important;
+    color: white !important;
     background-color:  #101820FF;
     text-align: center;
     width: 450px;
     height: 75px;
     margin: 0 auto;
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-top: 10px;
+    margin-right: 10px;
 }
 
 .mileage {
+    color: rgb(26, 184, 63);
     padding-top: 10px;
     font-weight: bold;
     font-size: 20px;

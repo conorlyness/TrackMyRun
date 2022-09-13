@@ -1,7 +1,29 @@
 .home-content {
     height: calc(100vh - 64px);
-    background-color: #41766f
+    background: linear-gradient(213deg, #246655, #245966);
+    background-size: 600% 600%;
+
+    -webkit-animation: AnimationName 21s ease infinite;
+    -moz-animation: AnimationName 21s ease infinite;
+    animation: AnimationName 21s ease infinite;
 }
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
 
 .centerDiv {
     position: absolute;
@@ -12,9 +34,11 @@
     width: 500px;
     border: 1px solid;
     padding: 10px;
-    box-shadow: 5px 10px #F2AA4CFF;
-    background-color: rgba(16, 24, 32, 0.582);
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    background-color: rgba(16, 24, 32, 0.649);
 }
+
+
 
 .title {
     text-align: center;
@@ -22,13 +46,14 @@
     font-style: italic;
     font-size: 46px;
     padding-top: 5px;
-    color: #F2AA4CFF;
+    color: white;
 }
 
 .datePicker {
-    color: #F2AA4CFF !important;
+    color: white !important;
     width: 350px;
     font-size: 20px;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -45,22 +70,26 @@
 }
 
 .distance {
-    color: #F2AA4CFF !important;
+    color: rgb(26, 184, 63) !important;
     width: 350px;
     font-size: 20px;
 }
 
 .notes {
     padding-bottom: 80px;
-    color: #F2AA4CFF !important;
+    color: white !important;
     width: 350px;
     font-size: 20px;
 }
 
+// ::ng-deep .mat-form-field-wrapper{
+//     margin-bottom: -1.25em;
+//  }
+
 .logBtn{
     width: 300px;
     height: 40px;
-    background:#F2AA4CFF;
+    background:white;
     color:rgb(16, 24, 32);
     border:none;
     position:relative;
@@ -73,7 +102,8 @@
   }
   .logBtn:hover{
     background:rgba(16, 24, 32, 0.582);
-    color:#F2AA4CFF;
+    color:#FF5A09;
+    border: 2px solid white;
   }
   .logBtn:before,.logBtn:after{
     content:'';
@@ -99,30 +129,32 @@
   .confirmBtn {
     font-size: 22px;
     background-color: #101820FF;
-    color: #F2AA4CFF;
+    border: 2px solid white;
+    color: white;
     margin-right: 40px;
   }
 
   .cancelBtn {
     font-size: 22px;
-    background-color: #101820FF;
-    color: #F2AA4CFF;
+    border: 2px solid white;
+    color: white;
   }
 
   .confirmBtn:hover {
     font-size: 22px;
-    background-color: #F2AA4CFF;
-    color: #101820FF;;
+    background-color: rgb(18, 128, 44);
+    color: white;
   }
 
   .cancelBtn:hover {
     font-size: 22px;
-    background-color: #F2AA4CFF;
-    color: #101820FF;
+    background-color: rgb(144, 30, 30);
+    color: white;
   }
 
   ::ng-deep .mat-dialog-container {
-    background-color: #41766f;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    background-color: #101820FF;
     text-align: center;
     font-size: 30px;
 }
@@ -130,16 +162,19 @@
 .confrimTitle {
     text-align: center;
     font-weight: bold;
+    font-style: italic;
     font-size: 46px;
     padding-top: 5px;
-    color: #F2AA4CFF;
+    margin-bottom: 10px;
+    color: white;
 }
 
 .areTheseCorrect {
-    padding-top: 5px;
+    padding-top: 15px;
     padding-bottom: 10px;
     text-align: center;
     font-weight: bold;
+    color: white;
 }
 
 
@@ -147,18 +182,21 @@
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
+    color: white;
 }
 
 .distanceTitle {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
+    color: white;
 }
 
 .dateTitle {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
+    color: white;
 
 }
 
@@ -166,7 +204,7 @@
     text-align: center;
     word-wrap:break-word;
     line-height: 1.6;
-    color: #F2AA4CFF;
+    color: rgb(18, 128, 44);
 }
 
 .notesText {
@@ -174,14 +212,14 @@
     word-wrap:break-word;
     line-height: 1.6;
     padding-bottom: 50px;
-    color: #F2AA4CFF;
+    color: rgb(18, 128, 44)
 }
 
 .dateText {
     text-align: center;
     word-wrap:break-word;
     line-height: 1.6;
-    color: #F2AA4CFF;
+    color: rgb(18, 128, 44)
 }
 
 .dialogWrapper {
