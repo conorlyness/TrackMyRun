@@ -42,7 +42,19 @@ export class RunLogComponent implements OnInit {
     public dialog: MatDialog
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.showAllRunsOnStart();
+  }
+
+  showAllRunsOnStart() {
+    this.runningService.getAllRuns().subscribe((runs: any) => {
+      this.runInfo = runs;
+      this.runInfo.forEach((run) => {
+        this.totalMiles += Number(run.Distance);
+      });
+      this.sortedData = this.runInfo.slice();
+    });
+  }
 
   search() {
     this.totalMiles = 0;
