@@ -1,4 +1,11 @@
-<div class="gallery-content">
-    <p>gallery works!</p>
+<div class="gallery-container">
+    <ng-container *ngFor="let image of allImages">
+        <div class="allImages">
+            <div class="image">
+                <div class="trick"></div>
+                <img src="{{ image }}" alt="image"/>
+            </div>
+        </div>
+        
+    </ng-container>
 </div>
-

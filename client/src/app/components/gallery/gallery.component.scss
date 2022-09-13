@@ -1,4 +1,56 @@
-.gallery-content {
-    height: calc(100vh - 64px);
-    background-color: #41766f
+.gallery-container{
+    min-height: calc(100vh - 64px);
+    display: flex;
+    flex-wrap: wrap;
+    background: linear-gradient(213deg, #246655, #245966);
+    background-size: 600% 600%;
+    overflow: hidden;
+
+    -webkit-animation: AnimationName 21s ease infinite;
+    -moz-animation: AnimationName 21s ease infinite;
+    animation: AnimationName 21s ease infinite;
+}
+
+@-webkit-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+    0%{background-position:0% 50%}
+    50%{background-position:100% 51%}
+    100%{background-position:0% 50%}
+}
+
+
+.image{
+    font-size: 0;
+    text-align: center;
+    width: 100%;  /* Container's dimensions */
+    height: 100%;
+}
+
+.image img{
+    max-height: 100%;
+    max-width: 100%;
+    object-fit: fill;
+
+}
+
+.trick {
+    display: inline-block;
+    vertical-align: middle;
+    height: 150px;
+  }
+
+.allImages {
+    width: 350px;
+    margin: 10px;
+    height: 400px;
+
 }
