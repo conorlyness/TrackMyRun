@@ -51,6 +51,19 @@ class Database {
     }
   }
 
+  editRun = async (run) => {
+    try {
+      const result = await this.connection
+      .request()
+      .query(`UPDATE dbo.RunLog
+      SET Distance = '${run.distance}', Notes = '${run.notes}'
+      WHERE RunDate = '${run.date}';`);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
 }
 
 

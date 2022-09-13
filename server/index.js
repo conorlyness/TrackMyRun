@@ -37,6 +37,16 @@ app.get('/allRuns', async (req, res) => {
     res.status(404);
   })
 
+  app.post('/editRun', async (req, res) => {
+    console.log("calling /editRun");
+    const {date, distance, notes} = req.body;
+    const result = await db.editRun(req.body);
+    if (result) {
+        return res.status(200).json(result);
+    }
+    res.status(404);
+  })
+
 
 app.listen(API_PORT, () => {
     db.connect();
