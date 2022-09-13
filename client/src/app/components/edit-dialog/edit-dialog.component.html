@@ -1,0 +1,24 @@
+<h1 mat-dialog-title class="title">Edit Run</h1>
+<div class="text" mat-dialog-content>
+    <p class="dateTitle">Date:</p>
+    <p class="dateText">{{data.date | date: 'MMMM d, y'}}</p>
+    <div class="inputs">
+        <p class="distanceLabel">Distance:</p>
+        <mat-form-field appearance="fill">
+            <input matInput type="text" [(ngModel)]="data.distance" />
+          </mat-form-field>
+          <p class="notesLabel">Notes:</p>
+          <mat-form-field appearance="fill">
+            <input matInput type="text" [(ngModel)]="data.notes" />
+          </mat-form-field>
+    </div>
+  <ng-container *ngIf="isNaN(data.distance)">
+    <button class="confirmBtn" mat-button mat-dialog-close [mat-dialog-close]="data">
+        Add
+      </button>
+  </ng-container>
+  <button class="cancelBtn" mat-button mat-dialog-close (click)="onNoClick()">
+    Close
+  </button>
+
+</div>
