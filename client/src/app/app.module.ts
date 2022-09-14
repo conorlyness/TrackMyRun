@@ -26,6 +26,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { MatSortModule } from '@angular/material/sort';
 import { MatCardModule } from '@angular/material/card';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
+import { FileUploadModule } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
@@ -59,6 +60,7 @@ import { EditDialogComponent } from './components/edit-dialog/edit-dialog.compon
     NgxPaginationModule,
     MatSortModule,
     MatCardModule,
+    FileUploadModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent],

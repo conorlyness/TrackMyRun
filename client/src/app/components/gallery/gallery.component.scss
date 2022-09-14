@@ -1,6 +1,5 @@
 .gallery-container{
     min-height: calc(100vh - 64px);
-    display: flex;
     flex-wrap: wrap;
     background: linear-gradient(213deg, #246655, #245966);
     background-size: 600% 600%;
@@ -29,28 +28,44 @@
 
 
 .image{
-    font-size: 0;
-    text-align: center;
-    width: 100%;  /* Container's dimensions */
-    height: 100%;
+padding: 5px;
 }
 
 .image img{
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: fill;
-
+    object-fit: cover;
+    width: 250px;
+    height: 300px;
 }
 
-.trick {
-    display: inline-block;
-    vertical-align: middle;
-    height: 150px;
+.imageGallery {
+    padding-top: 10px;
+    box-sizing: border-box;
+    display: flex;
+} 
+
+.uploadContainer {
+    width: 100%;
+    text-align: center;
+    padding-top: 10px;
   }
+  
 
-.allImages {
-    width: 350px;
-    margin: 10px;
-    height: 400px;
 
+.file-upload{
+    padding-top: 10px;
+    text-align: center;
+}
+
+.title{
+    text-align: center;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 46px;
+    padding-top: 5px;
+    color: white;
+    vertical-align: auto;
+}
+
+.chooseFile {
+    color: white;
 }

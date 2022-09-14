@@ -1,11 +1,31 @@
 <div class="gallery-container">
-    <ng-container *ngFor="let image of allImages">
-        <div class="allImages">
-            <div class="image">
-                <div class="trick"></div>
-                <img src="{{ image }}" alt="image"/>
-            </div>
+    <div class="uploadContainer">
+        <h1 class="title">Upload your running pics</h1>
+        <div class="file-upload">
+          <input
+            class="chooseFile"
+            type="file"
+            name="image"
+            ng2FileSelect
+            [uploader]="uploader"
+            accept="image/x-png,image/gif,image/jpeg"
+          />
+          <button
+            class="uploadBtn"
+            type="button"
+            (click)="uploader.uploadAll()"
+            [disabled]="!uploader.getNotUploadedItems().length"
+          >
+            Upload
+          </button>
         </div>
-        
-    </ng-container>
+      </div>
+      <div class="imageGallery">
+        <ng-container *ngFor="let image of allImages">
+          <div class="image">
+            <img src="{{image}}" alt="">
+          </div>
+          
+        </ng-container>
+      </div>
 </div>
