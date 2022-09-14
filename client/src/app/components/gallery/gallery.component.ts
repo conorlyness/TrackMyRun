@@ -30,7 +30,7 @@ export class GalleryComponent implements OnInit {
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);
-
+      this.openSnackBar('Image Uploaded Successfully');
       this.getAllImages();
     };
   }
@@ -38,7 +38,6 @@ export class GalleryComponent implements OnInit {
   getAllImages() {
     this.imageService.getAllImages().subscribe((image) => {
       console.log('the images coming from the server: ', image);
-      this.openSnackBar('Image Uploaded Successfully');
       this.allImages = image;
     });
   }
