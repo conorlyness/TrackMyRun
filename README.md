@@ -25,9 +25,10 @@ Copy the contents of this text file and execute this as a new sql query in sql s
 </ul>
 
 
-![image](https://user-images.githubusercontent.com/56432950/190004667-a1f29e1b-3ac1-48f0-93f5-e9ec01711628.png)
-![image](https://user-images.githubusercontent.com/56432950/190004895-8c85aa65-fc0a-4fa3-ae21-e40c501e0b73.png)
+![logRun](https://user-images.githubusercontent.com/56432950/190747476-357e18b9-afb1-43c8-9229-f2d8e8f040e4.png)
 
+
+![runLog](https://user-images.githubusercontent.com/56432950/190747512-a75b8a2c-c943-445d-92c9-305b848294cb.png)
 
 
 
