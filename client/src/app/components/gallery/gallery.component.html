@@ -23,7 +23,7 @@
       <div class="imageGallery">
         <ng-container *ngFor="let image of allImages">
           <div class="image">
-            <img src="{{image}}" alt="">
+            <img src="{{image}}" alt="" (click)="viewSpecificImage(image)">
           </div>
           
         </ng-container>

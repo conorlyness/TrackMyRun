@@ -1,8 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from 'src/app/services/image.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  MatDialog,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material/dialog';
+
 const URL = 'http://localhost:3001/api/upload';
+
+export interface DialogData {
+  image: any;
+}
 
 @Component({
   selector: 'app-gallery',
@@ -17,10 +27,12 @@ export class GalleryComponent implements OnInit {
 
   constructor(
     private imageService: ImageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    public dialog: MatDialog
   ) {}
 
   allImages!: any;
+  dialogAnswer: any;
 
   ngOnInit(): void {
     this.getAllImages();
@@ -46,5 +58,42 @@ export class GalleryComponent implements OnInit {
     this.snackBar.open(message, '', {
       duration: 3000,
     });
+  }
+
+  viewInNewTab(img: any) {
+    console.log('clicked: ', img);
+    window.open(img, '_blank')?.focus();
+  }
+
+  viewSpecificImage(img: any) {
+    const imgObj = { image: img };
+    this.openDialog(imgObj);
+  }
+
+  openDialog(data: any) {
+    this.dialog.open(ImageDialog, {
+      height: '650px',
+      width: '700px',
+      panelClass: 'image-dialog',
+      data: {
+        image: data.image,
+      },
+    });
+  }
+}
+
+@Component({
+  selector: 'image-dialog',
+  templateUrl: 'image-dialog.html',
+  styleUrls: ['./gallery.component.scss'],
+})
+export class ImageDialog {
+  constructor(
+    public dialogRef: MatDialogRef<ImageDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
   }
 }
