@@ -1,31 +1,9 @@
 .gallery-container{
     min-height: calc(100vh - 64px);
     flex-wrap: wrap;
-    background: linear-gradient(213deg, #246655, #245966);
-    background-size: 600% 600%;
-    overflow: hidden;
+    background-color: white;
 
-    -webkit-animation: AnimationName 21s ease infinite;
-    -moz-animation: AnimationName 21s ease infinite;
-    animation: AnimationName 21s ease infinite;
 }
-
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-
 
 .image{
 padding: 5px;
@@ -42,6 +20,7 @@ padding: 5px;
     box-sizing: border-box;
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
 } 
 
 .uploadContainer {
@@ -63,10 +42,45 @@ padding: 5px;
     font-style: italic;
     font-size: 46px;
     padding-top: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
     vertical-align: auto;
 }
 
 .chooseFile {
-    color: white;
+    color: rgb(0, 0, 0);
+}
+
+.imageContainer{
+    height: 600px;
+    width: 630px;
+    justify-content: center;
+    text-align: center;
+}
+
+.imageContainer img {
+
+    width: 500px;
+    height: 550px;
+    object-fit: cover;
+    
+}
+
+.closeImageBtn {
+    border: none !important;
+    background-color: transparent !important;
+    font-size: 20px;
+}
+
+
+.closeImageBtn:hover {
+    color: red;
+}
+
+.closeBtn{
+    text-align: right;
+}
+
+
+::ng-deep .mat-dialog-container {
+    overflow-y: hidden !important;
 }

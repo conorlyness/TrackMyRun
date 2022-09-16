@@ -4,7 +4,7 @@
         <div class="datePickerContainer">
             <mat-form-field appearance="fill" class="datePicker">
                 <mat-label class="chooseDateText">Choose a date</mat-label>
-                <input matInput [matDatepicker]="picker" readonly [formControl]="date">
+                <input class="pickerText" matInput [matDatepicker]="picker" readonly [formControl]="date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker  [startAt]="currentDate"></mat-datepicker>
               </mat-form-field>

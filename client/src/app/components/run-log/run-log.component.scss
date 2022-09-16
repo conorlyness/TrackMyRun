@@ -1,29 +1,7 @@
 .log-content {
     min-height: calc(100vh - 64px);
-    background: linear-gradient(213deg, #246655, #245966);
-    background-size: 600% 600%;
-
-    -webkit-animation: AnimationName 21s ease infinite;
-    -moz-animation: AnimationName 21s ease infinite;
-    animation: AnimationName 21s ease infinite;
+    background-color: white;
 }
-
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-
 
 .rangeTitle {
     text-align: center;
@@ -32,7 +10,7 @@
     font-size: 46px;
     padding-top: 25px;
     padding-bottom: 20px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .dateRange {
@@ -43,7 +21,7 @@
 }
 
 .chooseRangeLabel {
-    color: white
+    color: rgb(0, 0, 0)
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -51,13 +29,13 @@
 }
 
 .datePicker {
-    color: white!important;
+    color: rgb(0, 0, 0)!important;
     width: 350px;
     font-size: 20px;
 }
 
 ::ng-deep .mat-date-range-input-separator {
-    color: white !important;
+    color: rgb(0, 0, 0) !important;
 }
 
 .searchBtn{
@@ -106,16 +84,22 @@
 }
 
 .resultsTable {
+
     margin: 0 auto;
-    width: 1750px;
+    width: 90%;
     height: 600px;
     position: relative;
     overflow: auto;
+    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
 }
+
+.resultsTable:hover {
+    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
+}
+
 
 table {
     width: 100%;
-    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
 }
 
 ::ng-deep tr.mat-footer-row,
@@ -130,11 +114,12 @@ tr.mat-row {
 
 ::ng-deep tr {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 5px;
 }
 
 table th {
     font-style: italic;
+    font-size: 24px;
     color: white !important;
     background-color:  #101820FF;
 }
@@ -156,8 +141,8 @@ table th {
 }
 
 .totalMiles {
-    color: white !important;
-    background-color:  #101820FF;
+    color: rgb(0, 0, 0) !important;
+    background-color:  white;
     text-align: center;
     width: 450px;
     height: 75px;
@@ -168,6 +153,11 @@ table th {
     margin-top: 10px;
     margin-right: 10px;
 }
+
+.totalMiles:hover {
+    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
+}
+
 
 .mileage {
     color: rgb(26, 184, 63);

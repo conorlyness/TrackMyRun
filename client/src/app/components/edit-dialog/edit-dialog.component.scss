@@ -13,6 +13,7 @@
 
   .cancelBtn {
     font-size: 22px;
+    background-color: #101820FF;
     border: 2px solid white;
     color: white;
   }
@@ -31,7 +32,7 @@
 
   ::ng-deep .mat-dialog-container {
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: rgb(16, 24, 32);
+    background-color: white;
     text-align: center;
     font-size: 30px;
 }
@@ -43,21 +44,21 @@
     font-size: 46px;
     padding-top: 5px;
     padding-bottom: 10px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .dateTitle{
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .dateText{
     text-align: center;
     word-wrap:break-word;
     line-height: 1.6;
-    color: rgb(18, 128, 44)
+    color: rgb(18, 128, 44);
 }
 
 .inputs{
@@ -68,12 +69,9 @@
     
 }
 
-input {
-    
-}
 
 mat-label {
-    color: white !important;
+    color: #101820FF !important;
 }
 
 textarea:focus, input:focus {
@@ -88,7 +86,7 @@ textarea, input {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
 }
 
@@ -96,6 +94,6 @@ textarea, input {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
     text-align: center;
 }

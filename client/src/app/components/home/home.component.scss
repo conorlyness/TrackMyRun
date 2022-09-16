@@ -1,27 +1,6 @@
 .home-content {
     min-height: calc(100vh - 64px);
-    background: linear-gradient(213deg, #246655, #245966);
-    background-size: 600% 600%;
-
-    -webkit-animation: AnimationName 21s ease infinite;
-    -moz-animation: AnimationName 21s ease infinite;
-    animation: AnimationName 21s ease infinite;
-}
-
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 50%}
-    50%{background-position:100% 51%}
-    100%{background-position:0% 50%}
+    background-color: white;
 }
 
 
@@ -35,7 +14,11 @@
     border: 1px solid;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: rgba(16, 24, 32, 0.649);
+    background-color: rgb(255, 255, 255);
+}
+
+.centerDiv:hover {
+    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
 }
 
 
@@ -46,14 +29,14 @@
     font-style: italic;
     font-size: 46px;
     padding-top: 5px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .datePicker {
     color: white !important;
     width: 350px;
     font-size: 20px;
-    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -61,8 +44,13 @@
 }
 
 .chooseDateText {
-    color: white
+    color: rgb(0, 0, 0)
 }
+
+.pickerText{
+    color: rgb(0, 0, 0)
+}
+
 
 .datePickerContainer {
     text-align: center;
@@ -70,27 +58,24 @@
 }
 
 .distance {
-    color: rgb(26, 184, 63) !important;
+    color: rgb(18, 128, 44) !important;
     width: 350px;
     font-size: 20px;
 }
 
 .notes {
     padding-bottom: 80px;
-    color: white !important;
+    color: rgb(18, 128, 44) !important;
     width: 350px;
     font-size: 20px;
 }
 
-// ::ng-deep .mat-form-field-wrapper{
-//     margin-bottom: -1.25em;
-//  }
 
 .logBtn{
     width: 300px;
     height: 40px;
     background:white;
-    color:rgb(16, 24, 32);
+    color:rgb(0, 0, 0);
     border:none;
     position:relative;
     height:60px;
@@ -99,10 +84,12 @@
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
+    border: 2px solid rgb(0, 0, 0);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
   }
   .logBtn:hover{
-    background:rgba(16, 24, 32, 0.582);
-    color:#FF5A09;
+    background:rgb(0, 0, 0);
+    color:white;
     border: 2px solid white;
   }
   .logBtn:before,.logBtn:after{
@@ -112,7 +99,7 @@
     right:0;
     height:2px;
     width:0;
-    background: rgba(16, 24, 32, 0.582);
+    background: rgba(0, 0, 0, 0.582);
     transition:400ms ease all;
   }
   .logBtn:after{
@@ -136,6 +123,7 @@
 
   .cancelBtn {
     font-size: 22px;
+    background-color: #101820FF;
     border: 2px solid white;
     color: white;
   }
@@ -154,7 +142,7 @@
 
   ::ng-deep .mat-dialog-container {
     box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: #101820FF;
+    background-color: white;
     text-align: center;
     font-size: 30px;
 }
@@ -166,7 +154,7 @@
     font-size: 46px;
     padding-top: 5px;
     margin-bottom: 10px;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .areTheseCorrect {
@@ -174,7 +162,7 @@
     padding-bottom: 10px;
     text-align: center;
     font-weight: bold;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 
@@ -182,21 +170,21 @@
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .distanceTitle {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
 }
 
 .dateTitle {
     padding-top: 5px;
     font-weight: bold;
     font-style: italic;
-    color: white;
+    color: rgb(0, 0, 0);
 
 }
 
