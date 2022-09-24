@@ -82,6 +82,15 @@ export class RunLogComponent implements OnInit {
     }
   }
 
+  clearSearch() {
+    this.totalMiles = 0;
+    this.showAllRunsOnStart();
+    this.range.setValue({
+      start: null,
+      end: null,
+    });
+  }
+
   openSnackBar(message: string) {
     this.snackBar.open(message, '', {
       duration: 3000,

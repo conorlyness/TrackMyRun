@@ -55,7 +55,7 @@
 
         <mat-card class="totalMiles">
             Total Miles in current search:
-            <p class="mileage">{{totalMiles}}</p>
+            <p class="mileage">{{totalMiles | number : '1.2-2'}}</p>
             
         </mat-card>
 
@@ -65,6 +65,7 @@
 <ng-template #validDateRange >
     <div class="dateRangeSearch">
         <button class="searchBtn" (click)="search()">Search</button>
+        <button class="clearBtn" (click)="clearSearch()">Clear Search</button>
     </div>
 
 </ng-template>
