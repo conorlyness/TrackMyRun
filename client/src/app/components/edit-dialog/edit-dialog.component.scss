@@ -1,3 +1,13 @@
+$accentGreen: rgb(18, 128, 44);
+
+@mixin labelStyles {
+  padding-top: 5px;
+  font-weight: bold;
+  font-style: italic;
+  color: black;
+  text-align: center;
+}
+
 .text {
     text-align: center;
 
@@ -20,7 +30,7 @@
 
   .confirmBtn:hover {
     font-size: 22px;
-    background-color: rgb(18, 128, 44);
+    background-color: $accentGreen;
     color: white;
   }
 
@@ -44,27 +54,23 @@
     font-size: 46px;
     padding-top: 5px;
     padding-bottom: 10px;
-    color: rgb(0, 0, 0);
+    color: black;
 }
 
 .dateTitle{
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
+  @include labelStyles;
 }
 
 .dateText{
     text-align: center;
     word-wrap:break-word;
     line-height: 1.6;
-    color: rgb(18, 128, 44);
+    color: $accentGreen;
 }
 
 .inputs{
     text-align: center;
     display: grid;
-    // width: 100px;
     margin: 0 auto;
     
 }
@@ -75,25 +81,17 @@ mat-label {
 }
 
 textarea:focus, input:focus {
-    color: rgb(18, 128, 44);
+    color: $accentGreen;
 }
 
 textarea, input {
-    color: rgb(18, 128, 44);
+    color: $accentGreen;
 }
 
 .distanceLabel {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
-    text-align: center;
+    @include labelStyles;
 }
 
 .notesLabel {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
-    text-align: center;
+    @include labelStyles;
 }

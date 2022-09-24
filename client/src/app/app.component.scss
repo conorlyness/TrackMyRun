@@ -1,49 +1,52 @@
+$blueGrey: rgb(37, 55, 73);
+$darkBlue: #101820FF;
+
 .example-spacer {
     flex: 1 1 auto;
   }
 
 .sidenav {
     width: 250px;
-    background-color: #101820FF;
+    background-color: $darkBlue;
 }
 
 .runLog{
     width: 100%;
     height: 50px;
     color:  white;
-    background-color: #101820FF;
+    background-color: $darkBlue;
     margin-bottom: 10px;
 }
 
 .runLog:hover {
-    background-color: rgb(37, 55, 73);
+    background-color: $blueGrey;
 }
 
 .gallery{
     width: 100%;
     height: 50px;
     color:  white;
-    background-color: #101820FF;
+    background-color: $darkBlue;
 }
 
 .gallery:hover {
-    background-color: rgb(37, 55, 73);
+    background-color: $blueGrey;
 }
 
 .logRun {
     width: 100%;
     height: 50px;
     color:  white;
-    background-color: #101820FF;
+    background-color: $darkBlue;
     margin-bottom: 10px;
 }
 
 .logRun:hover {
-    background-color: rgb(37, 55, 73);
+    background-color: $blueGrey;
 }
 
 mat-toolbar {
-    background-color:#101820FF;
+    background-color: $darkBlue;
     color: white;
 }
 

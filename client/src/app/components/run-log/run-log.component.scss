@@ -1,3 +1,27 @@
+$mileageText: rgb(26, 184, 63);
+$accentGreen: rgb(18, 128, 44);
+$darkBlue: #101820FF;
+
+@mixin buttonStyle {
+    margin-left: 10px;
+    width: 160px;
+    height: 50px !important;
+    background: $darkBlue;
+    color:white;
+    border:none;
+    position:relative;
+    height:60px;
+    font-size:1.6em;
+    cursor:pointer;
+    transition:800ms ease all;
+    outline:none;
+}
+
+@mixin greenBoxShadow {
+    box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px, $accentGreen 0px -3px 0px inset;
+}
+
+
 .log-content {
     min-height: calc(100vh - 64px);
     background-color: white;
@@ -10,7 +34,7 @@
     font-size: 46px;
     padding-top: 25px;
     padding-bottom: 20px;
-    color: rgb(0, 0, 0);
+    color: black;
 }
 
 .dateRange {
@@ -21,7 +45,7 @@
 }
 
 .chooseRangeLabel {
-    color: rgb(0, 0, 0)
+    color: black;
 }
 
 ::ng-deep .mat-form-field-underline {
@@ -29,35 +53,22 @@
 }
 
 .datePicker {
-    color: rgb(0, 0, 0)!important;
+    color: black!important;
     width: 350px;
     font-size: 20px;
 }
 
 ::ng-deep .mat-date-range-input-separator {
-    color: rgb(0, 0, 0) !important;
+    color: black !important;
 }
 
 .searchBtn{
-    margin-left: 10px;
-    width: 160px;
-    height: 50px !important;
-    background:#101820FF;
-    color:white;
-    border:none;
-    position:relative;
-    height:60px;
-    font-size:1.6em;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
-
-    
+    @include buttonStyle;
 }
 
 .searchBtn:hover{
     background:white;
-    color:#101820FF;
+    color: $darkBlue;
 }
 
 .searchBtn:before,.searchBtn:after{
@@ -83,18 +94,50 @@
     transition:800ms ease all;
 }
 
-.resultsTable {
+.clearBtn{
+    @include buttonStyle;
+}
 
+.clearBtn:hover{
+    background:white;
+    color: $darkBlue;
+}
+
+.clearBtn:before,.clearBtn:after{
+    content:'';
+    position:absolute;
+    top:0;
+    right:0;
+    height:2px;
+    width:0;
+    background: rgba(16, 24, 32, 0.582);
+    transition:400ms ease all;
+}
+
+.clearBtn:after{
+    right:inherit;
+    top:inherit;
+    left:0;
+    bottom:0;
+}
+
+.clearBtn:hover:before,.clearBtn:hover:after{
+    width:100%;
+    transition:800ms ease all;
+}
+
+
+.resultsTable {
     margin: 0 auto;
     width: 90%;
     height: 600px;
     position: relative;
     overflow: auto;
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+    box-shadow: black 0px 22px 70px 4px;
 }
 
 .resultsTable:hover {
-    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
+    @include greenBoxShadow;
 }
 
 
@@ -121,7 +164,7 @@ table th {
     font-style: italic;
     font-size: 24px;
     color: white !important;
-    background-color:  #101820FF;
+    background-color:  $darkBlue;
 }
 
 .tableNotes {
@@ -141,7 +184,7 @@ table th {
 }
 
 .totalMiles {
-    color: rgb(0, 0, 0) !important;
+    color: black !important;
     background-color:  white;
     text-align: center;
     width: 450px;
@@ -155,12 +198,12 @@ table th {
 }
 
 .totalMiles:hover {
-    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
+    @include greenBoxShadow;
 }
 
 
 .mileage {
-    color: rgb(26, 184, 63);
+    color: $mileageText;
     padding-top: 10px;
     font-weight: bold;
     font-size: 20px;

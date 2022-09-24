@@ -1,3 +1,24 @@
+$accentGreen: rgb(18, 128, 44);
+
+
+@mixin dialogHeadings {
+    padding-top: 5px;
+    font-weight: bold;
+    font-style: italic;
+    color: black;
+}
+
+@mixin dialogValues {
+    text-align: center;
+    word-wrap:break-word;
+    line-height: 1.6;
+    color: $accentGreen;
+}
+
+@mixin greenBoxShadow {
+    box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px, $accentGreen 0px -3px 0px inset;
+}
+
 .home-content {
     min-height: calc(100vh - 64px);
     background-color: white;
@@ -13,15 +34,13 @@
     width: 500px;
     border: 1px solid;
     padding: 10px;
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: rgb(255, 255, 255);
+    box-shadow: black 0px 22px 70px 4px;
+    background-color: white;
 }
 
 .centerDiv:hover {
-    box-shadow: rgb(18, 128, 44) 0px 2px 4px, rgb(18, 128, 44) 0px 7px 13px -3px, rgb(18, 128, 44) 0px -3px 0px inset;
+    @include greenBoxShadow;
 }
-
-
 
 .title {
     text-align: center;
@@ -44,11 +63,11 @@
 }
 
 .chooseDateText {
-    color: rgb(0, 0, 0)
+    color: black;
 }
 
 .pickerText{
-    color: rgb(0, 0, 0)
+    color: black;
 }
 
 
@@ -58,14 +77,14 @@
 }
 
 .distance {
-    color: rgb(18, 128, 44) !important;
+    color: $accentGreen !important;
     width: 350px;
     font-size: 20px;
 }
 
 .notes {
     padding-bottom: 80px;
-    color: rgb(18, 128, 44) !important;
+    color: $accentGreen !important;
     width: 350px;
     font-size: 20px;
 }
@@ -75,7 +94,7 @@
     width: 300px;
     height: 40px;
     background:white;
-    color:rgb(0, 0, 0);
+    color: black;
     border:none;
     position:relative;
     height:60px;
@@ -84,11 +103,11 @@
     cursor:pointer;
     transition:800ms ease all;
     outline:none;
-    border: 2px solid rgb(0, 0, 0);
+    border: 2px solid black;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
   }
   .logBtn:hover{
-    background:rgb(0, 0, 0);
+    background: black;
     color:white;
     border: 2px solid white;
   }
@@ -130,7 +149,7 @@
 
   .confirmBtn:hover {
     font-size: 22px;
-    background-color: rgb(18, 128, 44);
+    background-color: $accentGreen;
     color: white;
   }
 
@@ -154,7 +173,7 @@
     font-size: 46px;
     padding-top: 5px;
     margin-bottom: 10px;
-    color: rgb(0, 0, 0);
+    color: black;
 }
 
 .areTheseCorrect {
@@ -167,47 +186,29 @@
 
 
 .notesTitle {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
+    @include dialogHeadings;
 }
 
 .distanceTitle {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
+    @include dialogHeadings;
 }
 
 .dateTitle {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: rgb(0, 0, 0);
+    @include dialogHeadings;
 
 }
 
 .distanceText {
-    text-align: center;
-    word-wrap:break-word;
-    line-height: 1.6;
-    color: rgb(18, 128, 44);
+    @include dialogValues;
+
 }
 
 .notesText {
-    text-align: center;
-    word-wrap:break-word;
-    line-height: 1.6;
-    padding-bottom: 50px;
-    color: rgb(18, 128, 44)
+    @include dialogValues;
 }
 
 .dateText {
-    text-align: center;
-    word-wrap:break-word;
-    line-height: 1.6;
-    color: rgb(18, 128, 44)
+    @include dialogValues;
 }
 
 .dialogWrapper {
