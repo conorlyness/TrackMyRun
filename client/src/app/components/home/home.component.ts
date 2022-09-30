@@ -8,6 +8,7 @@ import {
 import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
+import { ToastrService } from 'ngx-toastr';
 
 export interface DialogData {
   date: any;
@@ -21,7 +22,7 @@ export interface DialogData {
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  currentDate = moment().format('DD-MM-YYYY');
+  currentDate = new Date();
   date = new FormControl(this.currentDate);
   distance?: number;
   notes: string = '';
@@ -29,17 +30,17 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private runningService: RunningDataService,
-    private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {}
 
   confirmSelection() {
     if (!this.distance) {
-      this.openSnackBar('A distance is required');
+      this.toast.error('A distance is required');
     } else if (isNaN(this.distance)) {
-      this.openSnackBar('Distance must be a number');
+      this.toast.error('Distance must be a number');
     } else {
       const dialogObj = {
         date: this.date.value,
@@ -48,12 +49,6 @@ export class HomeComponent implements OnInit {
       };
       this.openDialog(dialogObj);
     }
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 3000,
-    });
   }
 
   openDialog(data: any) {
@@ -71,9 +66,9 @@ export class HomeComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       this.dialogAnswer = result;
       if (this.dialogAnswer === undefined) {
-        console.log('not correct');
+        console.log('cancelled selection');
       } else {
-        this.openSnackBar('Run Successfully Logged');
+        this.toast.success('Run Successfully Logged');
         this.runningService
           .addNewRun(
             moment(this.dialogAnswer.date).format('YYYY-MM-DD'),

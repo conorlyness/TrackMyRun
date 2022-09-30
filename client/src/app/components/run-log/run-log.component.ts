@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import * as moment from 'moment';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { RunningDataService } from 'src/app/services/running-data.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import {
@@ -10,6 +9,7 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 export interface Run {
   RunDate: any;
@@ -37,9 +37,9 @@ export class RunLogComponent implements OnInit {
   });
 
   constructor(
-    private snackBar: MatSnackBar,
     private runningService: RunningDataService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private toast: ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +57,6 @@ export class RunLogComponent implements OnInit {
   }
 
   search() {
-    this.totalMiles = 0;
     const startDate = moment(this.range.controls.start.value)
       .format('YYYY-MM-DD')
       .toLocaleString();
@@ -68,8 +67,13 @@ export class RunLogComponent implements OnInit {
 
     if (endDate < startDate || startDate > today) {
       console.log('start: ', startDate, ' end: ', endDate);
-      this.openSnackBar('The selected range has errors. Please try again');
+      this.toast.error('The selected range was invalid. Please try again');
+      this.range.setValue({
+        start: null,
+        end: null,
+      });
     } else {
+      this.totalMiles = 0;
       this.runningService
         .getSpecificRuns(startDate, endDate)
         .subscribe((runs: any) => {
@@ -88,12 +92,6 @@ export class RunLogComponent implements OnInit {
     this.range.setValue({
       start: null,
       end: null,
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 3000,
     });
   }
 
@@ -137,7 +135,7 @@ export class RunLogComponent implements OnInit {
       if (this.dialogAnswer === undefined) {
         console.log('not correct');
       } else {
-        this.openSnackBar('Run Successfully Updated');
+        this.toast.success('Run Successfully Updated');
         console.log(this.dialogAnswer);
         this.runningService
           .editRun(
@@ -146,7 +144,9 @@ export class RunLogComponent implements OnInit {
             this.dialogAnswer.notes
           )
           .subscribe();
-        this.search();
+        setTimeout(() => {
+          this.showAllRunsOnStart();
+        }, 50);
       }
     });
   }
