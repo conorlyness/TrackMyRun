@@ -19,6 +19,19 @@ $accentGreen: rgb(18, 128, 44);
     box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px, $accentGreen 0px -3px 0px inset;
 }
 
+@mixin inputStyles {
+    color: $accentGreen !important;
+    width: 350px;
+    font-size: 20px;
+}
+
+@mixin dialogBtnStyles {
+    font-size: 22px;
+    background-color: #101820FF;
+    border: 2px solid white;
+    color: white;
+}
+
 .home-content {
     min-height: calc(100vh - 64px);
     background-color: white;
@@ -66,6 +79,14 @@ $accentGreen: rgb(18, 128, 44);
     color: black;
 }
 
+.addMilesText {
+    color: black;
+}
+
+.addNotesText {
+    color: black;
+}
+
 .pickerText{
     color: black;
 }
@@ -77,16 +98,12 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .distance {
-    color: $accentGreen !important;
-    width: 350px;
-    font-size: 20px;
+    @include inputStyles;
 }
 
 .notes {
     padding-bottom: 80px;
-    color: $accentGreen !important;
-    width: 350px;
-    font-size: 20px;
+    @include inputStyles;
 }
 
 
@@ -133,18 +150,12 @@ $accentGreen: rgb(18, 128, 44);
   }
 
   .confirmBtn {
-    font-size: 22px;
-    background-color: #101820FF;
-    border: 2px solid white;
-    color: white;
+    @include dialogBtnStyles;
     margin-right: 40px;
   }
 
   .cancelBtn {
-    font-size: 22px;
-    background-color: #101820FF;
-    border: 2px solid white;
-    color: white;
+    @include dialogBtnStyles;
   }
 
   .confirmBtn:hover {
@@ -183,6 +194,22 @@ $accentGreen: rgb(18, 128, 44);
     font-weight: bold;
     color: rgb(0, 0, 0);
 }
+
+button:disabled,
+button[disabled]{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+button:disabled:hover,
+button[disabled]:hover{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+
 
 
 .notesTitle {
