@@ -1,12 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from 'src/app/services/image.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 
 const URL = 'http://localhost:3001/api/upload';
 
@@ -27,8 +27,8 @@ export class GalleryComponent implements OnInit {
 
   constructor(
     private imageService: ImageService,
-    private snackBar: MatSnackBar,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private toast: ToastrService
   ) {}
 
   allImages!: any;
@@ -42,7 +42,7 @@ export class GalleryComponent implements OnInit {
     };
     this.uploader.onCompleteItem = (item: any, status: any) => {
       console.log('Uploaded File Details:', item);
-      this.openSnackBar('Image Uploaded Successfully');
+      this.toast.success('Image uploaded successfully');
       this.getAllImages();
     };
   }
@@ -51,12 +51,6 @@ export class GalleryComponent implements OnInit {
     this.imageService.getAllImages().subscribe((image) => {
       console.log('the images coming from the server: ', image);
       this.allImages = image;
-    });
-  }
-
-  openSnackBar(message: string) {
-    this.snackBar.open(message, '', {
-      duration: 3000,
     });
   }
 
