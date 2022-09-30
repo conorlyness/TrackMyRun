@@ -7,6 +7,7 @@ async function createWindow() {
   await session.defaultSession.clearStorageData();
     win = new BrowserWindow({
       show: false,
+      icon : "./src/assets/Sonya-Swarm-Running.ico",
       webPreferences: {
         webSecurity: false,
         preload: path.resolve(path.join(__dirname, './preload.js'))
