@@ -28,6 +28,8 @@ export class HomeComponent implements OnInit {
   notes: string = '';
   dialogAnswer: any;
 
+  distanceControl = new FormControl(this.distance);
+
   constructor(
     private runningService: RunningDataService,
     public dialog: MatDialog,
@@ -37,14 +39,15 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {}
 
   confirmSelection() {
-    if (!this.distance) {
+    console.log(this.distanceControl.value);
+    if (!this.distanceControl.value) {
       this.toast.error('A distance is required');
-    } else if (isNaN(this.distance)) {
+    } else if (isNaN(this.distanceControl.value)) {
       this.toast.error('Distance must be a number');
     } else {
       const dialogObj = {
         date: this.date.value,
-        distance: this.distance,
+        distance: this.distanceControl.value,
         notes: this.notes,
       };
       this.openDialog(dialogObj);

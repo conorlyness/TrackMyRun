@@ -10,14 +10,15 @@
               </mat-form-field>
               <mat-form-field appearance="fill" class="distance">
                 <mat-label class="addMilesText">Distance (Miles)</mat-label>
-              <input matInput type="number" min="1" [(ngModel)]="distance" class="distanceInput" pattern="[0-9]+" 
+              <input matInput type="number" min="1" [formControl]="distanceControl" class="distanceInput"
               title="please enter positive numbers only" required="required">
             </mat-form-field>
             <mat-form-field appearance="fill" class="notes">
                 <mat-label class="addNotesText">Run notes</mat-label>
               <input matInput [(ngModel)]="notes" class="notesInput">
             </mat-form-field>
-            <button [disabled]="distance != undefined && distance <= 0" (click)="confirmSelection()"  class="logBtn">Log Run</button>
+            <div *ngIf="distanceControl.value != undefined && distanceControl.value <= 0" class="negativeDistance">Distance must be greater than 0</div>
+            <button [disabled]="distanceControl.value != undefined && distanceControl.value <= 0" (click)="confirmSelection()"  class="logBtn">Log Run</button>
         </div>
 
     </div>
