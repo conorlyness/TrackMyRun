@@ -1,0 +1,133 @@
+$mileageText: rgb(26, 184, 63);
+$accentGreen: rgb(18, 128, 44);
+$darkBlue: #101820ff;
+
+@mixin buttonStyle {
+  margin-left: 10px;
+  width: 160px;
+  height: 50px !important;
+  background: $darkBlue;
+  color: white;
+  border: none;
+  position: relative;
+  height: 60px;
+  font-size: 1.6em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+}
+
+@mixin greenBoxShadow {
+  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
+    $accentGreen 0px -3px 0px inset;
+}
+
+.rangeTitle {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 46px;
+  padding-top: 25px;
+  padding-bottom: 20px;
+  color: black;
+}
+
+.dateRange {
+  padding-top: 10px;
+  text-align: center;
+  display: flex;
+}
+
+.chooseRangeLabel {
+  color: black;
+}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+.datePicker {
+  color: black !important;
+  width: 350px;
+  font-size: 20px;
+}
+
+::ng-deep .mat-date-range-input-separator {
+  color: black !important;
+}
+
+.searchBtn {
+  @include buttonStyle;
+}
+
+.searchBtn:hover {
+  background: white;
+  color: $darkBlue;
+}
+
+.searchBtn:before,
+.searchBtn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: rgba(16, 24, 32, 0.582);
+  transition: 400ms ease all;
+}
+
+.searchBtn:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+
+.searchBtn:hover:before,
+.searchBtn:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+.clearBtn {
+  @include buttonStyle;
+}
+
+.clearBtn:hover {
+  background: white;
+  color: $darkBlue;
+}
+
+.clearBtn:before,
+.clearBtn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: rgba(16, 24, 32, 0.582);
+  transition: 400ms ease all;
+}
+
+.clearBtn:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+
+.clearBtn:hover:before,
+.clearBtn:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
+}
+
+.datePickerContent {
+  margin: auto;
+}
+
+.dateRangeSearch {
+  display: inline;
+}
