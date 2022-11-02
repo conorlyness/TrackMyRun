@@ -1,71 +1,76 @@
-<div class="bg"></div>
-<div class="bg bg2"></div>
-<div class="bg bg3"></div>
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+/>
 <div class="log-content">
-    <h1 class="rangeTitle">Running Log</h1>
+  <h1 class="rangeTitle">Running Log</h1>
+  <app-date-range-picker
+    (clearSearches)="clearSearch()"
+    (searchRange)="search($event)"
+    [clearRange]="parentSubject"
+  ></app-date-range-picker>
 
-    <div class="dateRange">
-        <div class="datePickerContent">
-            <mat-form-field appearance="fill" class="datePicker">
-                <mat-label class="chooseRangeLabel">Enter a date range</mat-label>
-                <mat-date-range-input [formGroup]="range" [rangePicker]="picker" >
-                  <input matStartDate formControlName="start" placeholder="Start date" readonly>
-                  <input matEndDate formControlName="end" placeholder="End date" readonly>
-                </mat-date-range-input>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-date-range-picker #picker></mat-date-range-picker>
-              
-                <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
-                <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
-              </mat-form-field>
- 
-            <ng-container *ngIf="range.controls.start.value === null || range.controls.end.value === null else validDateRange"></ng-container>
-        </div>
+  <div class="resultsTable">
+    <table
+      mat-table
+      [dataSource]="sortedData | paginate: { itemsPerPage: 10, currentPage: p }"
+      matSort
+      (matSortChange)="sortData($event)"
+    >
+      <ng-container matColumnDef="RunDate">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="RunDate">
+          Date
+        </th>
+        <td mat-cell *matCellDef="let run">
+          {{ run.RunDate | date: "MMMM d, y" }}
+        </td>
+      </ng-container>
 
-    </div>
+      <ng-container matColumnDef="Distance">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header="Distance">
+          Distance
+        </th>
+        <td mat-cell *matCellDef="let run">{{ run.Distance }}</td>
+      </ng-container>
 
-
-    <div class="resultsTable">
-        <table mat-table [dataSource]="sortedData | paginate: { itemsPerPage: 10, currentPage: p}" matSort (matSortChange)="sortData($event)">
-                <ng-container matColumnDef="RunDate">
-                    <th mat-header-cell *matHeaderCellDef   mat-sort-header="RunDate" > Date </th>
-                    <td mat-cell *matCellDef="let run">{{run.RunDate | date: 'MMMM d, y'}} </td>
-                  </ng-container>
-    
-                  <ng-container matColumnDef="Distance">
-                    <th mat-header-cell *matHeaderCellDef   mat-sort-header="Distance" > Distance </th>
-                    <td mat-cell *matCellDef="let run"> {{run.Distance}} </td>
-                  </ng-container>
-    
-                  <ng-container matColumnDef="notes">
-                    <th mat-header-cell *matHeaderCellDef> Notes </th>
-                    <td class="tableNotes" mat-cell *matCellDef="let run"> {{run.Notes}} </td>
-                  </ng-container>
-              <tr class="headerRows" mat-header-row *matHeaderRowDef="displayedColumns sticky: true"></tr>
-              <tr mat-row class="table-row" *matRowDef="let row; columns: displayedColumns;" (click)="editRow(row)"></tr>
-
-          </table>
-          
-    </div>
-    <ng-container *ngIf="sortedData">
-        <ng-container *ngIf="sortedData.length > 10">
-            <pagination-controls class="paginationControls" (pageChange)="p = $event"></pagination-controls>
-        </ng-container>
+      <ng-container matColumnDef="notes">
+        <th mat-header-cell *matHeaderCellDef>Notes</th>
+        <td class="tableNotes" mat-cell *matCellDef="let run">
+          {{ run.Notes }}
+        </td>
+      </ng-container>
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+          No data matching the filter.
+        </td>
+      </tr>
+      <tr
+        class="headerRows"
+        mat-header-row
+        *matHeaderRowDef="displayedColumns; sticky: true"
+      ></tr>
+      <tr
+        mat-row
+        class="table-row"
+        *matRowDef="let row; columns: displayedColumns"
+        (click)="editRow(row)"
+      ></tr>
+    </table>
+  </div>
+  <ng-container *ngIf="sortedData">
+    <ng-container *ngIf="sortedData.length > 10">
+      <pagination-controls
+        class="paginationControls"
+        (pageChange)="p = $event"
+      ></pagination-controls>
     </ng-container>
+  </ng-container>
 
-        <mat-card class="totalMiles">
-            Total Miles in current search:
-            <p class="mileage">{{totalMiles | number : '1.2-2'}}</p>
-            
-        </mat-card>
-
+  <mat-card class="totalMiles">
+    Total Miles in current search:
+    <p class="mileage">{{ totalMiles | number: "1.2-2" }}</p>
+    <button mat-fab (click)="openFilters()" class="filterRunsBtn">
+      <span class="material-symbols-outlined"> filter_alt </span>
+    </button>
+  </mat-card>
 </div>
-
-
-<ng-template #validDateRange >
-    <div class="dateRangeSearch">
-        <button class="searchBtn" (click)="search()">Search</button>
-        <button class="clearBtn" (click)="clearSearch()">Clear Search</button>
-    </div>
-
-</ng-template>

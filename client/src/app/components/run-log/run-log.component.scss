@@ -1,210 +1,120 @@
 $mileageText: rgb(26, 184, 63);
 $accentGreen: rgb(18, 128, 44);
-$darkBlue: #101820FF;
+$darkBlue: #101820ff;
 
 @mixin buttonStyle {
-    margin-left: 10px;
-    width: 160px;
-    height: 50px !important;
-    background: $darkBlue;
-    color:white;
-    border:none;
-    position:relative;
-    height:60px;
-    font-size:1.6em;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
+  margin-left: 10px;
+  width: 160px;
+  height: 50px !important;
+  background: $darkBlue;
+  color: white;
+  border: none;
+  position: relative;
+  height: 60px;
+  font-size: 1.6em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
 }
 
 @mixin greenBoxShadow {
-    box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px, $accentGreen 0px -3px 0px inset;
+  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
+    $accentGreen 0px -3px 0px inset;
 }
 
-
 .log-content {
-    min-height: calc(100vh - 64px);
-    background-color: white;
+  min-height: calc(100vh - 64px);
+  background-color: white;
 }
 
 .rangeTitle {
-    text-align: center;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 46px;
-    padding-top: 25px;
-    padding-bottom: 20px;
-    color: black;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 46px;
+  padding-top: 25px;
+  padding-bottom: 20px;
+  color: black;
 }
-
-.dateRange {
-    padding-top: 10px;
-    text-align: center;
-    display: flex;
-
-}
-
-.chooseRangeLabel {
-    color: black;
-}
-
-::ng-deep .mat-form-field-underline {
-    display: none;
-}
-
-.datePicker {
-    color: black!important;
-    width: 350px;
-    font-size: 20px;
-}
-
-::ng-deep .mat-date-range-input-separator {
-    color: black !important;
-}
-
-.searchBtn{
-    @include buttonStyle;
-}
-
-.searchBtn:hover{
-    background:white;
-    color: $darkBlue;
-}
-
-.searchBtn:before,.searchBtn:after{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    height:2px;
-    width:0;
-    background: rgba(16, 24, 32, 0.582);
-    transition:400ms ease all;
-}
-
-.searchBtn:after{
-    right:inherit;
-    top:inherit;
-    left:0;
-    bottom:0;
-}
-
-.searchBtn:hover:before,.searchBtn:hover:after{
-    width:100%;
-    transition:800ms ease all;
-}
-
-.clearBtn{
-    @include buttonStyle;
-}
-
-.clearBtn:hover{
-    background:white;
-    color: $darkBlue;
-}
-
-.clearBtn:before,.clearBtn:after{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    height:2px;
-    width:0;
-    background: rgba(16, 24, 32, 0.582);
-    transition:400ms ease all;
-}
-
-.clearBtn:after{
-    right:inherit;
-    top:inherit;
-    left:0;
-    bottom:0;
-}
-
-.clearBtn:hover:before,.clearBtn:hover:after{
-    width:100%;
-    transition:800ms ease all;
-}
-
 
 .resultsTable {
-    margin: 0 auto;
-    width: 90%;
-    height: 600px;
-    position: relative;
-    overflow: auto;
-    box-shadow: black 0px 22px 70px 4px;
+  margin: 0 auto;
+  width: 90%;
+  height: 600px;
+  position: relative;
+  overflow: auto;
+  box-shadow: black 0px 22px 70px 4px;
 }
 
 .resultsTable:hover {
-    @include greenBoxShadow;
+  @include greenBoxShadow;
 }
 
-
 table {
-    width: 100%;
+  width: 100%;
 }
 
 ::ng-deep tr.mat-footer-row,
 tr.mat-row {
-   border: 1px solid #e7e7e7;
-   font-weight: bold;
-   height: 70px !important;
+  border: 1px solid #e7e7e7;
+  font-weight: bold;
+  height: 70px !important;
 }
 .mat-row:hover {
-    background-color: rgba(26, 184, 63, 0.562);
-  }
+  background-color: rgba(26, 184, 63, 0.562);
+}
 
 ::ng-deep tr {
-    font-weight: bold;
-    font-size: 5px;
+  font-weight: bold;
+  font-size: 5px;
 }
 
 table th {
-    font-style: italic;
-    font-size: 24px;
-    color: white !important;
-    background-color:  $darkBlue;
+  font-style: italic;
+  font-size: 24px;
+  color: white !important;
+  background-color: $darkBlue;
 }
 
 .tableNotes {
-    word-wrap: break-word;
-    max-width: 15ch;
-}
-.datePickerContent {
-    margin: auto;
-}
-
-.dateRangeSearch  {
-    display: inline;
+  word-wrap: break-word;
+  max-width: 15ch;
 }
 
 .paginationControls {
-    text-align: center;
+  text-align: center;
 }
 
 .totalMiles {
-    color: black !important;
-    background-color:  white;
-    text-align: center;
-    width: 450px;
-    height: 75px;
-    margin: 0 auto;
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: 10px;
-    margin-right: 10px;
+  color: black !important;
+  background-color: white;
+  text-align: center;
+  width: 450px;
+  height: 75px;
+  margin: 0 auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: 10px;
+  margin-right: 10px;
 }
 
 .totalMiles:hover {
-    @include greenBoxShadow;
+  @include greenBoxShadow;
 }
 
-
 .mileage {
-    color: $mileageText;
-    padding-top: 10px;
-    font-weight: bold;
-    font-size: 20px;
+  color: $mileageText;
+  padding-top: 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+
+.filterRunsBtn {
+  background: black;
+  border: 1px solid white;
+}
+
+.filterRunsBtn:hover {
+  background-color: $accentGreen;
 }

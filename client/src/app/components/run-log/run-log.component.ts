@@ -1,5 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  Component,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -10,12 +16,19 @@ import {
 } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
+import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
+import { Subject } from 'rxjs/internal/Subject';
 
 export interface Run {
   RunDate: any;
   Distance: number;
   Notes: string;
 }
+
+export type Range = {
+  start: any;
+  end: any;
+};
 
 @Component({
   selector: 'app-run-log',
@@ -30,11 +43,11 @@ export class RunLogComponent implements OnInit {
   sortedData!: Run[];
   totalMiles: number = 0;
   dialogAnswer: any;
-
-  range = new FormGroup({
-    start: new FormControl(),
-    end: new FormControl(),
-  });
+  todaysDate = moment().format('YYYY-MM-DD');
+  last7Filter: boolean = false;
+  last14Filter: boolean = false;
+  last30Filter: boolean = false;
+  parentSubject: Subject<any> = new Subject();
 
   constructor(
     private runningService: RunningDataService,
@@ -56,23 +69,17 @@ export class RunLogComponent implements OnInit {
     });
   }
 
-  search() {
-    const startDate = moment(this.range.controls.start.value)
-      .format('YYYY-MM-DD')
-      .toLocaleString();
-    const endDate = moment(this.range.controls.end.value)
-      .format('YYYY-MM-DD')
-      .toLocaleString();
-    const today = moment().format('YYYY-MM-DD').toLocaleString();
+  search(range: Range) {
+    const startDate = moment(range.start).format('YYYY-MM-DD').toLocaleString();
+    const endDate = moment(range.end).format('YYYY-MM-DD').toLocaleString();
 
-    if (endDate < startDate || startDate > today) {
+    if (endDate < startDate || startDate > this.todaysDate.toLocaleString()) {
       console.log('start: ', startDate, ' end: ', endDate);
       this.toast.error('The selected range was invalid. Please try again');
-      this.range.setValue({
-        start: null,
-        end: null,
-      });
     } else {
+      this.last7Filter = false;
+      this.last30Filter = false;
+      this.last30Filter = false;
       this.totalMiles = 0;
       this.runningService
         .getSpecificRuns(startDate, endDate)
@@ -89,10 +96,6 @@ export class RunLogComponent implements OnInit {
   clearSearch() {
     this.totalMiles = 0;
     this.showAllRunsOnStart();
-    this.range.setValue({
-      start: null,
-      end: null,
-    });
   }
 
   sortData(sort: Sort) {
@@ -159,5 +162,76 @@ export class RunLogComponent implements OnInit {
     };
     console.log('OBJ to edit : ', runObj);
     this.openDialog(runObj);
+  }
+
+  openFilters() {
+    const dialogRef = this.dialog.open(FilterDialogComponent, {
+      height: '350px',
+      width: '600px',
+      data: {
+        last7: this.last7Filter,
+        last14: this.last14Filter,
+        last30: this.last30Filter,
+        resetToDefault: undefined,
+        cancel: false,
+      },
+      disableClose: true,
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('dialog result: ', result);
+      this.dialogAnswer = result;
+      this.last7Filter = this.dialogAnswer?.last7;
+      this.last14Filter = this.dialogAnswer?.last14;
+      this.last30Filter = this.dialogAnswer?.last30;
+      if (this.dialogAnswer === undefined) {
+        console.log('no filters');
+      } else if (this.dialogAnswer.cancel) {
+        console.log('cancelled filtering');
+      } else {
+        console.log(this.dialogAnswer);
+        if (this.dialogAnswer.last7) {
+          this.last7Filter = true;
+          this.SearchFromSetDaysAgo(7);
+          this.toast.info('Showing runs from last 7 days');
+        } else if (this.dialogAnswer.last14) {
+          this.last14Filter = true;
+          this.SearchFromSetDaysAgo(14);
+          this.toast.info('Showing runs from last 14 days');
+        } else if (this.dialogAnswer.last30) {
+          this.last30Filter = true;
+          this.SearchFromSetDaysAgo(30);
+          this.toast.info('Showing runs from last 30 days');
+        } else if (this.dialogAnswer.resetToDefault) {
+          this.last7Filter = false;
+          this.last14Filter = false;
+          this.last30Filter = false;
+          this.clearSearch();
+        }
+      }
+    });
+  }
+
+  //a function that will search for runs from a specific amount of days ago
+  //eg. passing in 7 will search for runs in the past 7 days
+  SearchFromSetDaysAgo(days: number) {
+    //the date picker uses the parent subject as an input, the child subscribes to this on init
+    //we pass clear, the child listens for the event being 'clear' and then will clear the date pickers
+    this.parentSubject.next('clear');
+    var endDate = moment(this.todaysDate);
+
+    var startDate = moment();
+    startDate = startDate.subtract(days, 'days');
+
+    this.totalMiles = 0;
+    this.runningService
+      .getSpecificRuns(startDate, endDate)
+      .subscribe((runs: any) => {
+        this.runInfo = runs;
+        this.runInfo.forEach((run) => {
+          this.totalMiles += Number(run.Distance);
+        });
+        this.sortedData = this.runInfo.slice();
+      });
   }
 }
