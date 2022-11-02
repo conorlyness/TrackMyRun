@@ -1,0 +1,72 @@
+$accentGreen: rgb(18, 128, 44);
+
+.title {
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 46px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  color: black;
+}
+
+.filter-run-section {
+  font-weight: 200;
+  font-style: italic;
+  font-size: 16px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  color: black;
+}
+
+.confirmBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
+  margin-right: 10px;
+}
+
+.cancelBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
+}
+
+.confirmBtn:hover {
+  font-size: 22px;
+  background-color: $accentGreen;
+  color: white;
+}
+
+.confirmBtn:disabled {
+  display: none;
+}
+
+.cancelBtn:hover {
+  font-size: 22px;
+  background-color: rgb(144, 30, 30);
+  color: white;
+}
+
+.buttons {
+  text-align: center;
+}
+
+.reset {
+  text-align: center;
+}
+
+.resetBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
+}
+
+.resetBtn:hover {
+  font-size: 22px;
+  background-color: rgb(17, 103, 201);
+  color: white;
+}

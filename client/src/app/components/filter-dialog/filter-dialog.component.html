@@ -1,0 +1,60 @@
+<h1 mat-dialog-title class="title">Filter runs</h1>
+<div class="checkbox-section">
+  <section class="filter-run-section" [formGroup]="filters">
+    <p>
+      <mat-checkbox
+        formControlName="last7"
+        (change)="checkboxChanged('last7', $event.checked)"
+        >last 7 days</mat-checkbox
+      >
+    </p>
+    <p>
+      <mat-checkbox
+        formControlName="last14"
+        (change)="checkboxChanged('last14', $event.checked)"
+        >last 14 days</mat-checkbox
+      >
+    </p>
+    <p>
+      <mat-checkbox
+        formControlName="last30"
+        (change)="checkboxChanged('last30', $event.checked)"
+        >last 30 days</mat-checkbox
+      >
+    </p>
+  </section>
+</div>
+
+<div class="buttons">
+  <button
+    class="confirmBtn"
+    mat-button
+    mat-dialog-close
+    [mat-dialog-close]="data"
+    [disabled]="noFilters"
+  >
+    Apply filters
+  </button>
+
+  <button
+    class="cancelBtn"
+    mat-button
+    [mat-dialog-close]="data"
+    (click)="onNoClick()"
+  >
+    Cancel
+  </button>
+</div>
+<ng-container *ngIf="!noFilters">
+  <div class="reset">
+    <button
+      class="resetBtn"
+      mat-button
+      mat-dialog-close
+      [mat-dialog-close]="data"
+      (click)="resetToDefault()"
+    >
+      Reset to defaults
+    </button>
+  </div>
+</ng-container>
