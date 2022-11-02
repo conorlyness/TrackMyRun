@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
           .addNewRun(
             moment(this.dialogAnswer.date).format('YYYY-MM-DD'),
             this.dialogAnswer.distance,
-            this.dialogAnswer.notes
+            this.dialogAnswer.notes.replace(/'/g, '')
           )
           .subscribe();
         this.distance = undefined;

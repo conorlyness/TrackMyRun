@@ -9,89 +9,88 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .text {
-    text-align: center;
+  text-align: center;
+}
 
-  }
+.confirmBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
+  margin-right: 40px;
+}
 
-  .confirmBtn {
-    font-size: 22px;
-    background-color: #101820FF;
-    border: 2px solid white;
-    color: white;
-    margin-right: 40px;
-  }
+.cancelBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
+}
 
-  .cancelBtn {
-    font-size: 22px;
-    background-color: #101820FF;
-    border: 2px solid white;
-    color: white;
-  }
+.confirmBtn:hover {
+  font-size: 22px;
+  background-color: $accentGreen;
+  color: white;
+}
 
-  .confirmBtn:hover {
-    font-size: 22px;
-    background-color: $accentGreen;
-    color: white;
-  }
+.cancelBtn:hover {
+  font-size: 22px;
+  background-color: rgb(144, 30, 30);
+  color: white;
+}
 
-  .cancelBtn:hover {
-    font-size: 22px;
-    background-color: rgb(144, 30, 30);
-    color: white;
-  }
-
-  ::ng-deep .mat-dialog-container {
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: white;
-    text-align: center;
-    font-size: 30px;
+::ng-deep .mat-dialog-container {
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  background-color: white;
+  text-align: center;
+  font-size: 30px;
 }
 
 .title {
-    text-align: center;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 46px;
-    padding-top: 5px;
-    padding-bottom: 10px;
-    color: black;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 46px;
+  padding-top: 5px;
+  padding-bottom: 10px;
+  color: black;
 }
 
-.dateTitle{
+.dateTitle {
   @include labelStyles;
 }
 
-.dateText{
-    text-align: center;
-    word-wrap:break-word;
-    line-height: 1.6;
-    color: $accentGreen;
+.dateText {
+  text-align: center;
+  word-wrap: break-word;
+  line-height: 1.6;
+  color: $accentGreen;
 }
 
-.inputs{
-    text-align: center;
-    display: grid;
-    margin: 0 auto;
-    
+.inputs {
+  text-align: center;
+  display: grid;
+  margin: 0 auto;
 }
-
 
 mat-label {
-    color: #101820FF !important;
+  color: #101820ff !important;
 }
 
-textarea:focus, input:focus {
-    color: $accentGreen;
+textarea:focus,
+input:focus {
+  color: $accentGreen;
 }
 
-textarea, input {
-    color: $accentGreen;
+textarea,
+input {
+  color: $accentGreen;
 }
 
 .distanceLabel {
-    @include labelStyles;
+  @include labelStyles;
 }
 
 .notesLabel {
-    @include labelStyles;
+  @include labelStyles;
 }

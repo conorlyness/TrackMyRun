@@ -28,6 +28,8 @@ import { MatCardModule } from '@angular/material/card';
 import { EditDialogComponent } from './components/edit-dialog/edit-dialog.component';
 import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
+import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
+import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +38,8 @@ import { ToastrModule } from 'ngx-toastr';
     RunLogComponent,
     GalleryComponent,
     EditDialogComponent,
+    FilterDialogComponent,
+    DateRangePickerComponent,
   ],
   imports: [
     BrowserModule,
