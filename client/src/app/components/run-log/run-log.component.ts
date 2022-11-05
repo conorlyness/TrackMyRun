@@ -111,7 +111,11 @@ export class RunLogComponent implements OnInit {
         case 'RunDate':
           return this.compare(a.RunDate, b.RunDate, isAsc);
         case 'Distance':
-          return this.compare(a.Distance, b.Distance, isAsc);
+          if (isAsc) {
+            return Number(b.Distance - a.Distance);
+          } else {
+            return Number(a.Distance - b.Distance);
+          }
         default:
           return 0;
       }
