@@ -4,11 +4,26 @@
 />
 <div class="log-content">
   <h1 class="rangeTitle">Running Log</h1>
-  <app-date-range-picker
-    (clearSearches)="clearSearch()"
-    (searchRange)="search($event)"
-    [clearRange]="parentSubject"
-  ></app-date-range-picker>
+  <mat-card class="totalMiles">
+    Total Miles in current search:
+    <p class="mileage">{{ totalMiles | number: "1.2-2" }}</p>
+    <button mat-fab (click)="openFilters()" class="filterRunsBtn">
+      <span class="material-symbols-outlined"> filter_alt </span>
+    </button>
+    <button mat-fab class="toggleRangePickerBtn" (click)="toggleRange()">
+      <mat-icon>date_range</mat-icon>
+    </button>
+  </mat-card>
+
+  <div>
+    <ng-container *ngIf="rangePicker">
+      <app-date-range-picker
+        (clearSearches)="clearSearch()"
+        (searchRange)="search($event)"
+        [clearRange]="parentSubject"
+      ></app-date-range-picker>
+    </ng-container>
+  </div>
 
   <div class="resultsTable">
     <table
@@ -65,12 +80,4 @@
       ></pagination-controls>
     </ng-container>
   </ng-container>
-
-  <mat-card class="totalMiles">
-    Total Miles in current search:
-    <p class="mileage">{{ totalMiles | number: "1.2-2" }}</p>
-    <button mat-fab (click)="openFilters()" class="filterRunsBtn">
-      <span class="material-symbols-outlined"> filter_alt </span>
-    </button>
-  </mat-card>
 </div>

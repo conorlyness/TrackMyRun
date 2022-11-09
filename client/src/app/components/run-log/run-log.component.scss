@@ -89,14 +89,10 @@ table th {
   color: black !important;
   background-color: white;
   text-align: center;
-  width: 450px;
   height: 75px;
+  width: fit-content;
   margin: 0 auto;
-  position: absolute;
-  right: 0;
-  top: 0;
-  margin-top: 10px;
-  margin-right: 10px;
+  margin-bottom: 40px;
 }
 
 .totalMiles:hover {
@@ -113,8 +109,18 @@ table th {
 .filterRunsBtn {
   background: black;
   border: 1px solid white;
+  margin-right: 10px;
 }
 
 .filterRunsBtn:hover {
+  background-color: $accentGreen;
+}
+
+.toggleRangePickerBtn {
+  background: black;
+  border: 1px solid white;
+}
+
+.toggleRangePickerBtn:hover {
   background-color: $accentGreen;
 }

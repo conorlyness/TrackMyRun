@@ -48,6 +48,7 @@ export class RunLogComponent implements OnInit {
   last14Filter: boolean = false;
   last30Filter: boolean = false;
   parentSubject: Subject<any> = new Subject();
+  rangePicker: boolean = false;
 
   constructor(
     private runningService: RunningDataService,
@@ -237,5 +238,9 @@ export class RunLogComponent implements OnInit {
         });
         this.sortedData = this.runInfo.slice();
       });
+  }
+
+  toggleRange() {
+    this.rangePicker = !this.rangePicker;
   }
 }
