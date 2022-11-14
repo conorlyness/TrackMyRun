@@ -20,7 +20,7 @@
       <app-date-range-picker
         (clearSearches)="clearSearch()"
         (searchRange)="search($event)"
-        [clearRange]="parentSubject"
+        [clearRange]="clearRangeObs$"
       ></app-date-range-picker>
     </ng-container>
   </div>

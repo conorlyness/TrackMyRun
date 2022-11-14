@@ -1,10 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output,
-  ViewChild,
-} from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
@@ -18,6 +12,7 @@ import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
+import { Subscription } from 'rxjs/internal/Subscription';
 
 export interface Run {
   RunDate: any;
@@ -35,7 +30,7 @@ export type Range = {
   templateUrl: './run-log.component.html',
   styleUrls: ['./run-log.component.scss'],
 })
-export class RunLogComponent implements OnInit {
+export class RunLogComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['RunDate', 'Distance', 'notes'];
   runInfo: any[] = [];
   //p for page number in pagination
@@ -47,8 +42,10 @@ export class RunLogComponent implements OnInit {
   last7Filter: boolean = false;
   last14Filter: boolean = false;
   last30Filter: boolean = false;
-  parentSubject: Subject<any> = new Subject();
+  clearRangeSubject: Subject<boolean> = new Subject();
+  clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
+  subscriptions = new Subscription();
 
   constructor(
     private runningService: RunningDataService,
@@ -61,13 +58,18 @@ export class RunLogComponent implements OnInit {
   }
 
   showAllRunsOnStart() {
-    this.runningService.getAllRuns().subscribe((runs: any) => {
-      this.runInfo = runs;
-      this.runInfo.forEach((run) => {
-        this.totalMiles += Number(run.Distance);
-      });
-      this.sortedData = this.runInfo.slice();
-    });
+    this.subscriptions.add(
+      this.runningService.getAllRuns().subscribe({
+        next: (runs: any) => {
+          this.runInfo = runs;
+          this.runInfo.forEach((run) => {
+            this.totalMiles += Number(run.Distance);
+          });
+          this.sortedData = this.runInfo.slice();
+        },
+        error: (error) => console.log('caught an error: ', error),
+      })
+    );
   }
 
   search(range: Range) {
@@ -82,15 +84,18 @@ export class RunLogComponent implements OnInit {
       this.last30Filter = false;
       this.last30Filter = false;
       this.totalMiles = 0;
-      this.runningService
-        .getSpecificRuns(startDate, endDate)
-        .subscribe((runs: any) => {
-          this.runInfo = runs;
-          this.runInfo.forEach((run) => {
-            this.totalMiles += Number(run.Distance);
-          });
-          this.sortedData = this.runInfo.slice();
-        });
+      this.subscriptions.add(
+        this.runningService.getSpecificRuns(startDate, endDate).subscribe({
+          next: (runs: any) => {
+            this.runInfo = runs;
+            this.runInfo.forEach((run) => {
+              this.totalMiles += Number(run.Distance);
+            });
+            this.sortedData = this.runInfo.slice();
+          },
+          error: (error) => console.log('caught an error: ', error),
+        })
+      );
     }
   }
 
@@ -127,7 +132,7 @@ export class RunLogComponent implements OnInit {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  openDialog(data: any) {
+  openEditDialog(data: any) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       height: '750px',
       width: '900px',
@@ -145,13 +150,17 @@ export class RunLogComponent implements OnInit {
       } else {
         this.toast.success('Run Successfully Updated');
         console.log(this.dialogAnswer);
-        this.runningService
-          .editRun(
-            moment(this.dialogAnswer.date).format('YYYY-MM-DD'),
-            this.dialogAnswer.distance,
-            this.dialogAnswer.notes
-          )
-          .subscribe();
+        this.subscriptions.add(
+          this.runningService
+            .editRun(
+              moment(this.dialogAnswer.date).format('YYYY-MM-DD'),
+              this.dialogAnswer.distance,
+              this.dialogAnswer.notes
+            )
+            .subscribe({
+              error: (error) => console.log('caught an error: ', error),
+            })
+        );
         setTimeout(() => {
           this.showAllRunsOnStart();
         }, 50);
@@ -166,7 +175,7 @@ export class RunLogComponent implements OnInit {
       notes: row.Notes,
     };
     console.log('OBJ to edit : ', runObj);
-    this.openDialog(runObj);
+    this.openEditDialog(runObj);
   }
 
   openFilters() {
@@ -221,26 +230,34 @@ export class RunLogComponent implements OnInit {
   //eg. passing in 7 will search for runs in the past 7 days
   SearchFromSetDaysAgo(days: number) {
     //the date picker uses the parent subject as an input, the child subscribes to this on init
-    //we pass clear, the child listens for the event being 'clear' and then will clear the date pickers
-    this.parentSubject.next('clear');
+    //we pass true, the child listens for the event being true and then will clear the date pickers
+    this.clearRangeSubject.next(true);
+    this.rangePicker = false;
     var endDate = moment(this.todaysDate);
 
     var startDate = moment();
     startDate = startDate.subtract(days, 'days');
 
     this.totalMiles = 0;
-    this.runningService
-      .getSpecificRuns(startDate, endDate)
-      .subscribe((runs: any) => {
-        this.runInfo = runs;
-        this.runInfo.forEach((run) => {
-          this.totalMiles += Number(run.Distance);
-        });
-        this.sortedData = this.runInfo.slice();
-      });
+    this.subscriptions.add(
+      this.runningService.getSpecificRuns(startDate, endDate).subscribe({
+        next: (runs: any) => {
+          this.runInfo = runs;
+          this.runInfo.forEach((run) => {
+            this.totalMiles += Number(run.Distance);
+          });
+          this.sortedData = this.runInfo.slice();
+        },
+        error: (error) => console.log('caught an error: ', error),
+      })
+    );
   }
 
   toggleRange() {
     this.rangePicker = !this.rangePicker;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }
