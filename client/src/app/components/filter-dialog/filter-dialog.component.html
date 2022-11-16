@@ -44,17 +44,18 @@
   >
     Cancel
   </button>
+
+  <ng-container *ngIf="!noFilters">
+    <div class="reset">
+      <button
+        class="resetBtn"
+        mat-button
+        mat-dialog-close
+        [mat-dialog-close]="data"
+        (click)="resetToDefault()"
+      >
+        Reset to defaults
+      </button>
+    </div>
+  </ng-container>
 </div>
-<ng-container *ngIf="!noFilters">
-  <div class="reset">
-    <button
-      class="resetBtn"
-      mat-button
-      mat-dialog-close
-      [mat-dialog-close]="data"
-      (click)="resetToDefault()"
-    >
-      Reset to defaults
-    </button>
-  </div>
-</ng-container>

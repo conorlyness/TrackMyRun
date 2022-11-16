@@ -2,6 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, retry, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { Run } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -9,15 +10,15 @@ import { environment } from 'src/environments/environment';
 export class RunningDataService {
   constructor(private http: HttpClient) {}
 
-  getAllRuns() {
+  getAllRuns(): Observable<any> {
     const url = environment.getAllRunsUrl;
-    return this.http.get<Observable<any>>(url, {}).pipe(
+    return this.http.get<Observable<Run>>(url, {}).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
   }
 
-  getSpecificRuns(start: any, end: any) {
+  getSpecificRuns(start: any, end: any): Observable<any> {
     const body = { start: start, end: end };
     const url = environment.getSpecificRunsUrl;
     return this.http.post<Observable<any>>(url, body).pipe(
@@ -26,7 +27,7 @@ export class RunningDataService {
     );
   }
 
-  addNewRun(runDate: any, distance: number, notes: string) {
+  addNewRun(runDate: any, distance: number, notes: string): Observable<any> {
     const body = { date: runDate, distance: distance, notes: notes };
     const url = environment.logNewRunUrl;
     return this.http.post<Observable<any>>(url, body).pipe(
@@ -35,7 +36,7 @@ export class RunningDataService {
     );
   }
 
-  editRun(runDate: any, distance: number, notes: string) {
+  editRun(runDate: any, distance: number, notes: string): Observable<any> {
     const body = { date: runDate, distance: distance, notes: notes };
     const url = environment.editRunUrl;
     return this.http.post<Observable<any>>(url, body).pipe(

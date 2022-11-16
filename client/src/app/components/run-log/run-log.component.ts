@@ -13,12 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
-
-export interface Run {
-  RunDate: any;
-  Distance: number;
-  Notes: string;
-}
+import { Run } from '../../types';
 
 export type Range = {
   start: any;
@@ -32,7 +27,7 @@ export type Range = {
 })
 export class RunLogComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = ['RunDate', 'Distance', 'notes'];
-  runInfo: any[] = [];
+  runInfo: Run[] = [];
   //p for page number in pagination
   p: number = 1;
   sortedData!: Run[];
@@ -60,7 +55,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
   showAllRunsOnStart() {
     this.subscriptions.add(
       this.runningService.getAllRuns().subscribe({
-        next: (runs: any) => {
+        next: (runs: Array<Run>) => {
+          // runs.forEach((run) => this.runInfo.push(run));
           this.runInfo = runs;
           this.runInfo.forEach((run) => {
             this.totalMiles += Number(run.Distance);
@@ -241,7 +237,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
     this.totalMiles = 0;
     this.subscriptions.add(
       this.runningService.getSpecificRuns(startDate, endDate).subscribe({
-        next: (runs: any) => {
+        next: (runs: Array<Run>) => {
           this.runInfo = runs;
           this.runInfo.forEach((run) => {
             this.totalMiles += Number(run.Distance);

@@ -24,7 +24,6 @@ $accentGreen: rgb(18, 128, 44);
   background-color: #101820ff;
   border: 2px solid white;
   color: white;
-  margin-right: 10px;
 }
 
 .cancelBtn {
@@ -69,4 +68,14 @@ $accentGreen: rgb(18, 128, 44);
   font-size: 22px;
   background-color: rgb(17, 103, 201);
   color: white;
+}
+
+.checkbox-section {
+  text-align: start;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 50px;
 }
