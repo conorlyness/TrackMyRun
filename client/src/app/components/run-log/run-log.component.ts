@@ -158,6 +158,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
             })
         );
         setTimeout(() => {
+          this.totalMiles = 0;
           this.showAllRunsOnStart();
         }, 50);
       }
