@@ -1,243 +1,245 @@
 $accentGreen: rgb(18, 128, 44);
 
-
 @mixin dialogHeadings {
-    padding-top: 5px;
-    font-weight: bold;
-    font-style: italic;
-    color: black;
+  padding-top: 5px;
+  font-weight: 200;
+  color: black;
 }
 
 @mixin dialogValues {
-    text-align: center;
-    word-wrap:break-word;
-    line-height: 1.6;
-    color: $accentGreen;
+  text-align: center;
+  word-wrap: break-word;
+  line-height: 1.6;
+  color: $accentGreen;
 }
 
 @mixin greenBoxShadow {
-    box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px, $accentGreen 0px -3px 0px inset;
+  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
+    $accentGreen 0px -3px 0px inset;
 }
 
 @mixin inputStyles {
-    color: $accentGreen !important;
-    width: 350px;
-    font-size: 20px;
+  color: black !important;
+  width: 350px;
+  font-size: 20px;
 }
 
 @mixin dialogBtnStyles {
-    font-size: 22px;
-    background-color: #101820FF;
-    border: 2px solid white;
-    color: white;
+  font-size: 22px;
+  background-color: #101820ff;
+  border: 2px solid white;
+  color: white;
 }
 
 .home-content {
-    min-height: calc(100vh - 64px);
-    background-color: white;
+  min-height: calc(100vh - 64px);
+  background-color: white;
 }
 
-
 .centerDiv {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    height: 600px;
-    width: 500px;
-    border: 1px solid;
-    padding: 10px;
-    box-shadow: black 0px 22px 70px 4px;
-    background-color: white;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  height: 600px;
+  width: 500px;
+  padding: 10px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+  background-color: white;
 }
 
 .centerDiv:hover {
-    @include greenBoxShadow;
+  @include greenBoxShadow;
 }
 
 .title {
-    text-align: center;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 46px;
-    padding-top: 5px;
-    color: rgb(0, 0, 0);
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+  color: rgb(0, 0, 0);
 }
 
 .datePicker {
-    color: white !important;
-    width: 350px;
-    font-size: 20px;
-
+  color: white !important;
+  width: 350px;
+  font-size: 20px;
 }
 
 ::ng-deep .mat-form-field-underline {
-    display: none;
+  display: none;
 }
 
 .chooseDateText {
-    color: black;
+  color: black;
+  font-weight: 100;
 }
 
 .addMilesText {
-    color: black;
+  color: black;
+  font-weight: 100;
+  display: inline-flex;
+}
+
+.miLabel {
+  font-size: 10px;
 }
 
 .addNotesText {
-    color: black;
+  color: black;
+  font-weight: 100;
 }
 
-.pickerText{
-    color: black;
+.pickerText {
+  color: black;
+  font-weight: 100;
 }
-
 
 .datePickerContainer {
-    text-align: center;
-    padding-top: 50px;
+  text-align: center;
+  padding-top: 50px;
 }
 
 .distance {
-    @include inputStyles;
+  @include inputStyles;
 }
 
 .notes {
-    padding-bottom: 80px;
-    @include inputStyles;
+  padding-bottom: 80px;
+  @include inputStyles;
 }
 
-
-.logBtn{
-    width: 300px;
-    height: 40px;
-    background:white;
-    color: black;
-    border:none;
-    position:relative;
-    height:60px;
-    font-size:1.6em;
-    padding:0 2em;
-    cursor:pointer;
-    transition:800ms ease all;
-    outline:none;
-    border: 2px solid black;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px, rgba(0, 0, 0, 0.1) 0px 2px 4px 0px, rgba(255, 255, 255, 0.05) 0px 0px 0px 1px inset;
-  }
-  .logBtn:hover{
-    background: black;
-    color:white;
-    border: 2px solid white;
-  }
-  .logBtn:before,.logBtn:after{
-    content:'';
-    position:absolute;
-    top:0;
-    right:0;
-    height:2px;
-    width:0;
-    background: rgba(0, 0, 0, 0.582);
-    transition:400ms ease all;
-  }
-  .logBtn:after{
-    right:inherit;
-    top:inherit;
-    left:0;
-    bottom:0;
-  }
-  .logBtn:hover:before,.logBtn:hover:after{
-    width:100%;
-    transition:800ms ease all;
-  }
-
-  .confirmBtn {
-    @include dialogBtnStyles;
-    margin-right: 40px;
-  }
-
-  .cancelBtn {
-    @include dialogBtnStyles;
-  }
-
-  .confirmBtn:hover {
-    font-size: 22px;
-    background-color: $accentGreen;
-    color: white;
-  }
-
-  .cancelBtn:hover {
-    font-size: 22px;
-    background-color: rgb(144, 30, 30);
-    color: white;
-  }
-
-  ::ng-deep .mat-dialog-container {
-    box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
-    background-color: white;
-    text-align: center;
-    font-size: 30px;
+.logBtn {
+  width: 300px;
+  height: 40px;
+  background: white;
+  color: black;
+  border: none;
+  position: relative;
+  height: 60px;
+  font-size: 20px;
+  font-weight: 100;
+  padding: 0 2em;
+  cursor: pointer;
+  transition: 800ms ease all;
+  outline: none;
+  box-shadow: rgb(255 255 255 / 20%) 0px 0px 0px 1px inset,
+    rgb(0 0 0 / 90%) 0px 0px 0px 1px;
+}
+.logBtn:hover {
+  background: black;
+  color: white;
+  border: 2px solid $accentGreen;
+}
+.logBtn:before,
+.logBtn:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 2px;
+  width: 0;
+  background: rgba(0, 0, 0, 0.582);
+  transition: 400ms ease all;
+}
+.logBtn:after {
+  right: inherit;
+  top: inherit;
+  left: 0;
+  bottom: 0;
+}
+.logBtn:hover:before,
+.logBtn:hover:after {
+  width: 100%;
+  transition: 800ms ease all;
 }
 
-.confrimTitle {
-    text-align: center;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 46px;
-    padding-top: 5px;
-    margin-bottom: 10px;
-    color: black;
+.confirmBtn {
+  @include dialogBtnStyles;
+  margin-right: 40px;
+}
+
+.cancelBtn {
+  @include dialogBtnStyles;
+}
+
+.confirmBtn:hover {
+  font-size: 22px;
+  background-color: $accentGreen;
+  color: white;
+}
+
+.cancelBtn:hover {
+  font-size: 22px;
+  background-color: rgb(144, 30, 30);
+  color: white;
+}
+
+::ng-deep .mat-dialog-container {
+  box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
+  background-color: white;
+  text-align: center;
+  font-size: 30px;
 }
 
 .areTheseCorrect {
-    padding-top: 15px;
-    padding-bottom: 10px;
-    text-align: center;
-    font-weight: bold;
-    color: rgb(0, 0, 0);
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+  color: rgb(0, 0, 0);
+  padding-bottom: 15px;
 }
 
 button:disabled,
-button[disabled]{
+button[disabled] {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
 
 button:disabled:hover,
-button[disabled]:hover{
+button[disabled]:hover {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
 }
 
-
-
-
 .notesTitle {
-    @include dialogHeadings;
+  @include dialogHeadings;
 }
 
 .distanceTitle {
-    @include dialogHeadings;
+  @include dialogHeadings;
 }
 
 .dateTitle {
-    @include dialogHeadings;
-
+  @include dialogHeadings;
 }
 
 .distanceText {
-    @include dialogValues;
-
+  @include dialogValues;
 }
 
 .notesText {
-    @include dialogValues;
+  @include dialogValues;
 }
 
 .dateText {
-    @include dialogValues;
+  @include dialogValues;
 }
 
 .dialogWrapper {
-    overflow: auto;
+  overflow: auto;
+}
+
+.dialogButtons {
+  padding-top: 100px;
+}
+
+.dialogDetails {
+  text-align: left;
 }

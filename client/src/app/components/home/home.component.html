@@ -1,25 +1,46 @@
 <div class="home-content">
-    <div class="centerDiv">
-        <h1 class="title">Log a Run</h1>
-        <div class="datePickerContainer">
-            <mat-form-field appearance="fill" class="datePicker">
-                <mat-label class="chooseDateText">Run Date</mat-label>
-                <input class="pickerText" matInput [matDatepicker]="picker" readonly [formControl]="date">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker  [startAt]="currentDate"></mat-datepicker>
-              </mat-form-field>
-              <mat-form-field appearance="fill" class="distance">
-                <mat-label class="addMilesText">Distance (Miles)</mat-label>
-              <input matInput type="number" min="1" [(ngModel)]="distance" class="distanceInput" pattern="[0-9]+" 
-              title="please enter positive numbers only" required="required">
-            </mat-form-field>
-            <mat-form-field appearance="fill" class="notes">
-                <mat-label class="addNotesText">Run notes</mat-label>
-              <input matInput [(ngModel)]="notes" class="notesInput">
-            </mat-form-field>
-            <button [disabled]="distance != undefined && distance <= 0" (click)="confirmSelection()"  class="logBtn">Log Run</button>
-        </div>
-
+  <div class="centerDiv">
+    <h1 class="title">Log run</h1>
+    <div class="datePickerContainer">
+      <mat-form-field appearance="fill" class="datePicker">
+        <mat-label class="chooseDateText">Run Date</mat-label>
+        <input
+          class="pickerText"
+          matInput
+          [matDatepicker]="picker"
+          readonly
+          [formControl]="date"
+        />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker [startAt]="currentDate"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="distance">
+        <mat-label class="addMilesText"
+          >Distance
+          <p class="miLabel">(Mi)</p></mat-label
+        >
+        <input
+          matInput
+          type="number"
+          min="1"
+          [(ngModel)]="distance"
+          class="distanceInput"
+          pattern="[0-9]+"
+          title="please enter positive numbers only"
+          required="required"
+        />
+      </mat-form-field>
+      <mat-form-field appearance="fill" class="notes">
+        <mat-label class="addNotesText">Notes...</mat-label>
+        <input matInput [(ngModel)]="notes" class="notesInput" />
+      </mat-form-field>
+      <button
+        [disabled]="distance != undefined && distance <= 0"
+        (click)="confirmSelection()"
+        class="logBtn"
+      >
+        Add to log
+      </button>
     </div>
-
+  </div>
 </div>

@@ -27,14 +27,13 @@ $darkBlue: #101820ff;
   background-color: white;
 }
 
-.rangeTitle {
+.logTitle {
   text-align: center;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 46px;
-  padding-top: 25px;
-  padding-bottom: 20px;
-  color: black;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+  color: rgb(0, 0, 0);
 }
 
 .resultsTable {
@@ -43,7 +42,8 @@ $darkBlue: #101820ff;
   height: 600px;
   position: relative;
   overflow: auto;
-  box-shadow: black 0px 22px 70px 4px;
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .resultsTable:hover {
@@ -104,6 +104,11 @@ table th {
   padding-top: 10px;
   font-weight: bold;
   font-size: 20px;
+}
+
+.miLabel {
+  padding-left: 3px;
+  font-size: 10px;
 }
 
 .filterRunsBtn {
