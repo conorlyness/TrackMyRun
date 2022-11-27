@@ -1,6 +1,6 @@
 {
   "name": "track-my-run",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "main.js",
   "build": {
     "appId": "TrackMyRun"
@@ -14,7 +14,7 @@
     "server-start": "cd ../server && npm start",
     "startAll": "concurrently \"npm run server-start\" \"ng s -o\"",
     "electron": "ng build && electron .",
-    "package": "electron-packager . --icon=./src/assets/Sonya-Swarm-Running.ico --overwrite "
+    "package": "electron-packager . --icon=./src/assets/track-my-run-high-resolution.ico --overwrite "
   },
   "private": true,
   "dependencies": {
