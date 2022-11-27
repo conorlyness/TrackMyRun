@@ -1,23 +1,11 @@
 <mat-toolbar>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon" (click)="drawer.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <span>Track My Run</span>
+  <img src="../assets/WhiteTrackMyRun.png" alt="logo" />
+
+  <div class="navMenu">
+    <a (click)="loadLogRun()">Add Run</a>
+    <a (click)="loadRunLog()">Run Log</a>
+    <a (click)="loadGallery()">Gallery</a>
+  </div>
 </mat-toolbar>
 
-<mat-drawer-container class="example-container">
-  <mat-drawer #drawer mode="over" class="sidenav">
-    <button class="logRun" (click)="loadLogRun()">
-      Log Run
-    </button>
-    <button class="runLog" (click)="loadRunLog()">
-      View Run Log
-    </button>
-    <button class="gallery" (click)="loadGallery()">
-      Gallery
-    </button>
-  </mat-drawer>
-  <mat-drawer-content>
-    <router-outlet class="mainBody"></router-outlet>
-  </mat-drawer-content>
-</mat-drawer-container>
+<router-outlet class="mainBody"></router-outlet>
