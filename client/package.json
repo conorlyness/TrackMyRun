@@ -14,7 +14,7 @@
     "server-start": "cd ../server && npm start",
     "startAll": "concurrently \"npm run server-start\" \"ng s -o\"",
     "electron": "ng build && electron .",
-    "package": "electron-packager . --icon=./src/assets/track-my-run-high-resolution.ico --overwrite "
+    "package": "electron-packager . --icon=./src/assets/TMR.ico --overwrite "
   },
   "private": true,
   "dependencies": {

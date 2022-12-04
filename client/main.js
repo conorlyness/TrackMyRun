@@ -6,7 +6,7 @@ async function createWindow() {
   await session.defaultSession.clearStorageData();
   win = new BrowserWindow({
     show: false,
-    icon: "./src/assets/track-my-run-high-resolution.ico",
+    icon: "./src/assets/TMR.ico",
     webPreferences: {
       webSecurity: false,
       preload: path.resolve(path.join(__dirname, "./preload.js")),
