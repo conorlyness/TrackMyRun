@@ -37,7 +37,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   last7Filter: boolean = false;
   last14Filter: boolean = false;
   last30Filter: boolean = false;
-  clearRangeSubject: Subject<boolean> = new Subject();
+  private clearRangeSubject: Subject<boolean> = new Subject();
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
   subscriptions = new Subscription();
