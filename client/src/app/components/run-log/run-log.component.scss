@@ -54,14 +54,14 @@ table {
   width: 100%;
 }
 
-::ng-deep tr.mat-footer-row,
-tr.mat-row {
-  border: 1px solid #e7e7e7;
+tr.tableRow {
+  cursor: pointer;
   font-weight: bold;
   height: 70px !important;
 }
-.mat-row:hover {
-  background-color: rgba(26, 184, 63, 0.562);
+
+tr.tableRow:hover {
+  background-color: rgba(243, 243, 243, 0.74);
 }
 
 ::ng-deep tr {
@@ -111,6 +111,22 @@ table th {
   font-size: 10px;
 }
 
+tr.notesRow {
+  height: 0 !important;
+}
+
+.expandedRowWithNotes {
+  overflow: hidden;
+}
+
+.expandRowBtn {
+  background-color: rgba(26, 184, 63, 0.562);
+}
+
+.expandRowBtn:hover {
+  background-color: $accentGreen;
+}
+
 .filterRunsBtn {
   background: black;
   border: 1px solid white;
@@ -128,4 +144,11 @@ table th {
 
 .toggleRangePickerBtn:hover {
   background-color: $accentGreen;
+}
+
+.noData {
+  border: none;
+  font-size: 20px;
+  font-weight: bold;
+  padding: 10px;
 }

@@ -1,19 +1,21 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl, AbstractControl } from '@angular/forms';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
-import { MatSort, Sort } from '@angular/material/sort';
-import {
-  MatDialog,
-  MatDialogRef,
-  MAT_DIALOG_DATA,
-} from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
+import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { Run } from '../../types';
+import {
+  animate,
+  state,
+  style,
+  transition,
+  trigger,
+} from '@angular/animations';
 
 export type Range = {
   start: any;
@@ -24,9 +26,21 @@ export type Range = {
   selector: 'app-run-log',
   templateUrl: './run-log.component.html',
   styleUrls: ['./run-log.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({ height: '0px', minHeight: '0' })),
+      state('expanded', style({ height: '*' })),
+      transition(
+        'expanded <=> collapsed',
+        animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')
+      ),
+    ]),
+  ],
 })
 export class RunLogComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['RunDate', 'Distance', 'notes'];
+  displayedColumns: string[] = ['RunDate', 'Distance'];
+  columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
+  expandedRow!: Run | null;
   runInfo: Run[] = [];
   //p for page number in pagination
   p: number = 1;
@@ -56,7 +70,6 @@ export class RunLogComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.runningService.getAllRuns().subscribe({
         next: (runs: Array<Run>) => {
-          // runs.forEach((run) => this.runInfo.push(run));
           this.runInfo = runs;
           this.runInfo.forEach((run) => {
             this.totalMiles += Number(run.Distance);
