@@ -7,10 +7,20 @@
   <mat-card class="totalMiles">
     Total Miles in current search:
     <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
-    <button mat-fab (click)="openFilters()" class="filterRunsBtn">
+    <button
+      [title]="'Filters'"
+      mat-fab
+      (click)="openFilters()"
+      class="filterRunsBtn"
+    >
       <span class="material-symbols-outlined"> filter_alt </span>
     </button>
-    <button mat-fab class="toggleRangePickerBtn" (click)="toggleRange()">
+    <button
+      [title]="'Date range'"
+      mat-fab
+      class="toggleRangePickerBtn"
+      (click)="toggleRange()"
+    >
       <mat-icon>date_range</mat-icon>
     </button>
   </mat-card>
