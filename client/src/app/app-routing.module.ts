@@ -5,13 +5,14 @@ import { HomeComponent } from './components/home/home.component';
 import { RunLogComponent } from './components/run-log/run-log.component';
 
 const routes: Routes = [
-  { path: '', component: HomeComponent},
-  { path: 'log', component: RunLogComponent},
-  { path: 'gallery', component: GalleryComponent}
+  { path: '', component: HomeComponent },
+  { path: 'log', component: RunLogComponent },
+  { path: 'gallery', component: GalleryComponent },
+  { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
