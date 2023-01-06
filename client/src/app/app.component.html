@@ -1,11 +1,26 @@
 <mat-toolbar>
-  <img src="assets/WhiteTrackMyRun.png" alt="logo" />
+  <img src="assets/WhiteTrackMyRun.png" alt="productBranding" />
 
   <div class="navMenu">
-    <a (click)="loadLogRun()">Add Run</a>
-    <a (click)="loadRunLog()">Run Log</a>
-    <a (click)="loadGallery()">Gallery</a>
+    <a
+      routerLink="/"
+      routerLinkActive="activeLink"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Add Run</a
+    >
+    <a
+      routerLink="/log"
+      routerLinkActive="activeLink"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Run Log</a
+    >
+    <a
+      routerLink="/gallery"
+      routerLinkActive="activeLink"
+      [routerLinkActiveOptions]="{ exact: true }"
+      >Gallery</a
+    >
   </div>
 </mat-toolbar>
 
-<router-outlet class="mainBody"></router-outlet>
+<router-outlet></router-outlet>
