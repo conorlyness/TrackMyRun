@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
-import { Sort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
 import { ToastrService } from 'ngx-toastr';
@@ -16,6 +16,8 @@ import {
   transition,
   trigger,
 } from '@angular/animations';
+import { MatTableExporterDirective } from 'mat-table-exporter';
+import { MatPaginator } from '@angular/material/paginator';
 
 export type Range = {
   start: any;
@@ -38,12 +40,12 @@ export type Range = {
   ],
 })
 export class RunLogComponent implements OnInit, OnDestroy {
+  private clearRangeSubject: Subject<boolean> = new Subject();
+
   displayedColumns: string[] = ['RunDate', 'Distance'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedRow!: Run | null;
   runInfo: Run[] = [];
-  //p for page number in pagination
-  p: number = 1;
   sortedData!: Run[];
   totalMiles: number = 0;
   dialogAnswer: any;
@@ -51,10 +53,19 @@ export class RunLogComponent implements OnInit, OnDestroy {
   last7Filter: boolean = false;
   last14Filter: boolean = false;
   last30Filter: boolean = false;
-  private clearRangeSubject: Subject<boolean> = new Subject();
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
   subscriptions = new Subscription();
+
+  //pagination variables
+  //p for page number in pagination
+  p: number = 1;
+  pageSizes = ['10', '25', '50'];
+  pageSize = '10';
+
+  @ViewChild(MatTableExporterDirective, { static: true })
+  exporter!: MatTableExporterDirective;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   constructor(
     private runningService: RunningDataService,
@@ -100,6 +111,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
             this.runInfo.forEach((run) => {
               this.totalMiles += Number(run.Distance);
             });
+
             this.sortedData = this.runInfo.slice();
           },
           error: (error) => console.log('caught an error: ', error),
@@ -265,6 +277,22 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   toggleRange() {
     this.rangePicker = !this.rangePicker;
+  }
+
+  exportTableData() {
+    const date = Date.now();
+    const timeStamp = new Date(date);
+
+    this.exporter.exportTable('xlsx', {
+      fileName: `TMR-${timeStamp}`,
+      sheet: 'RunData',
+      Props: { Author: 'Conor Lyness' },
+      columnWidths: [100, 20],
+    });
+  }
+
+  handlePageSizeChange(size: string) {
+    this.pageSize = size;
   }
 
   ngOnDestroy(): void {

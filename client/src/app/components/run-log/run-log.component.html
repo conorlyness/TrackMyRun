@@ -2,6 +2,10 @@
   rel="stylesheet"
   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
 />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+/>
 <div class="log-content">
   <h1 class="logTitle">Running Log</h1>
   <mat-card class="totalMiles">
@@ -37,9 +41,12 @@
 
   <div class="resultsTable">
     <table
+      matTableExporter
+      #exporter="matTableExporter"
+      [hiddenColumns]="[2]"
       mat-table
       [dataSource]="
-        sortedData | paginate : { itemsPerPage: 10, currentPage: p }
+        sortedData | paginate : { itemsPerPage: pageSize, currentPage: p }
       "
       matSort
       (matSortChange)="sortData($event)"
@@ -121,12 +128,37 @@
       ></tr>
     </table>
   </div>
+  <button
+    class="downloadCsvButton"
+    mat-mini-fab
+    (click)="exportTableData()"
+    title="Download current search"
+  >
+    <span class="material-symbols-outlined"> download </span>
+  </button>
+
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">
-      <pagination-controls
-        class="paginationControls"
-        (pageChange)="p = $event"
-      ></pagination-controls>
+      <div class="paginationControlsContainer">
+        <pagination-controls
+          class="paginationControls"
+          (pageChange)="p = $event"
+          [autoHide]="true"
+        ></pagination-controls>
+
+        <mat-form-field class="pageSizeMatSelect" appearance="legacy">
+          <mat-select [(ngModel)]="pageSize">
+            <ng-container *ngFor="let size of pageSizes">
+              <mat-option
+                class="pageSizeOption"
+                (click)="handlePageSizeChange(size)"
+                value="{{ size }}"
+                >{{ size }}</mat-option
+              >
+            </ng-container>
+          </mat-select>
+        </mat-form-field>
+      </div>
     </ng-container>
   </ng-container>
 </div>

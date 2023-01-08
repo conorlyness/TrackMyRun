@@ -81,8 +81,30 @@ table th {
   max-width: 15ch;
 }
 
-.paginationControls {
-  text-align: center;
+.paginationControls ::ng-deep .ngx-pagination .current {
+  background: $accentGreen;
+}
+
+.pageSizeOption ::ng-deep .mat-option-text {
+  color: black !important;
+}
+
+::ng-deep .mat-form-field-ripple {
+  background-color: black !important;
+}
+
+::ng-deep .mat-select-arrow {
+  color: black !important;
+}
+
+.paginationControlsContainer {
+  justify-content: center;
+  display: flex;
+}
+
+.pageSizeMatSelect {
+  margin-left: 10px;
+  width: 50px;
 }
 
 .totalMiles {
@@ -151,4 +173,18 @@ tr.notesRow {
   font-size: 20px;
   font-weight: bold;
   padding: 10px;
+}
+
+.downloadCsvButton {
+  color: black;
+  background-color: transparent;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  margin: 5px;
+}
+
+.downloadCsvButton:hover {
+  color: white;
+  background-color: $accentGreen;
 }

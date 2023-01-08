@@ -30,6 +30,8 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { ToastrModule } from 'ngx-toastr';
 import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
+import { MatTableExporterModule } from 'mat-table-exporter';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,6 +67,7 @@ import { DateRangePickerComponent } from './components/date-range-picker/date-ra
     MatSortModule,
     MatCardModule,
     FileUploadModule,
+    MatTableExporterModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),
