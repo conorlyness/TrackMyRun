@@ -1,0 +1,30 @@
+<div>
+  <p class="fileDownloadTitle">Download displayed data</p>
+  <div class="formField">
+    <mat-form-field appearance="fill" class="fileName">
+      <mat-label class="addMilesText"> File Name </mat-label>
+      <input
+        matInput
+        type="text"
+        maxlength="20"
+        [(ngModel)]="fileName"
+        class="fileNameInput"
+        title="Enter a name to save file as"
+        required="required"
+      />
+      <mat-hint align="end">{{ fileName.length }} / 20</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="dialogButtons">
+    <button
+      [disabled]="fileName.length <= 2"
+      mat-button
+      class="downloadBtn"
+      [mat-dialog-close]="fileName"
+    >
+      Download
+    </button>
+    <button mat-button class="cancelBtn" (click)="onNoClick()">Cancel</button>
+  </div>
+</div>

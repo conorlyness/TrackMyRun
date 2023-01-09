@@ -4,6 +4,7 @@ import { RunningDataService } from 'src/app/services/running-data.service';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditDialogComponent } from '../edit-dialog/edit-dialog.component';
+import { ExportDialogComponent } from '../export-dialog/export-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
@@ -279,12 +280,24 @@ export class RunLogComponent implements OnInit, OnDestroy {
     this.rangePicker = !this.rangePicker;
   }
 
-  exportTableData() {
-    const date = Date.now();
-    const timeStamp = new Date(date);
+  openExportDialog() {
+    const dialogRef = this.dialog.open(ExportDialogComponent, {
+      panelClass: 'confirm-dialog',
+    });
 
+    dialogRef.afterClosed().subscribe((result) => {
+      this.dialogAnswer = result;
+      if (this.dialogAnswer === undefined) {
+        console.log('cancelled Downlaod');
+      } else {
+        this.exportTableData(this.dialogAnswer);
+      }
+    });
+  }
+
+  exportTableData(fileName: string) {
     this.exporter.exportTable('xlsx', {
-      fileName: `TMR-${timeStamp}`,
+      fileName: `TMR-${fileName}`,
       sheet: 'RunData',
       Props: { Author: 'Conor Lyness' },
       columnWidths: [100, 20],
@@ -292,6 +305,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   }
 
   handlePageSizeChange(size: string) {
+    this.p = 1;
     this.pageSize = size;
   }
 

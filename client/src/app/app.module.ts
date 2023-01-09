@@ -31,6 +31,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.component';
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import { ExportDialogComponent } from './components/export-dialog/export-dialog.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
     EditDialogComponent,
     FilterDialogComponent,
     DateRangePickerComponent,
+    ExportDialogComponent,
   ],
   imports: [
     BrowserModule,
