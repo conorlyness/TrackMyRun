@@ -32,6 +32,7 @@ import { FilterDialogComponent } from './components/filter-dialog/filter-dialog.
 import { DateRangePickerComponent } from './components/date-range-picker/date-range-picker.component';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { ExportDialogComponent } from './components/export-dialog/export-dialog.component';
+import { AnalyticsComponent } from './components/analytics/analytics.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { ExportDialogComponent } from './components/export-dialog/export-dialog.
     FilterDialogComponent,
     DateRangePickerComponent,
     ExportDialogComponent,
+    AnalyticsComponent,
   ],
   imports: [
     BrowserModule,
