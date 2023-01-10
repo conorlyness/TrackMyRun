@@ -21,26 +21,28 @@ let storage = multer.diskStorage({
     cb(null, PATH);
   },
   filename: (req, file, cb) => {
-    cb(null, file.fieldname + '-' + Date.now()+ path.extname(file.originalname))
-  }
+    cb(
+      null,
+      file.fieldname + '-' + Date.now() + path.extname(file.originalname)
+    );
+  },
 });
 let upload = multer({
-  storage: storage
+  storage: storage,
 });
-
 
 // POST File
 app.post('/api/upload', upload.single('image'), function (req, res) {
   if (!req.file) {
-    console.log("No file is available!");
+    console.log('No file is available!');
     return res.send({
-      success: false
+      success: false,
     });
   } else {
     console.log('File is available!');
     return res.send({
-      success: true
-    })
+      success: true,
+    });
   }
 });
 
@@ -52,51 +54,61 @@ app.get('/allImages', async (req, res) => {
     allImages.push(img);
   });
 
-    res.send(allImages); 
-  });
+  res.send(allImages);
+});
 
 app.get('/allRuns', async (req, res) => {
-    console.log("calling /allRuns");
-    const viewAllRuns = await db.viewAllRuns();
-    if (viewAllRuns) {
-      return res.status(201).json(viewAllRuns);
-    }
-    res.status(404);
-  });
+  console.log('calling /allRuns');
+  const viewAllRuns = await db.viewAllRuns();
+  if (viewAllRuns) {
+    return res.status(201).json(viewAllRuns);
+  }
+  res.status(404);
+});
 
-  app.post('/specificRuns', async (req, res) => {
-    console.log("calling /specificRuns");
-    const viewAllRuns = await db.viewallRunsInRange(req.body.start, req.body.end);
-    if (viewAllRuns) {
-      return res.status(201).json(viewAllRuns);
-    }
-    res.status(404);
-  });
+app.post('/specificRuns', async (req, res) => {
+  console.log('calling /specificRuns');
+  const viewAllRuns = await db.viewallRunsInRange(req.body.start, req.body.end);
+  if (viewAllRuns) {
+    return res.status(201).json(viewAllRuns);
+  }
+  res.status(404);
+});
 
-  app.post('/logRun', async (req, res) => {
-    console.log("calling /logRun");
-    const {date, distance, notes} = req.body;
-    const result = await db.logRun(req.body);
-    if (result) {
-        return res.status(200).json(result);
-    }
-    res.status(404);
-  })
+app.post('/logRun', async (req, res) => {
+  console.log('calling /logRun');
+  const { date, distance, notes } = req.body;
+  const result = await db.logRun(req.body);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
 
-  app.post('/editRun', async (req, res) => {
-    console.log("calling /editRun");
-    const {date, distance, notes} = req.body;
-    const result = await db.editRun(req.body);
-    if (result) {
-        return res.status(200).json(result);
-    }
-    res.status(404);
-  })
+app.post('/editRun', async (req, res) => {
+  console.log('calling /editRun');
+  const { date, distance, notes } = req.body;
+  const result = await db.editRun(req.body);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
 
+app.get('/dayOfWeekDistance', async (req, res) => {
+  console.log('calling /dayOfWeekDistance');
+  const result = await db.sumOfRunsOnDaysOfWeek();
+
+  if (result) {
+    return res.status(200).json(result);
+  }
+
+  res.status(404);
+});
 
 app.listen(API_PORT, () => {
-    db.connect();
-    console.log(`listening on port ${API_PORT}`);
-  });
-  
-  module.exports = app;
+  db.connect();
+  console.log(`listening on port ${API_PORT}`);
+});
+
+module.exports = app;
