@@ -18,6 +18,48 @@ export class AnalyticsService {
     );
   }
 
+  getTotalForMonthInYear(month: number, year: number): Observable<any> {
+    const url = environment.getTotalMilesForMonthInYear;
+    const body = { month: month, year: year };
+    return this.http.post<any>(url, body).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getDailyAvgForMonthInYear(month: number, year: number): Observable<any> {
+    const url = environment.averageDistancePerDayMonthYear;
+    const body = { month: month, year: year };
+    return this.http.post<any>(url, body).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getTotalDistance(): Observable<any> {
+    const url = environment.totalDistanceRan;
+    return this.http.get<any>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getLongestRun(): Observable<any> {
+    const url = environment.longestRun;
+    return this.http.get<any>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getCurrentWeekTotal(): Observable<any> {
+    const url = environment.currentWeekTotal;
+    return this.http.get<any>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(`error caught: ${error.error.message}`));
   }
