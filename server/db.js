@@ -1,5 +1,6 @@
 var config = require('./config');
 const sql = require('mssql');
+const analyticsQueries = require('./sqlQueries/analytics');
 
 class Database {
   constructor() {
@@ -67,24 +68,75 @@ class Database {
 
   sumOfRunsOnDaysOfWeek = async () => {
     try {
-      const result = await this.connection.request().query(`SELECT
-    CASE DATEPART(WEEKDAY, RunDate)
-        WHEN 1 THEN 'Sunday'
-        WHEN 2 THEN 'Monday'
-        WHEN 3 THEN 'Tuesday'
-        WHEN 4 THEN 'Wednesday'
-        WHEN 5 THEN 'Thursday'
-        WHEN 6 THEN 'Friday'
-        WHEN 7 THEN 'Saturday'
-    END as DayOfWeek,
-    SUM(CAST(Distance AS decimal(5, 2))) as TotalMiles
-    FROM
-    dbo.RunLog
-GROUP BY
-    DATEPART(WEEKDAY, RunDate)
-ORDER BY
-    DayOfWeek;`);
+      const result = await this.connection
+        .request()
+        .query(analyticsQueries.distanceByDay);
       return result.recordset;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  totalDistanceByMonthAndYear = async (month, year) => {
+    try {
+      let query = analyticsQueries.totalDistanceMonthYear.replace(
+        /({month})|({year})/g,
+        function (match) {
+          if (match === '{month}') return month;
+          if (match === '{year}') return year;
+        }
+      );
+      const result = await this.connection.request().query(query);
+      return result.recordset[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  averageDistancePerDayInMonthAndYear = async (month, year) => {
+    try {
+      let query = analyticsQueries.averageDistancePerDayMonthYear.replace(
+        /({month})|({year})/g,
+        function (match) {
+          if (match === '{month}') return month;
+          if (match === '{year}') return year;
+        }
+      );
+      const result = await this.connection.request().query(query);
+      return result.recordset[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  totalDistanceRan = async () => {
+    try {
+      const result = await this.connection
+        .request()
+        .query(analyticsQueries.totalDistanceRan);
+      return result.recordset[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  longestRun = async () => {
+    try {
+      const result = await this.connection
+        .request()
+        .query(analyticsQueries.longestRun);
+      return result.recordset[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  totalDistanceThisCurrentWeek = async () => {
+    try {
+      const result = await this.connection
+        .request()
+        .query(analyticsQueries.totalDistanceSoFarThisWeek);
+      return result.recordset[0];
     } catch (err) {
       console.log(err);
     }
