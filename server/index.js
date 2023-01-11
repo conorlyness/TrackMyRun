@@ -106,6 +106,53 @@ app.get('/dayOfWeekDistance', async (req, res) => {
   res.status(404);
 });
 
+app.post('/totalForMonthYear', async (req, res) => {
+  console.log('calling /totalForMonthYear');
+  const { month, year } = req.body;
+  const result = await db.totalDistanceByMonthAndYear(month, year);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.post('/dailyAvgForMonthYear', async (req, res) => {
+  console.log('calling /dailyAvgForMonthYear');
+  const { month, year } = req.body;
+  const result = await db.averageDistancePerDayInMonthAndYear(month, year);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.get('/totalDistance', async (req, res) => {
+  console.log('calling /totalDistance');
+  const result = await db.totalDistanceRan();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.get('/longestRun', async (req, res) => {
+  console.log('calling /longestRun');
+  const result = await db.longestRun();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.get('/currentWeekTotal', async (req, res) => {
+  console.log('calling /currentWeekTotal');
+  const result = await db.totalDistanceThisCurrentWeek();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
 app.listen(API_PORT, () => {
   db.connect();
   console.log(`listening on port ${API_PORT}`);
