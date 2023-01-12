@@ -141,6 +141,17 @@ class Database {
       console.log(err);
     }
   };
+
+  totalDistanceLast6Months = async () => {
+    try {
+      const result = await this.connection
+        .request()
+        .query(analyticsQueries.TotalDistanceLast6Months);
+      return result.recordset[0];
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = new Database();

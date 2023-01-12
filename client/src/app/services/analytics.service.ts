@@ -60,6 +60,14 @@ export class AnalyticsService {
     );
   }
 
+  getLast6MonthsTotals(): Observable<any> {
+    const url = environment.totalLast6Months;
+    return this.http.get<any>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(`error caught: ${error.error.message}`));
   }

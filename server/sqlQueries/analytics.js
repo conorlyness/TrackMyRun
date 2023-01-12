@@ -74,6 +74,33 @@ let analyticsQueries = {
         TotalDistance as TotalDistanceWeek
     FROM 
         weeklyData`,
+
+  TotalDistanceLast6Months: `WITH
+   months AS (
+    SELECT
+        CONVERT(DATE,CONVERT(NVARCHAR(4), YEAR(GETDATE())) + '-' + CONVERT(NVARCHAR(2), MONTH(GETDATE())) + '-1') as month
+    UNION ALL
+    SELECT
+        DATEADD(month, -1, month) FROM months WHERE DATEADD(month, -1, month) >= DATEADD(month, -5, CONVERT(DATE,CONVERT(NVARCHAR(4), YEAR(GETDATE())) + '-' + CONVERT(NVARCHAR(2), MONTH(GETDATE())) + '-1'))
+    ),
+
+    monthlyData as (
+    SELECT
+        DATENAME(MONTH, months.month) as Month,
+        ISNULL(SUM(CAST(Distance AS decimal)), 0) as TotalDistance
+    FROM
+        months
+    LEFT JOIN
+        dbo.RunLog
+    ON
+        months.month = DATEADD(month, DATEDIFF(month, 0, RunDate), 0)
+    GROUP BY
+        DATENAME(MONTH, months.month), months.month
+    )
+
+    SELECT *
+    FROM 
+        monthlyData`,
 };
 
 module.exports = analyticsQueries;

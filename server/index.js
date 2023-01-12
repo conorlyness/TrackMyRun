@@ -10,6 +10,30 @@ const API_PORT = 3001;
 app.use(express.json());
 app.use(cors());
 
+//swagger stats
+var swStats = require('swagger-stats');
+var tlBucket = 60000;
+
+// Load your swagger specification
+// var apiSpec = require('./swagger.json');
+
+// Enable swagger-stats middleware
+app.use(
+  swStats.getMiddleware({
+    name: 'swagger-stats-TrackMyRun',
+    version: '0.99.2',
+    timelineBucketDuration: tlBucket,
+    uriPath: '/swagger-stats',
+    elasticsearch: 'http://127.0.0.1:9200',
+  })
+);
+
+//API routes
+
+app.get('/', function (req, res) {
+  res.redirect('/swagger-stats/');
+});
+
 // express.static to make the images im the upload folder accessible
 app.use(express.static('uploads'));
 var allImages = [];
@@ -147,6 +171,15 @@ app.get('/longestRun', async (req, res) => {
 app.get('/currentWeekTotal', async (req, res) => {
   console.log('calling /currentWeekTotal');
   const result = await db.totalDistanceThisCurrentWeek();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.get('/last6MonthsTotal', async (req, res) => {
+  console.log('calling /last6MonthsTotal');
+  const result = await db.totalDistanceLast6Months();
   if (result) {
     return res.status(200).json(result);
   }
