@@ -1,9 +1,23 @@
 {
   "name": "track-my-run",
+  "description": "The number one destination for tracking your runs.",
+  "author": "Conor Lyness",
   "version": "1.0.0",
   "main": "main.js",
   "build": {
-    "appId": "TrackMyRun"
+    "appId": "TrackMyRun",
+    "productName": "Track my Run",
+    "icon": "./src/assets/TMR_512x512.png",
+    "target": "nsis",
+    "nsis": {
+      "oneClick": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": true,
+      "perMachine": false
+    },
+    "directories": {
+      "output": "C:\\Users\\user\\Desktop\\TrackMyRunBuilds"
+    }
   },
   "scripts": {
     "ng": "ng",
@@ -13,8 +27,9 @@
     "test": "ng test",
     "server-start": "cd ../server && npm start",
     "startAll": "concurrently \"npm run server-start\" \"ng s -o\"",
-    "electron": "ng build && electron .",
-    "package": "electron-packager . --icon=./src/assets/TMR.ico --overwrite "
+    "electron": "ng build && electron --no-sandbox .",
+    "package": "electron-packager . --icon=./src/assets/TMR.ico --overwrite ",
+    "electron-build-win": "electron-builder --win"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +44,7 @@
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
     "chart.js": "^4.1.2",
+    "chartjs-plugin-datalabels": "^2.2.0",
     "concurrently": "^7.4.0",
     "electron-packager": "^16.0.0",
     "mat-table-exporter": "^10.2.4",
@@ -48,7 +64,7 @@
     "@types/jasmine": "~4.0.0",
     "@types/node": "^18.7.18",
     "electron": "^20.1.3",
-    "electron-builder": "^23.3.3",
+    "electron-builder": "^23.6.0",
     "jasmine-core": "~4.2.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",
