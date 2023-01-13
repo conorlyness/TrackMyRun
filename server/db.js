@@ -147,7 +147,7 @@ class Database {
       const result = await this.connection
         .request()
         .query(analyticsQueries.TotalDistanceLast6Months);
-      return result.recordset[0];
+      return result.recordset;
     } catch (err) {
       console.log(err);
     }
