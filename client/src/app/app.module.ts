@@ -33,6 +33,7 @@ import { DateRangePickerComponent } from './components/date-range-picker/date-ra
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { ExportDialogComponent } from './components/export-dialog/export-dialog.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
     MatCardModule,
     FileUploadModule,
     MatTableExporterModule,
+    MatGridListModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

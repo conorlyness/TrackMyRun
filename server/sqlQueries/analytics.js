@@ -62,13 +62,13 @@ let analyticsQueries = {
   totalDistanceSoFarThisWeek: `WITH
    weeklyData AS (
     SELECT 
-        SUM(CAST(Distance AS decimal)) as TotalDistance
+        SUM(CAST(Distance AS decimal(5,2))) as TotalDistance
     FROM 
         dbo.RunLog
-    WHERE 
-        RunDate >= DATEADD(week, DATEDIFF(week, 0, GETDATE()), 0) 
-        AND RunDate <= GETDATE()
-        AND Distance is not null
+    WHERE
+        RunDate >= DATEADD(week, DATEDIFF(week, 0, GETDATE() - 1), 0) 
+    AND 
+        RunDate <= GETDATE()
     )
     SELECT 
         TotalDistance as TotalDistanceWeek

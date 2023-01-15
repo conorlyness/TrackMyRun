@@ -13,3 +13,15 @@ export type SixMonthTotals = {
   Month: string;
   TotalDistance: number;
 };
+
+export type OverallTotal = {
+  TotalDistance: number;
+};
+
+export type LongestDistance = {
+  LongestRun: number;
+};
+
+export type WeeklyTotal = {
+  TotalDistanceWeek: number;
+};

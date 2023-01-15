@@ -18,9 +18,10 @@ class Database {
 
   viewAllRuns = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(`SELECT * FROM dbo.RunLog;`);
+      const result = await this.connection.request().query(`SELECT *
+      FROM dbo.RunLog
+      ORDER BY RunDate DESC;
+      `);
       return result.recordset;
     } catch (err) {
       console.log(err);

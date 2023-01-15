@@ -2,7 +2,12 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { catchError, retry, Observable, throwError } from 'rxjs';
-import { DistanceByDay } from '../types';
+import {
+  DistanceByDay,
+  LongestDistance,
+  OverallTotal,
+  WeeklyTotal,
+} from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -36,25 +41,25 @@ export class AnalyticsService {
     );
   }
 
-  getTotalDistance(): Observable<any> {
+  getTotalDistance(): Observable<OverallTotal> {
     const url = environment.totalDistanceRan;
-    return this.http.get<any>(url, {}).pipe(
+    return this.http.get<OverallTotal>(url, {}).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
   }
 
-  getLongestRun(): Observable<any> {
+  getLongestRun(): Observable<LongestDistance> {
     const url = environment.longestRun;
-    return this.http.get<any>(url, {}).pipe(
+    return this.http.get<LongestDistance>(url, {}).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
   }
 
-  getCurrentWeekTotal(): Observable<any> {
+  getCurrentWeekTotal(): Observable<WeeklyTotal> {
     const url = environment.currentWeekTotal;
-    return this.http.get<any>(url, {}).pipe(
+    return this.http.get<WeeklyTotal>(url, {}).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
