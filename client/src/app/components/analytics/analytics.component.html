@@ -1,5 +1,108 @@
-<p>The day that most miles are done on: {{ highestMileageDay }}</p>
-<p>
-  The amount of miles altogether that have been done on this day :
-  {{ highestMileage }}
-</p>
+<div class="analyticsContent">
+  <mat-grid-list cols="5" [gutterSize]="'10px'">
+    <mat-grid-tile class="sixMonthTotalTile" [colspan]="2" [rowspan]="1">
+      <div class="sixMonthTotalsLine">
+        <canvas #sixMonthTotalsLine></canvas>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="dailyAvgMonthYearTile">
+      <div class="monthlyDailyAvg">
+        <div class="monthYearSelects">
+          <mat-form-field appearance="fill" class="monthSelect">
+            <mat-label>Select Month</mat-label>
+            <mat-select
+              [(value)]="currentMonth"
+              (selectionChange)="
+                totalDistanceForMonthInYear(+currentMonth, +currentYear)
+              "
+            >
+              <ng-container *ngFor="let month of sortedMonths">
+                <mat-option value="{{ month[1] }}">{{ month[0] }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="yearSelect">
+            <mat-label>Select Year</mat-label>
+            <mat-select
+              [(value)]="currentYear"
+              (selectionChange)="
+                totalDistanceForMonthInYear(+currentMonth, +currentYear)
+              "
+            >
+              <mat-option value="2022">2022</mat-option>
+              <mat-option value="2023">2023</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="longestRunTile">
+      <div class="longestRun">
+        <p class="tileTitle">Furthest Run</p>
+        <div class="tileData">
+          <p class="distanceTag">{{ longestDistance?.LongestRun }}</p>
+          <p class="milesTag">Mi</p>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile class="totalDistanceTile">
+      <div class="totalDistance">
+        <p class="tileTitle">Total Running Distance</p>
+        <div class="tileData">
+          <p class="distanceTag">{{ totalDistance?.TotalDistance }}</p>
+          <p class="milesTag">Mi</p>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile class="currentWeeksTotalTile">
+      <div class="currentWeeksTotal">
+        <p class="tileTitle">Total This Week</p>
+        <div class="tileData">
+          <p class="distanceTag">
+            {{ currentWeeksTotal?.TotalDistanceWeek || 0 }}
+          </p>
+          <p class="milesTag">Mi</p>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile class="monthInYearTotalTile">
+      <div class="monthlyTotal">
+        <div class="monthYearSelects">
+          <mat-form-field appearance="fill" class="monthSelect">
+            <mat-label>Select Month</mat-label>
+            <mat-select
+              [(value)]="currentMonth"
+              (selectionChange)="
+                totalDistanceForMonthInYear(+currentMonth, +currentYear)
+              "
+            >
+              <ng-container *ngFor="let month of sortedMonths">
+                <mat-option value="{{ month[1] }}">{{ month[0] }}</mat-option>
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="fill" class="yearSelect">
+            <mat-label>Select Year</mat-label>
+            <mat-select
+              [(value)]="currentYear"
+              (selectionChange)="
+                totalDistanceForMonthInYear(+currentMonth, +currentYear)
+              "
+            >
+              <mat-option value="2022">2022</mat-option>
+              <mat-option value="2023">2023</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="distanceByDayTile">
+      <div class="distanceByDayPie">
+        <canvas #distanceByDay></canvas>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

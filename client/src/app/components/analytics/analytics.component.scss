@@ -1,0 +1,87 @@
+.analyticsContent {
+  height: calc(100vh - 64px);
+}
+
+.distanceByDayPie {
+  height: 300px;
+  width: 300px;
+}
+
+.sixMonthTotalsLine {
+  height: 100%;
+  width: 100%;
+}
+
+mat-grid-tile {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
+    rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+mat-grid-list {
+  height: fit-content;
+  padding: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.tileTitle {
+  font-weight: lighter;
+  font-size: 22px;
+  text-align: center;
+  top: 0;
+  position: absolute;
+  padding-top: 5px;
+}
+
+.tileData {
+  display: flex;
+  align-items: baseline;
+  margin: auto;
+}
+
+.distanceTag {
+  font-size: 50px;
+  font-weight: bolder;
+  text-shadow: 0 0 3px white; /* adds a green, blurred shadow */
+}
+
+.milesTag {
+}
+
+.monthYearSelects {
+  display: flex;
+}
+
+.monthlyDailyAvg {
+  height: 100%;
+  width: 100%;
+}
+
+.monthlyTotal {
+  height: 100%;
+  width: 100%;
+}
+
+.longestRun {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.totalDistance {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentWeeksTotal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
