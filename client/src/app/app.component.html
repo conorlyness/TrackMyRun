@@ -27,6 +27,13 @@
       >Gallery</a
     >
   </div>
+  <div class="change-theme">
+    <mat-icon class="mr-8">brightness_5</mat-icon>
+    <mat-slide-toggle [formControl]="toggleControl"> </mat-slide-toggle>
+    <mat-icon>bedtime</mat-icon>
+  </div>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<div class="content mat-app-background">
+  <router-outlet></router-outlet>
+</div>

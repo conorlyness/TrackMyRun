@@ -24,7 +24,6 @@ $darkBlue: #101820ff;
 
 .log-content {
   min-height: calc(100vh - 64px);
-  background-color: white;
 }
 
 .logTitle {
@@ -33,7 +32,6 @@ $darkBlue: #101820ff;
   font-weight: 100;
   font-size: 28px;
   padding-top: 5px;
-  color: rgb(0, 0, 0);
 }
 
 .resultsTable {
@@ -108,8 +106,6 @@ table th {
 }
 
 .totalMiles {
-  color: black !important;
-  background-color: white;
   text-align: center;
   height: 75px;
   width: fit-content;

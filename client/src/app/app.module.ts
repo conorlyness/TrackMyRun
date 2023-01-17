@@ -34,6 +34,7 @@ import { MatTableExporterModule } from 'mat-table-exporter';
 import { ExportDialogComponent } from './components/export-dialog/export-dialog.component';
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     FileUploadModule,
     MatTableExporterModule,
     MatGridListModule,
+    MatSlideToggleModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

@@ -1,86 +1,72 @@
-.gallery-container{
-    min-height: calc(100vh - 64px);
-    flex-wrap: wrap;
-    background-color: white;
-
+.gallery-container {
+  min-height: calc(100vh - 64px);
+  flex-wrap: wrap;
 }
 
-.image{
-padding: 5px;
+.image {
+  padding: 5px;
 }
 
-.image img{
-    object-fit: cover;
-    width: 250px;
-    height: 300px;
+.image img {
+  object-fit: cover;
+  width: 250px;
+  height: 300px;
 }
 
 .imageGallery {
-    padding-top: 10px;
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-} 
+  padding-top: 10px;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
 
 .uploadContainer {
-    width: 100%;
-    text-align: center;
-    padding-top: 10px;
-  }
-  
-
-
-.file-upload{
-    padding-top: 10px;
-    text-align: center;
+  width: 100%;
+  text-align: center;
+  padding-top: 10px;
 }
 
-.title{
-    text-align: center;
-    font-weight: bold;
-    font-style: italic;
-    font-size: 46px;
-    padding-top: 5px;
-    color: rgb(0, 0, 0);
-    vertical-align: auto;
+.file-upload {
+  padding-top: 10px;
+  text-align: center;
 }
 
-.chooseFile {
-    color: rgb(0, 0, 0);
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
 }
 
-.imageContainer{
-    height: 600px;
-    width: 630px;
-    justify-content: center;
-    text-align: center;
+.imageContainer {
+  height: 600px;
+  width: 630px;
+  justify-content: center;
+  text-align: center;
 }
 
 .imageContainer img {
-
-    width: 500px;
-    height: 550px;
-    object-fit: cover;
-    
+  width: 500px;
+  height: 550px;
+  object-fit: cover;
 }
 
 .closeImageBtn {
-    border: none !important;
-    background-color: transparent !important;
-    font-size: 20px;
+  border: none !important;
+  background-color: transparent !important;
+  font-size: 20px;
 }
-
 
 .closeImageBtn:hover {
-    color: red;
+  color: red;
 }
 
-.closeBtn{
-    text-align: right;
+.closeBtn {
+  text-align: right;
 }
-
 
 ::ng-deep .mat-dialog-container {
-    overflow-y: hidden !important;
+  overflow-y: hidden !important;
 }

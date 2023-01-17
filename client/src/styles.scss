@@ -1,5 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
 @import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import "../node_modules/@angular/material/theming";
+
+@include mat-core();
+
+$dark-primary: mat-palette($mat-green);
+$dark-accent: mat-palette($mat-blue-grey, 800);
+$dark-warn: mat-palette($mat-red);
+
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+.darkMode {
+  @include angular-material-theme($dark-theme);
+}
+
 html,
 body {
   height: 100%;

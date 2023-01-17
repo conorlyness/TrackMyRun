@@ -29,7 +29,6 @@ $darkBlue: #101820ff;
   font-size: 46px;
   padding-top: 25px;
   padding-bottom: 20px;
-  color: black;
 }
 
 .dateRange {
@@ -38,22 +37,13 @@ $darkBlue: #101820ff;
   display: flex;
 }
 
-.chooseRangeLabel {
-  color: black;
-}
-
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
 
 .datePicker {
-  color: black !important;
-  width: 350px;
-  font-size: 20px;
-}
-
-::ng-deep .mat-date-range-input-separator {
-  color: black !important;
+  width: 300px;
+  font-size: 18px;
 }
 
 .searchBtn {

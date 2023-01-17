@@ -1,13 +1,12 @@
 $accentGreen: rgb(18, 128, 44);
 
 .title {
-  text-align: center;
-  font-weight: bold;
-  font-style: italic;
-  font-size: 46px;
-  padding-top: 5px;
   padding-bottom: 10px;
-  color: black;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
 }
 
 .filter-run-section {
@@ -16,7 +15,6 @@ $accentGreen: rgb(18, 128, 44);
   font-size: 16px;
   padding-top: 5px;
   padding-bottom: 10px;
-  color: black;
 }
 
 .confirmBtn {

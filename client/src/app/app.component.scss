@@ -2,7 +2,7 @@ $darkBlue: #101820ff;
 $accentGreen: rgb(18, 128, 44);
 
 mat-toolbar {
-  background-color: $darkBlue;
+  background-color: $darkBlue !important;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -31,4 +31,25 @@ img {
 
 .activeLink {
   color: $accentGreen !important;
+}
+
+.change-theme {
+  color: white;
+  padding-right: 50px;
+}
+
+mat-slide-toggle {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 2px;
+  left: 5px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+mat-icon {
+  position: relative;
+  /* Adjust these values accordingly */
+  top: 6px;
+  left: 5px;
 }
