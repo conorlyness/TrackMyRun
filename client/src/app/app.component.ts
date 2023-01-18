@@ -14,28 +14,26 @@ export class AppComponent implements OnInit {
   constructor(private overlay: OverlayContainer) {}
 
   ngOnInit() {
+    const darkModeClass = 'darkMode';
     if (this.darkThemePref === 'true') {
       this.toggleControl.setValue(true);
+      this.className = darkModeClass;
+      this.overlay.getContainerElement().classList.add(darkModeClass);
     } else {
       this.toggleControl.setValue(false);
+      this.className = '';
+      this.overlay.getContainerElement().classList.remove(darkModeClass);
     }
 
-    const darkModeClass = 'darkMode';
     this.toggleControl.valueChanges.subscribe((darkMode) => {
       this.className = darkMode ? darkModeClass : '';
       if (this.className === darkModeClass) {
         localStorage.setItem('sliderVal', 'true');
+        this.overlay.getContainerElement().classList.add(darkModeClass);
       } else {
         localStorage.setItem('sliderVal', 'false');
+        this.overlay.getContainerElement().classList.remove(darkModeClass);
       }
     });
-
-    if (this.darkThemePref === 'true') {
-      this.className = darkModeClass;
-      this.overlay.getContainerElement().classList.add(darkModeClass);
-    } else {
-      this.className = '';
-      this.overlay.getContainerElement().classList.add('');
-    }
   }
 }
