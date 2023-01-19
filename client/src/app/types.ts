@@ -25,3 +25,8 @@ export type LongestDistance = {
 export type WeeklyTotal = {
   TotalDistanceWeek: number;
 };
+
+export type MonthAndYear = {
+  month: number;
+  year: number;
+};

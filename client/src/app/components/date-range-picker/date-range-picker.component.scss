@@ -3,18 +3,8 @@ $accentGreen: rgb(18, 128, 44);
 $darkBlue: #101820ff;
 
 @mixin buttonStyle {
-  margin-left: 10px;
-  width: 160px;
-  height: 50px !important;
-  background: $darkBlue;
-  color: white;
-  border: none;
-  position: relative;
-  height: 60px;
-  font-size: 1.6em;
-  cursor: pointer;
-  transition: 800ms ease all;
-  outline: none;
+  background: black;
+  border: 1px solid white;
 }
 
 @mixin greenBoxShadow {
@@ -31,53 +21,17 @@ $darkBlue: #101820ff;
   padding-bottom: 20px;
 }
 
-.dateRange {
-  padding-top: 10px;
-  text-align: center;
-  display: flex;
-}
-
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
 
-.datePicker {
-  width: 300px;
-  font-size: 18px;
-}
-
 .searchBtn {
   @include buttonStyle;
+  margin-right: 10px;
 }
 
 .searchBtn:hover {
-  background: white;
-  color: $darkBlue;
-}
-
-.searchBtn:before,
-.searchBtn:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 2px;
-  width: 0;
-  background: rgba(16, 24, 32, 0.582);
-  transition: 400ms ease all;
-}
-
-.searchBtn:after {
-  right: inherit;
-  top: inherit;
-  left: 0;
-  bottom: 0;
-}
-
-.searchBtn:hover:before,
-.searchBtn:hover:after {
-  width: 100%;
-  transition: 800ms ease all;
+  background-color: $accentGreen;
 }
 
 .clearBtn {
@@ -85,39 +39,12 @@ $darkBlue: #101820ff;
 }
 
 .clearBtn:hover {
-  background: white;
-  color: $darkBlue;
+  background-color: $accentGreen;
 }
 
-.clearBtn:before,
-.clearBtn:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 2px;
-  width: 0;
-  background: rgba(16, 24, 32, 0.582);
-  transition: 400ms ease all;
+mat-form-field {
+  margin-bottom: -1.25em;
 }
-
-.clearBtn:after {
-  right: inherit;
-  top: inherit;
-  left: 0;
-  bottom: 0;
-}
-
-.clearBtn:hover:before,
-.clearBtn:hover:after {
-  width: 100%;
-  transition: 800ms ease all;
-}
-
-.datePickerContent {
-  margin: auto;
-}
-
-.dateRangeSearch {
-  display: inline;
+.dateRangeButtons {
+  padding-top: 10px;
 }

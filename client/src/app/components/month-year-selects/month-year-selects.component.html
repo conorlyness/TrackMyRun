@@ -1,0 +1,23 @@
+<div class="monthYearSelects">
+  <mat-form-field appearance="fill" class="monthSelect">
+    <mat-label>Select Month</mat-label>
+    <mat-select
+      [(value)]="currentMonth"
+      (selectionChange)="monthAndYear(+currentMonth, +currentYear)"
+    >
+      <ng-container *ngFor="let month of months">
+        <mat-option value="{{ month[1] }}">{{ month[0] }}</mat-option>
+      </ng-container>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="yearSelect">
+    <mat-label>Select Year</mat-label>
+    <mat-select
+      [(value)]="currentYear"
+      (selectionChange)="monthAndYear(+currentMonth, +currentYear)"
+    >
+      <mat-option value="2022">2022</mat-option>
+      <mat-option value="2023">2023</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

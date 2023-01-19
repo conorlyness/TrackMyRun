@@ -35,6 +35,7 @@ import { ExportDialogComponent } from './components/export-dialog/export-dialog.
 import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MonthYearSelectsComponent } from './components/month-year-selects/month-year-selects.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
     DateRangePickerComponent,
     ExportDialogComponent,
     AnalyticsComponent,
+    MonthYearSelectsComponent,
   ],
   imports: [
     BrowserModule,

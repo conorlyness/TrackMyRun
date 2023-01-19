@@ -105,12 +105,36 @@ table th {
   width: 50px;
 }
 
+.contentCards {
+  display: flex;
+  justify-content: center;
+  margin: 10px;
+}
+
 .totalMiles {
   text-align: center;
   height: 75px;
   width: fit-content;
-  margin: 0 auto;
   margin-bottom: 40px;
+}
+
+.cardMargin {
+  text-align: center;
+  height: 75px;
+  width: fit-content;
+  margin-bottom: 40px;
+  margin-right: 10px;
+}
+
+.dateRangeComp {
+  text-align: center;
+  height: 75px;
+  width: fit-content;
+  margin-bottom: 40px;
+}
+
+.dateRangeComp:hover {
+  @include greenBoxShadow;
 }
 
 .totalMiles:hover {

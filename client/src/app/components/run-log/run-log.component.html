@@ -8,34 +8,38 @@
 />
 <div class="log-content">
   <h1 class="logTitle">Running Log</h1>
-  <mat-card class="totalMiles">
-    Total Miles in current search:
-    <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
-    <button
-      [title]="'Filters'"
-      mat-fab
-      (click)="openFilters()"
-      class="filterRunsBtn"
-    >
-      <span class="material-symbols-outlined"> filter_alt </span>
-    </button>
-    <button
-      [title]="'Date range'"
-      mat-fab
-      class="toggleRangePickerBtn"
-      (click)="toggleRange()"
-    >
-      <mat-icon>date_range</mat-icon>
-    </button>
-  </mat-card>
+  <div class="contentCards">
+    <mat-card class="totalMiles" [ngClass]="{ cardMargin: rangePicker }">
+      Total Miles in current search:
+      <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
+      <div>
+        <button
+          [title]="'Filters'"
+          mat-fab
+          (click)="openFilters()"
+          class="filterRunsBtn"
+        >
+          <span class="material-symbols-outlined"> filter_alt </span>
+        </button>
+        <button
+          [title]="'Date range'"
+          mat-fab
+          class="toggleRangePickerBtn"
+          (click)="toggleRange()"
+        >
+          <mat-icon>date_range</mat-icon>
+        </button>
+      </div>
+    </mat-card>
 
-  <div>
     <ng-container *ngIf="rangePicker">
-      <app-date-range-picker
-        (clearSearches)="clearSearch()"
-        (searchRange)="search($event)"
-        [clearRange]="clearRangeObs$"
-      ></app-date-range-picker>
+      <mat-card class="dateRangeComp">
+        <app-date-range-picker
+          (clearSearches)="clearSearch()"
+          (searchRange)="search($event)"
+          [clearRange]="clearRangeObs$"
+        ></app-date-range-picker>
+      </mat-card>
     </ng-container>
   </div>
 
