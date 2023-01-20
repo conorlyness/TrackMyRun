@@ -6,6 +6,7 @@
 /out-tsc
 /bazel-out
 track-my-run-win32-x64/
+/server/uploads
 
 # Node
 *node_modules
