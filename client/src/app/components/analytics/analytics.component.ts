@@ -63,6 +63,7 @@ export class AnalyticsComponent implements OnInit {
     this.longestRun();
     this.currentWeekTotal();
     this.totalDistanceForMonthInYear(+this.currentMonth, +this.currentYear);
+    this.dailyAvgForMonthInYear(+this.currentMonth, +this.currentYear);
   }
 
   distanceByDays() {
