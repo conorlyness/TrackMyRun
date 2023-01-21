@@ -30,3 +30,11 @@ export type MonthAndYear = {
   month: number;
   year: number;
 };
+
+export type DailyAvgMonthAndYear = {
+  AverageDistancePerMonth: number;
+};
+
+export type MonthlyTotalMonthAndYear = {
+  TotalDistance: number;
+};
