@@ -5,8 +5,10 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import {
+  DailyAvgMonthAndYear,
   DistanceByDay,
   LongestDistance,
+  MonthlyTotalMonthAndYear,
   OverallTotal,
   SixMonthTotals,
   WeeklyTotal,
@@ -23,7 +25,8 @@ export class AnalyticsComponent implements OnInit {
   totalDistance?: OverallTotal;
   longestDistance?: LongestDistance;
   currentWeeksTotal?: WeeklyTotal;
-  monthInYearTotal!: number | null;
+  monthInYearTotal?: MonthlyTotalMonthAndYear;
+  dailyAvgMonthInYear?: DailyAvgMonthAndYear;
   currentYear: string = moment().format('YYYY');
   currentMonth: string = moment().month(moment().format('MMM')).format('M');
   distanceByDayData: DistanceByDay[] = [];
@@ -83,22 +86,24 @@ export class AnalyticsComponent implements OnInit {
   }
 
   totalDistanceForMonthInYear(month: number, year: number) {
-    console.log(month, year);
+    this.currentMonth = month.toString();
+    this.currentYear = year.toString();
     this.analyticsService
       .getTotalForMonthInYear(month, year)
       .subscribe((val) => {
+        console.log(val);
         this.monthInYearTotal = val;
       });
   }
 
   dailyAvgForMonthInYear(month: number, year: number) {
+    this.currentMonth = month.toString();
+    this.currentYear = year.toString();
     this.analyticsService
       .getDailyAvgForMonthInYear(month, year)
       .subscribe((val) => {
-        console.log(
-          'the returned data for daily average in month 1 of 2023 (aka jan)'
-        );
         console.log(val);
+        this.dailyAvgMonthInYear = val;
       });
   }
 
