@@ -1,6 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Chart } from 'chart.js/auto';
-import { ChartItem } from 'chart.js/dist/types/index';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
@@ -31,6 +30,7 @@ export class AnalyticsComponent implements OnInit {
   currentMonth: string = moment().month(moment().format('MMM')).format('M');
   distanceByDayData: DistanceByDay[] = [];
   sixMonthTotalsData: SixMonthTotals[] = [];
+  displayMonth: string = moment().month(moment().format('MMM')).format('MMMM');
 
   months = {
     Jan: 1,
@@ -86,8 +86,6 @@ export class AnalyticsComponent implements OnInit {
   }
 
   totalDistanceForMonthInYear(month: number, year: number) {
-    this.currentMonth = month.toString();
-    this.currentYear = year.toString();
     this.analyticsService
       .getTotalForMonthInYear(month, year)
       .subscribe((val) => {
@@ -97,8 +95,6 @@ export class AnalyticsComponent implements OnInit {
   }
 
   dailyAvgForMonthInYear(month: number, year: number) {
-    this.currentMonth = month.toString();
-    this.currentYear = year.toString();
     this.analyticsService
       .getDailyAvgForMonthInYear(month, year)
       .subscribe((val) => {
@@ -135,6 +131,20 @@ export class AnalyticsComponent implements OnInit {
     });
   }
 
+  totalAndAverageMonthInYear(month: number, year: number) {
+    this.currentYear = year.toString();
+    this.getMonthName(month);
+    this.dailyAvgForMonthInYear(month, year);
+    this.totalDistanceForMonthInYear(month, year);
+  }
+
+  getMonthName(monthNumber: number) {
+    const date = new Date();
+    date.setMonth(monthNumber - 1);
+
+    this.displayMonth = date.toLocaleString('en-US', { month: 'long' });
+  }
+
   populateDistanceByDayPie() {
     console.log(this.distanceByDayData);
     let ctx = this.pieChartContainer.nativeElement.getContext('2d');
@@ -165,25 +175,30 @@ export class AnalyticsComponent implements OnInit {
           datalabels: {
             display: false,
             labels: {
-              value: {
-                color: 'black',
-              },
+              // value: {
+              //   color: 'black',
+              // },
             },
           },
           legend: {
             position: 'bottom',
             align: 'center',
             labels: {
-              // color: 'rgb(255, 99, 132)',
-              boxWidth: 10,
+              color: 'rgb(54, 162, 23)',
+              boxWidth: 15,
               font: {
-                size: 10,
+                size: 12,
               },
             },
           },
           title: {
             display: true,
             text: 'Total miles on days of the week',
+            font: {
+              size: 22,
+              family: 'Open Sans',
+              weight: 'lighter',
+            },
           },
         },
       },
@@ -212,6 +227,11 @@ export class AnalyticsComponent implements OnInit {
           title: {
             display: true,
             text: 'Total Miles in last 6 months',
+            font: {
+              size: 22,
+              family: 'Open Sans',
+              weight: 'lighter',
+            },
           },
           datalabels: {
             display: false,

@@ -6,24 +6,43 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="dailyAvgMonthYearTile" [colspan]="2">
-      <div class="monthlyDailyAvg">
-        <p class="dailyAvgtileTitle">Avg daily distance in {{currentMonth | date: 'MMM' }} {{currentYear}}</p>
+    <mat-grid-tile class="totalAndAvgMonthYearTile" [colspan]="2">
+      <div class="monthlyDailyAvgAndTotal">
+        <p class="totalAndAvgtileTitle">
+          Metrics in {{ displayMonth }}
+          {{ currentYear }}
+        </p>
         <div class="selects">
           <app-month-year-selects
             [currentYear]="currentYear"
             [currentMonth]="currentMonth"
             [months]="sortedMonths"
             (monthYearSelection)="
-              dailyAvgForMonthInYear($event.month, $event.year)
+              totalAndAverageMonthInYear($event.month, $event.year)
             "
           ></app-month-year-selects>
-          
-          <div class="tileData">
-            <p class="distanceTag">
-              {{ dailyAvgMonthInYear?.AverageDistancePerMonth | number : '1.2-2' || 0 }}
-            </p>
-            <p class="milesTag">Mi</p>
+
+          <div class="totalAndAverageData">
+            <div class="tileData">
+              <p class="distanceTag">
+                {{
+                  (dailyAvgMonthInYear?.AverageDistancePerMonth
+                    | number : "1.2-2") || 0
+                }}
+              </p>
+              <p class="milesTag">Mi</p>
+            </div>
+
+            <div class="tileData">
+              <p class="distanceTag">
+                {{ monthInYearTotal?.TotalDistance || 0 }}
+              </p>
+              <p class="milesTag">Mi</p>
+            </div>
+          </div>
+          <div class="infoTag">
+            <p>Daily Avg</p>
+            <p>Monthly Total</p>
           </div>
         </div>
       </div>
@@ -59,36 +78,16 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="distanceByDayTile">
+    <mat-grid-tile class="brandingImgTile" [colspan]="1">
+      <div class="imgContainer">
+        <img src="assets/WhiteTrackMyRun.png" alt="" />
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile class="distanceByDayTile" [colspan]="2">
       <div class="distanceByDayPie">
         <canvas #distanceByDay></canvas>
       </div>
     </mat-grid-tile>
-
-    <mat-grid-tile class="monthInYearTotalTile" [colspan]="2">
-      <div class="monthlyTotal">
-        <p class="monthTotaltileTitle">Total Distance in {{currentMonth | date: 'MMM' }} {{currentYear}}</p>
-        <div class="monthYearSelects">
-          <div class="selects">
-            <app-month-year-selects
-              [currentYear]="currentYear"
-              [currentMonth]="currentMonth"
-              [months]="sortedMonths"
-              (monthYearSelection)="
-                totalDistanceForMonthInYear($event.month, $event.year)
-              "
-            ></app-month-year-selects>
-          </div>
-          <div class="tileData">
-            <p class="distanceTag">
-              {{ monthInYearTotal?.TotalDistance || 0 }}
-            </p>
-            <p class="milesTag">Mi</p>
-          </div>
-        </div>
-      </div>
-    </mat-grid-tile>
-
-
   </mat-grid-list>
 </div>
