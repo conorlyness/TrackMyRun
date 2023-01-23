@@ -36,6 +36,7 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MonthYearSelectsComponent } from './components/month-year-selects/month-year-selects.component';
+import { NgxElectronModule } from 'ngx-electron';
 
 @NgModule({
   declarations: [
@@ -78,6 +79,7 @@ import { MonthYearSelectsComponent } from './components/month-year-selects/month
     MatTableExporterModule,
     MatGridListModule,
     MatSlideToggleModule,
+    NgxElectronModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

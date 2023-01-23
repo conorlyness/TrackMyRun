@@ -1,6 +1,7 @@
 import { OverlayContainer } from '@angular/cdk/overlay';
 import { Component, HostBinding, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { ElectronService } from 'ngx-electron';
 
 @Component({
   selector: 'app-root',
@@ -8,12 +9,22 @@ import { FormControl } from '@angular/forms';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  darkThemePref: string = localStorage.getItem('sliderVal')!;
+  darkThemePref: string = '';
   toggleControl = new FormControl();
   @HostBinding('class') className = '';
-  constructor(private overlay: OverlayContainer) {}
+  constructor(
+    private overlay: OverlayContainer,
+    private _electronService: ElectronService
+  ) {}
 
   ngOnInit() {
+    if (this._electronService.isElectronApp) {
+      this.darkThemePref =
+        this._electronService.ipcRenderer.sendSync('getThemeSettings');
+    } else {
+      this.darkThemePref = localStorage.getItem('sliderVal') || '';
+    }
+
     const darkModeClass = 'darkMode';
     if (this.darkThemePref === 'true') {
       this.toggleControl.setValue(true);
@@ -29,9 +40,11 @@ export class AppComponent implements OnInit {
       this.className = darkMode ? darkModeClass : '';
       if (this.className === darkModeClass) {
         localStorage.setItem('sliderVal', 'true');
+        this._electronService.ipcRenderer.sendSync('setThemeSettings', 'true');
         this.overlay.getContainerElement().classList.add(darkModeClass);
       } else {
         localStorage.setItem('sliderVal', 'false');
+        this._electronService.ipcRenderer.sendSync('setThemeSettings', 'false');
         this.overlay.getContainerElement().classList.remove(darkModeClass);
       }
     });
