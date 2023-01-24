@@ -1,6 +1,7 @@
 var config = require('./config');
 const sql = require('mssql');
 const analyticsQueries = require('./sqlQueries/analytics');
+const coreQueries = require('./sqlQueries/core');
 
 class Database {
   constructor() {
@@ -18,10 +19,9 @@ class Database {
 
   viewAllRuns = async () => {
     try {
-      const result = await this.connection.request().query(`SELECT *
-      FROM dbo.RunLog
-      ORDER BY RunDate DESC;
-      `);
+      const result = await this.connection
+        .request()
+        .query(coreQueries.viewAllRuns);
       return result.recordset;
     } catch (err) {
       console.log(err);
@@ -29,14 +29,15 @@ class Database {
   };
 
   viewallRunsInRange = async (start, end) => {
-    console.log('START: ', start);
-    console.log('END :', end);
+    let query = coreQueries.viewAllRunsInRange.replace(
+      /({start})|({end})/g,
+      function (match) {
+        if (match === '{start}') return start;
+        if (match === '{end}') return end;
+      }
+    );
     try {
-      const result = await this.connection
-        .request()
-        .query(
-          `select RunDate, Distance, Notes from dbo.RunLog where RunDate >= '${start}' and RunDate <= '${end}'`
-        );
+      const result = await this.connection.request().query(query);
       return result.recordset;
     } catch (err) {
       console.log(err);
@@ -45,11 +46,15 @@ class Database {
 
   logRun = async (run) => {
     try {
-      const result = await this.connection
-        .request()
-        .query(
-          `Insert into dbo.RunLog values ('${run.date}', '${run.distance}', '${run.notes}');`
-        );
+      let query = coreQueries.logRun.replace(
+        /({run.date})|({run.distance})|({run.notes})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+          if (match === '{run.notes}') return run.notes;
+        }
+      );
+      const result = await this.connection.request().query(query);
       return result;
     } catch (err) {
       console.log(err);
@@ -58,9 +63,15 @@ class Database {
 
   editRun = async (run) => {
     try {
-      const result = await this.connection.request().query(`UPDATE dbo.RunLog
-      SET Distance = '${run.distance}', Notes = '${run.notes}'
-      WHERE RunDate = '${run.date}';`);
+      let query = coreQueries.editRun.replace(
+        /({run.date})|({run.distance})|({run.notes})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+          if (match === '{run.notes}') return run.notes;
+        }
+      );
+      const result = await this.connection.request().query(query);
       return result;
     } catch (err) {
       console.log(err);
