@@ -4,7 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent, RunInfoDialog } from './components/home/home.component';
+import {
+  LogRunComponent,
+  RunInfoDialog,
+} from './components/log-run/log-run.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -37,11 +40,13 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MonthYearSelectsComponent } from './components/month-year-selects/month-year-selects.component';
 import { NgxElectronModule } from 'ngx-electron';
+import { ButtonComponent } from './components/button/button.component';
+import { DeleteRunComponent } from './components/delete-run/delete-run.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    LogRunComponent,
     RunInfoDialog,
     RunLogComponent,
     GalleryComponent,
@@ -51,6 +56,8 @@ import { NgxElectronModule } from 'ngx-electron';
     ExportDialogComponent,
     AnalyticsComponent,
     MonthYearSelectsComponent,
+    ButtonComponent,
+    DeleteRunComponent,
   ],
   imports: [
     BrowserModule,
