@@ -1,0 +1,50 @@
+<ng-container *ngIf="matStyle === 'mat-button'">
+  <button
+    #btn
+    mat-button
+    class="btn"
+    [ngClass]="{ borderBtn: border }"
+    [disabled]="disabled"
+    (click)="onClick()"
+    (mouseover)="onMouseOver()"
+    (mouseleave)="onMouseLeave()"
+  >
+    <mat-icon>
+      {{ icon }}
+    </mat-icon>
+  </button>
+</ng-container>
+
+<ng-container *ngIf="matStyle === 'mat-fab'">
+  <button
+    #btn
+    mat-fab
+    class="btn"
+    [ngClass]="{ borderBtn: border }"
+    [disabled]="disabled"
+    (click)="onClick()"
+    (mouseover)="onMouseOver()"
+    (mouseleave)="onMouseLeave()"
+  >
+    <mat-icon>
+      {{ icon }}
+    </mat-icon>
+  </button>
+</ng-container>
+
+<ng-container *ngIf="matStyle === 'mat-mini-fab'">
+  <button
+    #btn
+    mat-mini-fab
+    class="btn"
+    [ngClass]="{ borderBtn: border }"
+    [disabled]="disabled"
+    (click)="onClick()"
+    (mouseover)="onMouseOver()"
+    (mouseleave)="onMouseLeave()"
+  >
+    <mat-icon>
+      {{ icon }}
+    </mat-icon>
+  </button>
+</ng-container>
