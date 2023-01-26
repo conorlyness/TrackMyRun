@@ -6,19 +6,13 @@
       routerLink="/"
       routerLinkActive="activeLink"
       [routerLinkActiveOptions]="{ exact: true }"
-      >Add Run</a
+      >Run Log</a
     >
     <a
       routerLink="/analytics"
       routerLinkActive="activeLink"
       [routerLinkActiveOptions]="{ exact: true }"
       >Analytics</a
-    >
-    <a
-      routerLink="/log"
-      routerLinkActive="activeLink"
-      [routerLinkActiveOptions]="{ exact: true }"
-      >Run Log</a
     >
     <a
       routerLink="/gallery"
@@ -28,9 +22,21 @@
     >
   </div>
   <div class="change-theme">
-    <mat-icon class="mr-8">brightness_5</mat-icon>
-    <mat-slide-toggle [formControl]="toggleControl"> </mat-slide-toggle>
-    <mat-icon>bedtime</mat-icon>
+    <button
+      (click)="switchTheme()"
+      class="changeThemeBtn"
+      title="{{
+        toggleControl.value ? 'Switch to light theme' : 'Switch to dark theme'
+      }}"
+    >
+      <mat-icon
+        [ngClass]="{
+          lightThemeBg: toggleControl.value,
+          darkThemeBg: !toggleControl.value
+        }"
+        >{{ toggleControl.value ? "wb_sunny" : "bedtime" }}</mat-icon
+      >
+    </button>
   </div>
 </mat-toolbar>
 

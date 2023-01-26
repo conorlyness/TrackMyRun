@@ -39,14 +39,28 @@ export class AppComponent implements OnInit {
     this.toggleControl.valueChanges.subscribe((darkMode) => {
       this.className = darkMode ? darkModeClass : '';
       if (this.className === darkModeClass) {
+        if (this._electronService.isElectronApp) {
+          this._electronService.ipcRenderer.sendSync(
+            'setThemeSettings',
+            'true'
+          );
+        }
         localStorage.setItem('sliderVal', 'true');
-        this._electronService.ipcRenderer.sendSync('setThemeSettings', 'true');
         this.overlay.getContainerElement().classList.add(darkModeClass);
       } else {
         localStorage.setItem('sliderVal', 'false');
-        this._electronService.ipcRenderer.sendSync('setThemeSettings', 'false');
+        if (this._electronService.isElectronApp) {
+          this._electronService.ipcRenderer.sendSync(
+            'setThemeSettings',
+            'false'
+          );
+        }
         this.overlay.getContainerElement().classList.remove(darkModeClass);
       }
     });
+  }
+
+  switchTheme() {
+    this.toggleControl.setValue(!this.toggleControl.value);
   }
 }

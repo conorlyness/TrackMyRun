@@ -14,7 +14,7 @@ mat-toolbar {
   color: white;
   text-decoration: none;
   text-transform: uppercase;
-  font-weight: 500;
+  font-weight: 300;
   display: inline-flex;
   margin: 40px;
   transition: all 0.2s ease-in-out;
@@ -35,7 +35,6 @@ img {
 
 .change-theme {
   color: white;
-  padding-right: 50px;
 }
 
 mat-slide-toggle {
@@ -47,9 +46,25 @@ mat-slide-toggle {
   margin-right: 2px;
 }
 
-mat-icon {
-  position: relative;
-  /* Adjust these values accordingly */
-  top: 6px;
-  left: 5px;
+.changeThemeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  border: none;
+  border-left: solid 1px white !important;
+}
+
+.lightThemeBg {
+  color: white;
+  &:hover {
+    color: #f5bd1f;
+  }
+}
+
+.darkThemeBg {
+  color: white;
+  &:hover {
+    color: #8a8a8a;
+  }
 }
