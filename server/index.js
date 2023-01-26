@@ -119,6 +119,15 @@ app.post('/editRun', async (req, res) => {
   res.status(404);
 });
 
+app.post('/deleteRun', async (req, res) => {
+  console.log('calling /deleteRun');
+  const result = await db.deleteRun(req.body);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
 app.get('/dayOfWeekDistance', async (req, res) => {
   console.log('calling /dayOfWeekDistance');
   const result = await db.sumOfRunsOnDaysOfWeek();

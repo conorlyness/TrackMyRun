@@ -47,11 +47,12 @@ class Database {
   logRun = async (run) => {
     try {
       let query = coreQueries.logRun.replace(
-        /({run.date})|({run.distance})|({run.notes})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
           if (match === '{run.notes}') return run.notes;
+          if (match === '{run.rpe}') return run.rpe;
         }
       );
       const result = await this.connection.request().query(query);
@@ -64,6 +65,24 @@ class Database {
   editRun = async (run) => {
     try {
       let query = coreQueries.editRun.replace(
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+          if (match === '{run.notes}') return run.notes;
+          if (match === '{run.rpe}') return run.rpe;
+        }
+      );
+      const result = await this.connection.request().query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  deleteRun = async (run) => {
+    try {
+      let query = coreQueries.deleteRun.replace(
         /({run.date})|({run.distance})|({run.notes})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
