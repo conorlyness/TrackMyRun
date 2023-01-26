@@ -1,11 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, OnInit, Output } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import * as moment from 'moment';
 import { RunningDataService } from 'src/app/services/running-data.service';
 import { ToastrService } from 'ngx-toastr';
@@ -14,19 +13,22 @@ export interface DialogData {
   date: any;
   distance: number;
   notes: string;
+  rpe: number;
 }
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-log-run',
+  templateUrl: './log-run.component.html',
+  styleUrls: ['./log-run.component.scss'],
 })
-export class HomeComponent implements OnInit {
+export class LogRunComponent implements OnInit {
   currentDate = new Date();
   date = new FormControl(this.currentDate);
   distance?: number;
   notes: string = '';
   dialogAnswer: any;
+  rpe?: number;
+  @Output() closeDialog = new EventEmitter();
 
   constructor(
     private runningService: RunningDataService,
@@ -46,20 +48,21 @@ export class HomeComponent implements OnInit {
         date: this.date.value,
         distance: this.distance,
         notes: this.notes,
+        rpe: this.rpe,
       };
       this.openDialog(dialogObj);
     }
   }
 
   openDialog(data: any) {
+    console.log(data);
     const dialogRef = this.dialog.open(RunInfoDialog, {
-      height: '650px',
-      width: '700px',
       panelClass: 'confirm-dialog',
       data: {
         date: data.date,
         distance: data.distance,
         notes: data.notes,
+        rpe: data.rpe,
       },
     });
 
@@ -73,20 +76,30 @@ export class HomeComponent implements OnInit {
           .addNewRun(
             moment(this.dialogAnswer.date).format('YYYY-MM-DD'),
             this.dialogAnswer.distance,
-            this.dialogAnswer.notes.replace(/'/g, '')
+            this.dialogAnswer.notes.replace(/'/g, ''),
+            this.dialogAnswer.rpe
           )
           .subscribe();
         this.distance = undefined;
         this.notes = '';
+        this.closeLogForm('logged');
       }
     });
+  }
+
+  closeLogForm(event: string) {
+    this.closeDialog.emit(event);
+  }
+
+  storeEffort(rpe: number) {
+    this.rpe = rpe;
   }
 }
 
 @Component({
   selector: 'confirm-run-dialog',
   templateUrl: 'confirmRunDialog.html',
-  styleUrls: ['./home.component.scss'],
+  styleUrls: ['./log-run.component.scss'],
 })
 export class RunInfoDialog {
   constructor(

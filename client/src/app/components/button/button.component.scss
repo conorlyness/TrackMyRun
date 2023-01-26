@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 40px;
 }
 
 .btn {
@@ -14,5 +15,11 @@
   color: white;
   display: flex;
   justify-content: center;
+  align-items: center;
+  height: 40px;
+}
+
+mat-icon {
+  display: flex;
   align-items: center;
 }

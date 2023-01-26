@@ -7,9 +7,9 @@ $accentGreen: rgb(18, 128, 44);
 
 @mixin dialogValues {
   text-align: center;
+  max-width: 450px;
   word-wrap: break-word;
   line-height: 1.6;
-  color: $accentGreen;
 }
 
 @mixin greenBoxShadow {
@@ -25,12 +25,11 @@ $accentGreen: rgb(18, 128, 44);
 @mixin dialogBtnStyles {
   font-size: 22px;
   background-color: #101820ff;
-  border: 2px solid white;
   color: white;
 }
 
 .home-content {
-  min-height: calc(100vh - 64px);
+  text-align: end;
 }
 
 .centerDiv {
@@ -38,15 +37,9 @@ $accentGreen: rgb(18, 128, 44);
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
-  height: 600px;
+  height: 650px;
   width: 500px;
-  padding: 10px;
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
-    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
-
-.centerDiv:hover {
-  @include greenBoxShadow;
+  // padding: 10px;
 }
 
 .title {
@@ -97,17 +90,16 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .notes {
-  padding-bottom: 80px;
   @include inputStyles;
 }
 
 .logBtn {
-  width: 300px;
-  height: 40px;
+  margin-top: 50px;
+  width: 200px;
+  height: 60px;
   color: black;
   border: none;
   position: relative;
-  height: 60px;
   font-size: 20px;
   font-weight: 100;
   padding: 0 2em;
@@ -148,6 +140,7 @@ $accentGreen: rgb(18, 128, 44);
 .confirmBtn {
   @include dialogBtnStyles;
   margin-right: 40px;
+  border: 2px solid white;
 }
 
 .cancelBtn {
@@ -181,6 +174,11 @@ $accentGreen: rgb(18, 128, 44);
   padding-bottom: 15px;
 }
 
+.horizontalSpacer {
+  width: 318px;
+  opacity: 0.3;
+}
+
 button:disabled,
 button[disabled] {
   border: 1px solid #999999;
@@ -195,23 +193,15 @@ button[disabled]:hover {
   color: #666666;
 }
 
-.notesTitle {
-  @include dialogHeadings;
-}
-
-.distanceTitle {
-  @include dialogHeadings;
-}
-
-.dateTitle {
-  @include dialogHeadings;
-}
-
 .distanceText {
   @include dialogValues;
 }
 
 .notesText {
+  @include dialogValues;
+}
+
+.rpeText {
   @include dialogValues;
 }
 
@@ -229,4 +219,18 @@ button[disabled]:hover {
 
 .dialogDetails {
   text-align: left;
+}
+
+.closeBtn {
+  background: black;
+  border: 1px solid white;
+
+  &:hover {
+    background-color: rgb(144, 30, 30);
+  }
+}
+
+.closeIcon {
+  cursor: pointer;
+  // color: white;
 }

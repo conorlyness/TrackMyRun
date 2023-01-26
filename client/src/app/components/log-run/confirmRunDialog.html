@@ -1,12 +1,11 @@
 <div class="dialogWrapper">
-  <p class="areTheseCorrect">Are these details correct?</p>
+  <h1 class="areTheseCorrect">Are these details correct?</h1>
+  <hr class="horizontalSpacer" />
   <div class="dialogDetails">
-    <p class="dateTitle">Run Date:</p>
     <p class="dateText">{{data.date | date: 'fullDate'}}</p>
-    <p class="distanceTitle">Distance:</p>
     <p class="distanceText">{{data.distance}} Miles</p>
-    <p class="notesTitle">Notes:</p>
     <p class="notesText">{{data.notes}}</p>
+    <p class="rpeText">RPE: {{data.rpe}}</p>
   </div>
 
   <div class="dialogButtons">

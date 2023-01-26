@@ -1,4 +1,7 @@
 <div class="home-content">
+  <button mat-mini-fab (click)="closeLogForm('cancel')" class="closeBtn">
+    <mat-icon class="closeIcon">close</mat-icon>
+  </button>
   <div class="centerDiv">
     <h1 class="title">Log run</h1>
     <div class="datePickerContainer">
@@ -17,7 +20,7 @@
       <mat-form-field appearance="fill" class="distance">
         <mat-label class="addMilesText"
           >Distance
-          <p class="miLabel">(Mi)</p></mat-label
+          <p class="miLabel">Mi</p></mat-label
         >
         <input
           matInput
@@ -25,21 +28,29 @@
           min="1"
           [(ngModel)]="distance"
           class="distanceInput"
-          pattern="[0-9]+"
           title="please enter positive numbers only"
+          autocomplete="off"
           required="required"
         />
       </mat-form-field>
       <mat-form-field appearance="fill" class="notes">
         <mat-label class="addNotesText">Notes...</mat-label>
-        <input matInput [(ngModel)]="notes" class="notesInput" />
+        <input
+          matInput
+          [(ngModel)]="notes"
+          class="notesInput"
+          autocomplete="off"
+        />
       </mat-form-field>
+      <app-effort-slider
+        (effortValue)="storeEffort($event)"
+      ></app-effort-slider>
       <button
         [disabled]="distance != undefined && distance <= 0"
         (click)="confirmSelection()"
         class="logBtn"
       >
-        Add to log
+        {{ "Submit" | uppercase }}
       </button>
     </div>
   </div>
