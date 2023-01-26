@@ -1,9 +1,13 @@
 $accentGreen: rgb(18, 128, 44);
 
-@mixin labelStyles {
-  padding-top: 5px;
-  font-weight: 200;
-  text-align: left;
+@mixin inputStyles {
+  width: 350px;
+  font-size: 20px;
+}
+
+.dialogBtns {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .confirmBtn {
@@ -11,7 +15,12 @@ $accentGreen: rgb(18, 128, 44);
   background-color: #101820ff;
   border: 2px solid white;
   color: white;
-  margin-right: 40px;
+
+  &:hover {
+    font-size: 22px;
+    background-color: $accentGreen;
+    color: white;
+  }
 }
 
 .cancelBtn {
@@ -19,18 +28,25 @@ $accentGreen: rgb(18, 128, 44);
   background-color: #101820ff;
   border: 2px solid white;
   color: white;
+
+  &:hover {
+    font-size: 22px;
+    background-color: rgb(144, 30, 30);
+    color: white;
+  }
 }
 
-.confirmBtn:hover {
+.deleteBtn {
   font-size: 22px;
-  background-color: $accentGreen;
+  background-color: #101820ff;
+  border: 2px solid white;
   color: white;
-}
 
-.cancelBtn:hover {
-  font-size: 22px;
-  background-color: rgb(144, 30, 30);
-  color: white;
+  &:hover {
+    font-size: 22px;
+    background-color: rgb(144, 30, 30);
+    color: white;
+  }
 }
 
 ::ng-deep .mat-dialog-container {
@@ -45,44 +61,44 @@ $accentGreen: rgb(18, 128, 44);
   font-weight: 100;
   font-size: 28px;
   padding-top: 5px;
+  padding-bottom: 15px;
 }
 
-.dateTitle {
-  @include labelStyles;
+.horizontalSpacer {
+  width: 318px;
+  opacity: 0.3;
 }
 
 .dateText {
   text-align: center;
   word-wrap: break-word;
   line-height: 1.6;
-  color: $accentGreen;
 }
 
 .inputs {
-  text-align: left;
   display: grid;
   margin: 0 auto;
+  justify-content: center;
 }
 
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
 
-textarea:focus,
-input:focus {
-  color: $accentGreen;
+.distance {
+  @include inputStyles;
 }
 
-textarea,
-input {
-  color: $accentGreen;
-  font-size: 20px;
+.notes {
+  @include inputStyles;
 }
 
 .distanceLabel {
-  @include labelStyles;
+  font-weight: 100;
+  display: inline-flex;
 }
 
 .notesLabel {
-  @include labelStyles;
+  font-weight: 100;
+  display: inline-flex;
 }
