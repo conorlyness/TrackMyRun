@@ -42,6 +42,9 @@ import { MonthYearSelectsComponent } from './components/month-year-selects/month
 import { NgxElectronModule } from 'ngx-electron';
 import { ButtonComponent } from './components/button/button.component';
 import { DeleteRunComponent } from './components/delete-run/delete-run.component';
+import { EffortSliderComponent } from './components/effort-slider/effort-slider.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -58,6 +61,7 @@ import { DeleteRunComponent } from './components/delete-run/delete-run.component
     MonthYearSelectsComponent,
     ButtonComponent,
     DeleteRunComponent,
+    EffortSliderComponent,
   ],
   imports: [
     BrowserModule,
@@ -87,6 +91,8 @@ import { DeleteRunComponent } from './components/delete-run/delete-run.component
     MatGridListModule,
     MatSlideToggleModule,
     NgxElectronModule,
+    MatSliderModule,
+    MatTooltipModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),
