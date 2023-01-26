@@ -2,7 +2,7 @@
   "name": "track-my-run",
   "description": "The number one destination for tracking your runs.",
   "author": "Conor Lyness",
-  "version": "1.0.0",
+  "version": "1.5.0",
   "main": "main.js",
   "build": {
     "appId": "TrackMyRun",
@@ -34,12 +34,12 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^14.2.1",
-    "@angular/cdk": "^14.2.1",
+    "@angular/cdk": "~14.2.7",
     "@angular/common": "^14.1.0",
     "@angular/compiler": "^14.1.0",
     "@angular/core": "^14.1.0",
     "@angular/forms": "^14.1.0",
-    "@angular/material": "^14.2.1",
+    "@angular/material": "~14.2.7",
     "@angular/platform-browser": "^14.1.0",
     "@angular/platform-browser-dynamic": "^14.1.0",
     "@angular/router": "^14.1.0",
@@ -75,6 +75,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
-    "typescript": "~4.7.2"
+    "typescript": "^4.7.2"
   }
 }
