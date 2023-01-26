@@ -1,0 +1,43 @@
+.sliderContent {
+  width: 350px;
+  margin: auto;
+}
+
+.rpeSlider {
+  width: 360px;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 14px;
+  margin: 0;
+  padding-right: 5px;
+  padding-bottom: 5px;
+}
+
+::ng-deep .mat-slider-thumb-label {
+  display: none;
+}
+::ng-deep .mat-slider-track-fill {
+  background: linear-gradient(to right, yellow 0%, red 100%);
+}
+
+.sliderLabels {
+  display: flex;
+  justify-content: space-between;
+
+  p {
+    font-size: 10px;
+  }
+}
+
+.titleInfo {
+  justify-content: center;
+  display: flex;
+}
+
+::ng-deep .mat-tooltip {
+  white-space: pre-line !important;
+}

@@ -1,0 +1,36 @@
+<div class="titleInfo">
+  <h1 class="title">Perceived Exertion</h1>
+  <mat-icon
+    matTooltip="Rate of Perceived Exertion (RPE) refers to a 1-10 scale to self-report the intensity of an effort.
+    RPE 1-2: Recovery
+    RPE 3-4: Easy
+    RPE 5-6: Easy-Moderate
+    RPE 7: Moderate
+    RPE 8: Moderate-Hard
+    RPE 9: Hard
+    RPE 10: Max Effort"
+    matTooltipClass="rpeInfo"
+    [matTooltipPosition]="'after'"
+    >info</mat-icon
+  >
+</div>
+
+<div class="sliderContent">
+  <mat-slider
+    [thumbLabel]="true"
+    class="rpeSlider"
+    [max]="max"
+    [min]="min"
+    [step]="step"
+    [displayWith]="effortLabel"
+    tickInterval="1"
+    (change)="emitEffort($event)"
+    [value]="value"
+  >
+  </mat-slider>
+  <div class="sliderLabels">
+    <p>Recovery</p>
+    <p>Moderate</p>
+    <p>Max Effort</p>
+  </div>
+</div>
