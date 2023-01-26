@@ -33,6 +33,7 @@ export class GalleryComponent implements OnInit {
 
   allImages!: any;
   dialogAnswer: any;
+  fileUpload: boolean = false;
 
   ngOnInit(): void {
     this.getAllImages();
@@ -73,6 +74,10 @@ export class GalleryComponent implements OnInit {
         image: data.image,
       },
     });
+  }
+
+  toggleUploader() {
+    this.fileUpload = !this.fileUpload;
   }
 }
 

@@ -1,31 +1,40 @@
 <div class="gallery-container">
-    <div class="uploadContainer">
-        <h1 class="title">Upload your running pics</h1>
-        <div class="file-upload">
-          <input
-            class="chooseFile"
-            type="file"
-            name="image"
-            ng2FileSelect
-            [uploader]="uploader"
-            accept="image/x-png,image/gif,image/jpeg"
-          />
-          <button
-            class="uploadBtn"
-            type="button"
-            (click)="uploader.uploadAll()"
-            [disabled]="!uploader.getNotUploadedItems().length"
-          >
-            Upload
-          </button>
-        </div>
+  <div class="uploadContainer">
+    <h1 class="title">Upload your running pics</h1>
+    <button
+      [title]="'Upload image'"
+      mat-fab
+      class="toggleUploadBtn"
+      (click)="toggleUploader()"
+    >
+      <span class="material-symbols-outlined"> upload </span>
+    </button>
+    <ng-container *ngIf="fileUpload">
+      <div class="file-upload">
+        <input
+          class="chooseFile"
+          type="file"
+          name="image"
+          ng2FileSelect
+          [uploader]="uploader"
+          accept="image/x-png,image/gif,image/jpeg"
+        />
+        <button
+          class="uploadBtn"
+          type="button"
+          (click)="uploader.uploadAll()"
+          [disabled]="!uploader.getNotUploadedItems().length"
+        >
+          Upload
+        </button>
       </div>
-      <div class="imageGallery">
-        <ng-container *ngFor="let image of allImages">
-          <div class="image">
-            <img src="{{image}}" alt="" (click)="viewSpecificImage(image)">
-          </div>
-          
-        </ng-container>
+    </ng-container>
+  </div>
+  <div class="imageGallery">
+    <ng-container *ngFor="let image of allImages">
+      <div class="image">
+        <img src="{{ image }}" alt="" (click)="viewSpecificImage(image)" />
       </div>
+    </ng-container>
+  </div>
 </div>

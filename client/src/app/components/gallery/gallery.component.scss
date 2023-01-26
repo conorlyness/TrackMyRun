@@ -1,3 +1,4 @@
+$accentGreen: rgb(18, 128, 44);
 .gallery-container {
   min-height: calc(100vh - 64px);
   flex-wrap: wrap;
@@ -69,4 +70,12 @@
 
 ::ng-deep .mat-dialog-container {
   overflow-y: hidden !important;
+}
+
+.toggleUploadBtn {
+  background: black;
+  border: 1px solid white;
+  &:hover {
+    background-color: $accentGreen;
+  }
 }
