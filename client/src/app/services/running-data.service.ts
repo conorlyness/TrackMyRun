@@ -27,8 +27,13 @@ export class RunningDataService {
     );
   }
 
-  addNewRun(runDate: any, distance: number, notes: string): Observable<any> {
-    const body = { date: runDate, distance: distance, notes: notes };
+  addNewRun(
+    runDate: any,
+    distance: number,
+    notes: string,
+    rpe: number
+  ): Observable<any> {
+    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
     const url = environment.logNewRunUrl;
     return this.http.post<Observable<any>>(url, body).pipe(
       retry(1),
@@ -36,9 +41,23 @@ export class RunningDataService {
     );
   }
 
-  editRun(runDate: any, distance: number, notes: string): Observable<any> {
-    const body = { date: runDate, distance: distance, notes: notes };
+  editRun(
+    runDate: any,
+    distance: number,
+    notes: string,
+    rpe: number
+  ): Observable<any> {
+    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
     const url = environment.editRunUrl;
+    return this.http.post<Observable<any>>(url, body).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  deleteRun(runDate: any, distance: number, notes: string): Observable<any> {
+    const body = { date: runDate, distance: distance, notes: notes };
+    const url = environment.deleteRunUrl;
     return this.http.post<Observable<any>>(url, body).pipe(
       retry(1),
       catchError((error) => this.handleError(error))

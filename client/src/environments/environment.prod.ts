@@ -4,6 +4,7 @@ export const environment = {
   getSpecificRunsUrl: 'http://localhost:3001/specificRuns',
   logNewRunUrl: 'http://localhost:3001/logRun',
   editRunUrl: 'http://localhost:3001/editRun',
+  deleteRunUrl: 'http://localhost:3001/deleteRun',
   getDaysOfWeekDistanceUrl: 'http://localhost:3001/dayOfWeekDistance',
   getTotalMilesForMonthInYear: 'http://localhost:3001/totalForMonthYear',
   averageDistancePerDayMonthYear: 'http://localhost:3001/dailyAvgForMonthYear',
