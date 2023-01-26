@@ -19,6 +19,7 @@ import {
 } from '@angular/animations';
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { MatPaginator } from '@angular/material/paginator';
+import { LogRunComponent } from '../log-run/log-run.component';
 
 export type Range = {
   start: any;
@@ -156,37 +157,24 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   openEditDialog(data: any) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
-      height: '750px',
-      width: '900px',
       data: {
         date: data.date,
         distance: data.distance,
         notes: data.notes,
+        rpe: data.rpe,
       },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       this.dialogAnswer = result;
-      if (this.dialogAnswer === undefined) {
-        console.log('not correct');
-      } else {
-        this.toast.success('Run Successfully Updated');
-        console.log(this.dialogAnswer);
-        this.subscriptions.add(
-          this.runningService
-            .editRun(
-              moment(this.dialogAnswer.date).format('YYYY-MM-DD'),
-              this.dialogAnswer.distance,
-              this.dialogAnswer.notes
-            )
-            .subscribe({
-              error: (error) => console.log('caught an error: ', error),
-            })
-        );
+      if (this.dialogAnswer === 'deleted' || this.dialogAnswer === 'edited') {
+        this.toast.success(`Successfully ${this.dialogAnswer}`);
         setTimeout(() => {
           this.totalMiles = 0;
           this.showAllRunsOnStart();
         }, 50);
+      } else {
+        console.log('cancelled');
       }
     });
   }
@@ -196,6 +184,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       date: row.RunDate,
       distance: row.Distance,
       notes: row.Notes,
+      rpe: row.RPE,
     };
     console.log('OBJ to edit : ', runObj);
     this.openEditDialog(runObj);
@@ -307,6 +296,32 @@ export class RunLogComponent implements OnInit, OnDestroy {
   handlePageSizeChange(size: string) {
     this.p = 1;
     this.pageSize = size;
+  }
+
+  openLogRun() {
+    const dialogRef = this.dialog.open(LogRunComponent, {
+      width: '600px',
+      height: '750px',
+      disableClose: true,
+    });
+
+    dialogRef.componentInstance.closeDialog.subscribe((event) => {
+      if (event === 'cancel') {
+        dialogRef.close('cancel');
+      } else if (event === 'logged') {
+        dialogRef.close('logged');
+      } else {
+        dialogRef.close();
+      }
+    });
+
+    dialogRef.afterClosed().subscribe((event) => {
+      if (event === 'cancel') {
+      } else if (event === 'logged') {
+        this.totalMiles = 0;
+        this.showAllRunsOnStart();
+      }
+    });
   }
 
   ngOnDestroy(): void {

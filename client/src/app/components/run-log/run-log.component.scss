@@ -44,22 +44,17 @@ $darkBlue: #101820ff;
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-.resultsTable:hover {
-  @include greenBoxShadow;
-}
-
 table {
   width: 100%;
 }
 
 tr.tableRow {
   cursor: pointer;
-  font-weight: bold;
   height: 70px !important;
 }
 
 tr.tableRow:hover {
-  background-color: rgba(243, 243, 243, 0.74);
+  background-color: rgba(0, 80, 7, 0.356);
 }
 
 ::ng-deep tr {
@@ -83,16 +78,8 @@ table th {
   background: $accentGreen;
 }
 
-.pageSizeOption ::ng-deep .mat-option-text {
-  color: black !important;
-}
-
-::ng-deep .mat-form-field-ripple {
-  background-color: black !important;
-}
-
-::ng-deep .mat-select-arrow {
-  color: black !important;
+.paginationControls ::ng-deep.ngx-pagination a {
+  color: $accentGreen !important;
 }
 
 .paginationControlsContainer {
@@ -144,7 +131,6 @@ table th {
 .mileage {
   color: $mileageText;
   padding-top: 10px;
-  font-weight: bold;
   font-size: 20px;
 }
 
@@ -162,30 +148,41 @@ tr.notesRow {
 }
 
 .expandRowBtn {
-  background-color: rgba(202, 202, 202, 0.562);
-}
+  background: black;
+  border: 1px solid white;
 
-.expandRowBtn:hover {
-  background-color: $accentGreen;
+  &:hover {
+    background-color: $accentGreen;
+  }
 }
 
 .filterRunsBtn {
   background: black;
   border: 1px solid white;
   margin-right: 10px;
-}
 
-.filterRunsBtn:hover {
-  background-color: $accentGreen;
+  &:hover {
+    background-color: $accentGreen;
+  }
 }
 
 .toggleRangePickerBtn {
   background: black;
   border: 1px solid white;
+  margin-right: 10px;
+
+  &:hover {
+    background-color: $accentGreen;
+  }
 }
 
-.toggleRangePickerBtn:hover {
-  background-color: $accentGreen;
+.logRunBtn {
+  background: black;
+  border: 1px solid white;
+
+  &:hover {
+    background-color: $accentGreen;
+  }
 }
 
 .noData {
@@ -207,4 +204,37 @@ tr.notesRow {
 .downloadCsvButton:hover {
   color: white;
   background-color: $accentGreen;
+}
+
+.distanceData {
+  font-weight: 400;
+}
+
+.dateData {
+  font-weight: 400;
+}
+
+.expandedRowTitle {
+  font-weight: 100;
+}
+
+.expandedRowNotes {
+  font-weight: 300;
+}
+
+.rpeNotesTitle {
+  font-weight: 100;
+  padding-right: 5px;
+}
+
+.expandedRowRpe {
+  font-weight: 300;
+}
+
+.titleAndIcon {
+  display: flex;
+}
+
+::ng-deep .mat-tooltip {
+  white-space: pre-line !important;
 }
