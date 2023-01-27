@@ -16,4 +16,8 @@ export class ExportDialogComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  download(filename: string) {
+    this.dialogRef.close(filename);
+  }
 }

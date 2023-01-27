@@ -1,41 +1,9 @@
 $accentGreen: rgb(18, 128, 44);
-@mixin dialogBtnStyles {
-  font-size: 22px;
-  background-color: #101820ff;
-  border: 2px solid white;
-  color: white;
-}
 
 .dialogButtons {
   padding-top: 100px;
-  justify-content: center;
-}
-
-.downloadBtn {
-  @include dialogBtnStyles;
-  margin-right: 40px;
-}
-
-.cancelBtn {
-  @include dialogBtnStyles;
-}
-
-.downloadBtn:hover {
-  font-size: 22px;
-  background-color: $accentGreen;
-  color: white;
-}
-
-.cancelBtn:hover {
-  font-size: 22px;
-  background-color: rgb(144, 30, 30);
-  color: white;
-}
-
-button:disabled,
-button[disabled] {
-  border: 1px solid #999999;
-  background-color: #949494;
+  justify-content: space-evenly;
+  display: flex;
 }
 
 .fileName {
@@ -49,6 +17,24 @@ button[disabled] {
 }
 
 .formField {
+  padding-top: 5px;
   display: flex;
   justify-content: center;
+}
+
+mat-form-field {
+  width: 300px;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 18px;
+  padding-top: 5px;
+}
+
+.horizontalSpacer {
+  width: 318px;
+  opacity: 0.3;
 }

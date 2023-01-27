@@ -186,14 +186,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
       notes: row.Notes,
       rpe: row.RPE,
     };
-    console.log('OBJ to edit : ', runObj);
     this.openEditDialog(runObj);
   }
 
   openFilters() {
     const dialogRef = this.dialog.open(FilterDialogComponent, {
-      height: '350px',
-      width: '600px',
       data: {
         last7: this.last7Filter,
         last14: this.last14Filter,
@@ -205,7 +202,6 @@ export class RunLogComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log('dialog result: ', result);
       this.dialogAnswer = result;
       this.last7Filter = this.dialogAnswer?.last7;
       this.last14Filter = this.dialogAnswer?.last14;
