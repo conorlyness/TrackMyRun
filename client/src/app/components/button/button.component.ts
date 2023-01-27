@@ -19,6 +19,10 @@ export class ButtonComponent implements OnInit {
   @Input() matStyle!: string;
   @Input() hoverColour!: string;
   @Input() disabled!: boolean;
+  @Input() customContent!: boolean;
+  @Input() content!: string;
+  @Input() customClass!: string;
+  @Input() toolTip!: string;
   @Output() clickEvnt = new EventEmitter();
   @ViewChild('btn', { read: ElementRef }) btn!: ElementRef<HTMLButtonElement>;
 

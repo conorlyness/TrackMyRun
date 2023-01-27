@@ -8,8 +8,13 @@
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
+    matTooltip="{{ toolTip }}"
   >
-    <mat-icon>
+    <span *ngIf="customContent" class="{{ customClass }}">
+      {{ content }}
+    </span>
+
+    <mat-icon *ngIf="!customContent">
       {{ icon }}
     </mat-icon>
   </button>
@@ -25,8 +30,13 @@
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
+    matTooltip="{{ toolTip }}"
   >
-    <mat-icon>
+    <span *ngIf="customContent" class="{{ customClass }}">
+      {{ content }}
+    </span>
+
+    <mat-icon *ngIf="!customContent">
       {{ icon }}
     </mat-icon>
   </button>
@@ -42,8 +52,13 @@
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
+    matTooltip="{{ toolTip }}"
   >
-    <mat-icon>
+    <span *ngIf="customContent" class="{{ customClass }}">
+      {{ content }}
+    </span>
+
+    <mat-icon *ngIf="!customContent">
       {{ icon }}
     </mat-icon>
   </button>
