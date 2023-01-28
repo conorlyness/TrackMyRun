@@ -7,8 +7,9 @@ import {
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
-const URL = 'http://localhost:3001/api/upload';
+const URL = environment.imageUploadUrl;
 
 export interface DialogData {
   image: any;
@@ -34,6 +35,7 @@ export class GalleryComponent implements OnInit {
   allImages!: any;
   dialogAnswer: any;
   fileUpload: boolean = false;
+  fileNameDisplay?: File;
 
   ngOnInit(): void {
     this.getAllImages();
@@ -46,6 +48,11 @@ export class GalleryComponent implements OnInit {
       this.toast.success('Image uploaded successfully');
       this.getAllImages();
     };
+  }
+
+  onFileSelected(event: any) {
+    const file: File = event[0].name;
+    this.fileNameDisplay = file;
   }
 
   getAllImages() {
@@ -63,6 +70,11 @@ export class GalleryComponent implements OnInit {
   viewSpecificImage(img: any) {
     const imgObj = { image: img };
     this.openDialog(imgObj);
+  }
+
+  upload() {
+    this.uploader.uploadAll();
+    this.fileNameDisplay = undefined;
   }
 
   openDialog(data: any) {

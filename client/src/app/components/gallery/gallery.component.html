@@ -1,32 +1,60 @@
 <div class="gallery-container">
   <div class="uploadContainer">
-    <h1 class="title">Upload your running pics</h1>
+    <h1 class="title">Gallery</h1>
     <button
-      [title]="'Upload image'"
+      [title]="fileUpload ? 'Hide Upload' : 'Upload'"
       mat-fab
       class="toggleUploadBtn"
       (click)="toggleUploader()"
     >
-      <span class="material-symbols-outlined"> upload </span>
+      <span class="material-symbols-outlined">
+        {{ fileUpload ? "file_upload_off" : "upload" }}
+      </span>
     </button>
     <ng-container *ngIf="fileUpload">
       <div class="file-upload">
-        <input
-          class="chooseFile"
-          type="file"
-          name="image"
-          ng2FileSelect
-          [uploader]="uploader"
-          accept="image/x-png,image/gif,image/jpeg"
-        />
-        <button
-          class="uploadBtn"
-          type="button"
-          (click)="uploader.uploadAll()"
-          [disabled]="!uploader.getNotUploadedItems().length"
-        >
-          Upload
-        </button>
+        <mat-card class="cardContent">
+          <h1 class="uploadTitle">Image Upload</h1>
+          <p>
+            File Chosen:
+            {{ fileNameDisplay ? fileNameDisplay : "None selected" }}
+          </p>
+          <div class="uploadBtns">
+            <div class="hiddenUploader">
+              <input
+                class="chooseFile"
+                type="file"
+                name="image"
+                ng2FileSelect
+                [uploader]="uploader"
+                accept="image/x-png,image/gif,image/jpeg"
+                (onFileSelected)="onFileSelected($event)"
+                #fileInput
+              />
+            </div>
+            <app-button
+              [customContent]="true"
+              [customClass]="'material-symbols-outlined'"
+              [content]="'folder_open'"
+              [border]="true"
+              [hoverColour]="'rgb(17, 103, 201)'"
+              [matStyle]="'mat-button'"
+              (clickEvnt)="fileInput.click()"
+              [toolTip]="'Choose file'"
+            ></app-button>
+            <app-button
+              [matStyle]="'mat-button'"
+              [border]="true"
+              [customContent]="true"
+              [customClass]="'material-symbols-outlined'"
+              [content]="'upload'"
+              [hoverColour]="'rgb(18, 128, 44)'"
+              [disabled]="!uploader.getNotUploadedItems().length"
+              (clickEvnt)="upload()"
+              [toolTip]="'Upload image'"
+            ></app-button>
+          </div>
+        </mat-card>
       </div>
     </ng-container>
   </div>
