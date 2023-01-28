@@ -16,6 +16,7 @@ export const environment = {
   longestRun: 'http://localhost:3001/longestRun',
   currentWeekTotal: 'http://localhost:3001/currentWeekTotal',
   totalLast6Months: 'http://localhost:3001/last6MonthsTotal',
+  imageUploadUrl: 'http://localhost:3001/api/upload',
 };
 
 /*
