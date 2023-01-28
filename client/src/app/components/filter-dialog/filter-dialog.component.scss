@@ -9,63 +9,16 @@ $accentGreen: rgb(18, 128, 44);
   padding-top: 5px;
 }
 
+.horizontalSpacer {
+  width: 318px;
+  opacity: 0.3;
+}
+
 .filter-run-section {
   font-weight: 200;
-  font-style: italic;
   font-size: 16px;
   padding-top: 5px;
   padding-bottom: 10px;
-}
-
-.confirmBtn {
-  font-size: 22px;
-  background-color: #101820ff;
-  border: 2px solid white;
-  color: white;
-}
-
-.cancelBtn {
-  font-size: 22px;
-  background-color: #101820ff;
-  border: 2px solid white;
-  color: white;
-}
-
-.confirmBtn:hover {
-  font-size: 22px;
-  background-color: $accentGreen;
-  color: white;
-}
-
-.confirmBtn:disabled {
-  display: none;
-}
-
-.cancelBtn:hover {
-  font-size: 22px;
-  background-color: rgb(144, 30, 30);
-  color: white;
-}
-
-.buttons {
-  text-align: center;
-}
-
-.reset {
-  text-align: center;
-}
-
-.resetBtn {
-  font-size: 22px;
-  background-color: #101820ff;
-  border: 2px solid white;
-  color: white;
-}
-
-.resetBtn:hover {
-  font-size: 22px;
-  background-color: rgb(17, 103, 201);
-  color: white;
 }
 
 .checkbox-section {
@@ -76,4 +29,12 @@ $accentGreen: rgb(18, 128, 44);
   display: flex;
   justify-content: space-evenly;
   padding-top: 50px;
+}
+
+::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+  background-color: $accentGreen !important;
+}
+
+.mat-checkbox ::ng-deep.mat-checkbox-checkmark-path {
+  stroke: white !important;
 }

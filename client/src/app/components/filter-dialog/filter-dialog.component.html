@@ -1,61 +1,49 @@
 <h1 mat-dialog-title class="title">Filter runs</h1>
+<hr class="horizontalSpacer" />
 <div class="checkbox-section">
   <section class="filter-run-section" [formGroup]="filters">
-    <p>
-      <mat-checkbox
-        formControlName="last7"
-        (change)="checkboxChanged('last7', $event.checked)"
-        >last 7 days</mat-checkbox
-      >
-    </p>
-    <p>
-      <mat-checkbox
-        formControlName="last14"
-        (change)="checkboxChanged('last14', $event.checked)"
-        >last 14 days</mat-checkbox
-      >
-    </p>
-    <p>
-      <mat-checkbox
-        formControlName="last30"
-        (change)="checkboxChanged('last30', $event.checked)"
-        >last 30 days</mat-checkbox
-      >
-    </p>
+    <ng-container *ngFor="let filter of filtersToUse">
+      <p>
+        <mat-checkbox
+          formControlName="{{ filter.controlName }}"
+          (change)="checkboxChanged(filter.controlName, $event.checked)"
+          >{{ filter.uiName }}</mat-checkbox
+        >
+      </p>
+    </ng-container>
   </section>
 </div>
 
 <div class="buttons">
-  <button
-    class="confirmBtn"
-    mat-button
-    mat-dialog-close
-    [mat-dialog-close]="data"
-    [disabled]="noFilters"
-  >
-    Apply filters
-  </button>
+  <ng-container *ngIf="!noFilters">
+    <app-button
+      [icon]="'check'"
+      [border]="true"
+      [matStyle]="'mat-button'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [disabled]="noFilters"
+      (clickEvnt)="closeDialog(data)"
+    ></app-button>
+  </ng-container>
 
-  <button
-    class="cancelBtn"
-    mat-button
-    [mat-dialog-close]="data"
-    (click)="onNoClick()"
-  >
-    Cancel
-  </button>
+  <app-button
+    [icon]="'clear'"
+    [border]="false"
+    [matStyle]="'mat-button'"
+    [hoverColour]="'rgb(144, 30, 30)'"
+    (clickEvnt)="onNoClick()"
+  ></app-button>
 
   <ng-container *ngIf="!noFilters">
-    <div class="reset">
-      <button
-        class="resetBtn"
-        mat-button
-        mat-dialog-close
-        [mat-dialog-close]="data"
-        (click)="resetToDefault()"
-      >
-        Reset to defaults
-      </button>
-    </div>
+    <app-button
+      [border]="false"
+      [matStyle]="'mat-button'"
+      (clickEvnt)="closeDialog(data, true)"
+      [hoverColour]="'rgb(17, 103, 201)'"
+      [customContent]="true"
+      [content]="'filter_alt_off'"
+      [customClass]="'material-symbols-outlined'"
+      [toolTip]="'Reset to defaults'"
+    ></app-button>
   </ng-container>
 </div>

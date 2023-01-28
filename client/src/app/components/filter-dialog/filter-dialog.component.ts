@@ -24,6 +24,12 @@ export class FilterDialogComponent implements OnInit {
   last14: any = this.filters.controls['last14'].value;
   last30: any = this.filters.controls['last30'].value;
 
+  filtersToUse = [
+    { controlName: 'last7', uiName: 'Last 7 days' },
+    { controlName: 'last14', uiName: 'Last 14 days' },
+    { controlName: 'last30', uiName: 'Last 30 days' },
+  ];
+
   noFilters: boolean = true;
 
   ngOnInit(): void {
@@ -82,5 +88,12 @@ export class FilterDialogComponent implements OnInit {
     this.data.last14 = false;
     this.data.last30 = false;
     this.data.resetToDefault = true;
+  }
+
+  closeDialog(data: any, reset?: boolean) {
+    this.dialogRef.close(data);
+    if (reset) {
+      this.resetToDefault();
+    }
   }
 }
