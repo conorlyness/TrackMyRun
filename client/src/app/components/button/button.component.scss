@@ -6,7 +6,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
 }
 
 .btn {
@@ -17,6 +16,15 @@
   justify-content: center;
   align-items: center;
   height: 40px;
+}
+
+.fabBtn {
+  font-size: 22px;
+  background-color: #101820ff;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 mat-icon {
