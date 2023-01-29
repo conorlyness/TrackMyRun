@@ -1,5 +1,5 @@
 <mat-form-field appearance="fill" class="datePicker">
-  <mat-label class="chooseRangeLabel">Enter a date range</mat-label>
+  <mat-label class="chooseRangeLabel">Select a range to search</mat-label>
   <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
     <input
       matStartDate
@@ -35,13 +35,22 @@
 </div>
 
 <ng-template #validDateRange>
-  <button mat-fab class="searchBtn" (click)="search()">
-    <mat-icon>search</mat-icon>
-  </button>
+  <app-button
+    [matStyle]="'mat-fab'"
+    [icon]="'search'"
+    (clickEvnt)="search()"
+    [border]="true"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    [toolTip]="'Search'"
+  ></app-button>
 </ng-template>
 
 <ng-template #clearBtn>
-  <button mat-fab class="clearBtn" (click)="clearSearch()">
-    <mat-icon>clear</mat-icon>
-  </button>
+  <app-button
+    [matStyle]="'mat-fab'"
+    [icon]="'clear'"
+    (clickEvnt)="clearSearch()"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    [toolTip]="'clear'"
+  ></app-button>
 </ng-template>

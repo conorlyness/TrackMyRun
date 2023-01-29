@@ -1,11 +1,5 @@
-$mileageText: rgb(26, 184, 63);
 $accentGreen: rgb(18, 128, 44);
 $darkBlue: #101820ff;
-
-@mixin buttonStyle {
-  background: black;
-  border: 1px solid white;
-}
 
 @mixin greenBoxShadow {
   box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
@@ -25,26 +19,12 @@ $darkBlue: #101820ff;
   display: none;
 }
 
-.searchBtn {
-  @include buttonStyle;
-  margin-right: 10px;
-}
-
-.searchBtn:hover {
-  background-color: $accentGreen;
-}
-
-.clearBtn {
-  @include buttonStyle;
-}
-
-.clearBtn:hover {
-  background-color: $accentGreen;
-}
-
 mat-form-field {
   margin-bottom: -1.25em;
 }
+
 .dateRangeButtons {
   padding-top: 10px;
+  display: flex;
+  justify-content: center;
 }
