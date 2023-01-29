@@ -110,4 +110,8 @@ export class RunInfoDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  closeDialog(data: DialogData) {
+    this.dialogRef.close(data);
+  }
 }

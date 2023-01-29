@@ -137,28 +137,6 @@ $accentGreen: rgb(18, 128, 44);
   transition: 800ms ease all;
 }
 
-.confirmBtn {
-  @include dialogBtnStyles;
-  margin-right: 40px;
-  border: 2px solid white;
-}
-
-.cancelBtn {
-  @include dialogBtnStyles;
-}
-
-.confirmBtn:hover {
-  font-size: 22px;
-  background-color: $accentGreen;
-  color: white;
-}
-
-.cancelBtn:hover {
-  font-size: 22px;
-  background-color: rgb(144, 30, 30);
-  color: white;
-}
-
 ::ng-deep .mat-dialog-container {
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   text-align: center;
@@ -215,6 +193,8 @@ button[disabled]:hover {
 
 .dialogButtons {
   padding-top: 100px;
+  display: flex;
+  justify-content: space-evenly;
 }
 
 .dialogDetails {
@@ -232,5 +212,4 @@ button[disabled]:hover {
 
 .closeIcon {
   cursor: pointer;
-  // color: white;
 }

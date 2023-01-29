@@ -9,9 +9,21 @@
   </div>
 
   <div class="dialogButtons">
-    <button mat-button class="confirmBtn" [mat-dialog-close]="data">
-      Confirm
-    </button>
-    <button mat-button class="cancelBtn" (click)="onNoClick()">Cancel</button>
+    <app-button
+      [matStyle]="'mat-button'"
+      [border]="true"
+      [icon]="'check'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [toolTip]="'Confirm'"
+      (clickEvnt)="closeDialog(data)"
+    ></app-button>
+
+    <app-button
+      [matStyle]="'mat-button'"
+      [icon]="'clear'"
+      [hoverColour]="'rgb(144, 30, 30)'"
+      [toolTip]="'Cancel'"
+      (clickEvnt)="onNoClick()"
+    ></app-button>
   </div>
 </div>

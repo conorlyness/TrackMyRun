@@ -1,20 +1,9 @@
-$mileageText: rgb(26, 184, 63);
 $accentGreen: rgb(18, 128, 44);
 $darkBlue: #101820ff;
 
-@mixin buttonStyle {
-  margin-left: 10px;
-  width: 160px;
-  height: 50px !important;
-  background: $darkBlue;
-  color: white;
-  border: none;
-  position: relative;
-  height: 60px;
-  font-size: 1.6em;
-  cursor: pointer;
-  transition: 800ms ease all;
-  outline: none;
+.controlBtns {
+  display: flex;
+  justify-content: space-evenly;
 }
 
 @mixin greenBoxShadow {
@@ -103,6 +92,7 @@ table th {
   height: 75px;
   width: fit-content;
   margin-bottom: 40px;
+  font-weight: 200;
 }
 
 .cardMargin {
@@ -129,9 +119,9 @@ table th {
 }
 
 .mileage {
-  color: $mileageText;
   padding-top: 10px;
   font-size: 20px;
+  font-weight: 400;
 }
 
 .miLabel {
@@ -156,39 +146,10 @@ tr.notesRow {
   }
 }
 
-.filterRunsBtn {
-  background: black;
-  border: 1px solid white;
-  margin-right: 10px;
-
-  &:hover {
-    background-color: $accentGreen;
-  }
-}
-
-.toggleRangePickerBtn {
-  background: black;
-  border: 1px solid white;
-  margin-right: 10px;
-
-  &:hover {
-    background-color: $accentGreen;
-  }
-}
-
-.logRunBtn {
-  background: black;
-  border: 1px solid white;
-
-  &:hover {
-    background-color: $accentGreen;
-  }
-}
-
 .noData {
   border: none;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 400;
   padding: 10px;
 }
 

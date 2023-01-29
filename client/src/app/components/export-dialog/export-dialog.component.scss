@@ -1,13 +1,9 @@
 $accentGreen: rgb(18, 128, 44);
 
 .dialogButtons {
-  padding-top: 100px;
+  padding-top: 25px;
   justify-content: space-evenly;
   display: flex;
-}
-
-.fileName {
-  position: absolute;
 }
 
 .fileDownloadTitle {
@@ -22,16 +18,16 @@ $accentGreen: rgb(18, 128, 44);
   justify-content: center;
 }
 
-mat-form-field {
-  width: 300px;
-}
-
 .title {
   text-align: center;
   text-transform: uppercase;
   font-weight: 100;
   font-size: 18px;
   padding-top: 5px;
+}
+
+.fileName {
+  font-size: 16px;
 }
 
 .horizontalSpacer {
