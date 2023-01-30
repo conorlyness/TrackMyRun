@@ -1,7 +1,12 @@
 <div class="home-content">
-  <button mat-mini-fab (click)="closeLogForm('cancel')" class="closeBtn">
-    <mat-icon class="closeIcon">close</mat-icon>
-  </button>
+  <app-button
+    class="closeBtn"
+    [icon]="'close'"
+    (clickEvnt)="closeLogForm('cancel')"
+    [matStyle]="'mat-mini-fab'"
+    [border]="true"
+    [hoverColour]="'rgb(144, 30, 30)'"
+  ></app-button>
   <div class="centerDiv">
     <h1 class="title">Log run</h1>
     <div class="datePickerContainer">
@@ -45,13 +50,16 @@
       <app-effort-slider
         (effortValue)="storeEffort($event)"
       ></app-effort-slider>
-      <button
+      <app-button
+        class="submitBtn"
         [disabled]="distance != undefined && distance <= 0"
+        [customContent]="true"
+        [content]="'Submit' | uppercase"
+        [matStyle]="'mat-button'"
+        [border]="true"
+        [hoverColour]="'rgb(18, 128, 44)'"
         (click)="confirmSelection()"
-        class="logBtn"
-      >
-        {{ "Submit" | uppercase }}
-      </button>
+      ></app-button>
     </div>
   </div>
 </div>

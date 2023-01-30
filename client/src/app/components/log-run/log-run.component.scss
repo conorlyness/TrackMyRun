@@ -22,16 +22,6 @@ $accentGreen: rgb(18, 128, 44);
   font-size: 20px;
 }
 
-@mixin dialogBtnStyles {
-  font-size: 22px;
-  background-color: #101820ff;
-  color: white;
-}
-
-.home-content {
-  text-align: end;
-}
-
 .centerDiv {
   position: absolute;
   left: 50%;
@@ -93,50 +83,6 @@ $accentGreen: rgb(18, 128, 44);
   @include inputStyles;
 }
 
-.logBtn {
-  margin-top: 50px;
-  width: 200px;
-  height: 60px;
-  color: black;
-  border: none;
-  position: relative;
-  font-size: 20px;
-  font-weight: 100;
-  padding: 0 2em;
-  cursor: pointer;
-  transition: 800ms ease all;
-  outline: none;
-  box-shadow: rgb(255 255 255 / 20%) 0px 0px 0px 1px inset,
-    rgb(0 0 0 / 90%) 0px 0px 0px 1px;
-}
-.logBtn:hover {
-  background: black;
-  color: white;
-  border: 2px solid $accentGreen;
-}
-.logBtn:before,
-.logBtn:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 2px;
-  width: 0;
-  background: rgba(0, 0, 0, 0.582);
-  transition: 400ms ease all;
-}
-.logBtn:after {
-  right: inherit;
-  top: inherit;
-  left: 0;
-  bottom: 0;
-}
-.logBtn:hover:before,
-.logBtn:hover:after {
-  width: 100%;
-  transition: 800ms ease all;
-}
-
 ::ng-deep .mat-dialog-container {
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   text-align: center;
@@ -155,20 +101,6 @@ $accentGreen: rgb(18, 128, 44);
 .horizontalSpacer {
   width: 318px;
   opacity: 0.3;
-}
-
-button:disabled,
-button[disabled] {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
-}
-
-button:disabled:hover,
-button[disabled]:hover {
-  border: 1px solid #999999;
-  background-color: #cccccc;
-  color: #666666;
 }
 
 .distanceText {
@@ -202,14 +134,13 @@ button[disabled]:hover {
 }
 
 .closeBtn {
-  background: black;
-  border: 1px solid white;
-
-  &:hover {
-    background-color: rgb(144, 30, 30);
-  }
+  display: flex;
+  justify-content: end;
 }
 
-.closeIcon {
-  cursor: pointer;
+.submitBtn {
+  display: flex;
+  justify-content: center;
+  padding-top: 50px;
+  scale: 1.2;
 }
