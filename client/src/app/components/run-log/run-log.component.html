@@ -162,14 +162,16 @@
       ></tr>
     </table>
   </div>
-  <button
+  <app-button
+    [matStyle]="'mat-mini-fab'"
+    (clickEvnt)="openExportDialog()"
+    [toolTip]="'Download current search'"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    [customContent]="true"
+    [customClass]="'material-symbols-outlined'"
+    [content]="'download'"
     class="downloadCsvButton"
-    mat-mini-fab
-    (click)="openExportDialog()"
-    title="Download current search"
-  >
-    <span class="material-symbols-outlined"> download </span>
-  </button>
+  ></app-button>
 
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">

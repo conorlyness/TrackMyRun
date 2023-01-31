@@ -154,17 +154,10 @@ tr.notesRow {
 }
 
 .downloadCsvButton {
-  color: black;
-  background-color: transparent;
   bottom: 0;
   left: 0;
   position: absolute;
   margin: 5px;
-}
-
-.downloadCsvButton:hover {
-  color: white;
-  background-color: $accentGreen;
 }
 
 .distanceData {

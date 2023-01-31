@@ -58,49 +58,14 @@ $accentGreen: rgb(18, 128, 44);
   font-weight: 100;
 }
 
-.imageContainer {
-  height: 600px;
-  width: 630px;
-  justify-content: center;
-  text-align: center;
-}
-
 .uploadContent {
   display: flex;
   justify-content: center;
 }
 
-.imageContainer img {
-  width: 500px;
-  height: 550px;
-  object-fit: cover;
-}
-
-.closeImageBtn {
-  border: none !important;
-  background-color: transparent !important;
-  font-size: 20px;
-}
-
-.closeImageBtn:hover {
-  color: red;
-}
-
-.closeBtn {
-  text-align: right;
-}
-
-::ng-deep .mat-dialog-container {
-  overflow-y: hidden !important;
-}
-
 .toggleUploadBtn {
-  background: black;
-  border: 1px solid white;
-  margin-bottom: 5px;
-  &:hover {
-    background-color: $accentGreen;
-  }
+  display: flex;
+  justify-content: center;
 }
 
 .hiddenUploader {
