@@ -26,7 +26,7 @@
             <div class="tileData">
               <p class="distanceTag">
                 {{
-                  (dailyAvgMonthInYear?.AverageDistancePerMonth
+                  (dailyAvgMonthInYear?.average_daily_distance_month_year
                     | number : "1.2-2") || 0
                 }}
               </p>
@@ -35,7 +35,7 @@
 
             <div class="tileData">
               <p class="distanceTag">
-                {{ monthInYearTotal?.TotalDistance || 0 }}
+                {{ monthInYearTotal?.total_distance || 0 }}
               </p>
               <p class="milesTag">Mi</p>
             </div>
@@ -52,7 +52,7 @@
       <div class="longestRun">
         <p class="tileTitle">Furthest Run</p>
         <div class="tileData">
-          <p class="distanceTag">{{ longestDistance?.LongestRun }}</p>
+          <p class="distanceTag">{{ longestDistance?.longest_run }}</p>
           <p class="milesTag">Mi</p>
         </div>
       </div>
@@ -61,7 +61,7 @@
       <div class="totalDistance">
         <p class="tileTitle">Total Running Distance</p>
         <div class="tileData">
-          <p class="distanceTag">{{ totalDistance?.TotalDistance }}</p>
+          <p class="distanceTag">{{ totalDistance?.total_distance }}</p>
           <p class="milesTag">Mi</p>
         </div>
       </div>
@@ -71,7 +71,7 @@
         <p class="tileTitle">Total This Week</p>
         <div class="tileData">
           <p class="distanceTag">
-            {{ currentWeeksTotal?.TotalDistanceWeek || 0 }}
+            {{ currentWeeksTotal?.total_distance_week || 0 }}
           </p>
           <p class="milesTag">Mi</p>
         </div>

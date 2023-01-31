@@ -5,25 +5,25 @@ export type Run = {
 };
 
 export type DistanceByDay = {
-  DayOfWeek: string;
-  TotalMiles: number;
+  day_of_week: string;
+  total_miles: number;
 };
 
 export type SixMonthTotals = {
-  Month: string;
-  TotalDistance: number;
+  month: string;
+  totaldistance: number;
 };
 
 export type OverallTotal = {
-  TotalDistance: number;
+  total_distance: number;
 };
 
 export type LongestDistance = {
-  LongestRun: number;
+  longest_run: number;
 };
 
 export type WeeklyTotal = {
-  TotalDistanceWeek: number;
+  total_distance_week: number;
 };
 
 export type MonthAndYear = {
@@ -32,9 +32,9 @@ export type MonthAndYear = {
 };
 
 export type DailyAvgMonthAndYear = {
-  AverageDistancePerMonth: number;
+  average_daily_distance_month_year: number;
 };
 
 export type MonthlyTotalMonthAndYear = {
-  TotalDistance: number;
+  total_distance: number;
 };
