@@ -1,106 +1,95 @@
 let analyticsQueries = {
-  distanceByDay: `SELECT
-        CASE DATEPART(WEEKDAY, RunDate)
-            WHEN 1 THEN 'Sunday'
-            WHEN 2 THEN 'Monday'
-            WHEN 3 THEN 'Tuesday'
-            WHEN 4 THEN 'Wednesday'
-            WHEN 5 THEN 'Thursday'
-            WHEN 6 THEN 'Friday'
-            WHEN 7 THEN 'Saturday'
-        END as DayOfWeek,
-        SUM(CAST(Distance AS decimal(5, 2))) as TotalMiles
-        FROM
-            dbo.RunLog
-        GROUP BY
-            DATEPART(WEEKDAY, RunDate)
-        ORDER BY
-            DayOfWeek;`,
+  distanceByDay: `SELECT 
+    CASE 
+    WHEN EXTRACT(DOW FROM "RunDate") = 0 THEN 'Sunday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 1 THEN 'Monday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 2 THEN 'Tuesday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 3 THEN 'Wednesday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 4 THEN 'Thursday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 5 THEN 'Friday'
+    WHEN EXTRACT(DOW FROM "RunDate") = 6 THEN 'Saturday'
+    END AS Day_Of_Week, 
+    SUM(CAST("Distance" AS decimal(5, 2))) AS Total_Miles
+    FROM 
+    "RunLog"
+    GROUP BY 
+    EXTRACT(DOW FROM "RunDate")
+    ORDER BY 
+    Day_Of_Week;`,
 
   totalDistanceRan: `SELECT
-        SUM(CAST(Distance AS decimal(5, 2))) as TotalDistance
-        FROM
-            dbo.RunLog
-        WHERE 
-            RunDate BETWEEN 
-            (SELECT MIN(RunDate) FROM dbo.RunLog) AND 
-            (SELECT MAX(RunDate) FROM dbo.RunLog)`,
+    SUM(CAST("Distance" AS decimal(5, 2))) as Total_Distance
+    FROM
+    "RunLog"
+    WHERE 
+    "RunDate" BETWEEN 
+    (SELECT MIN("RunDate") FROM "RunLog") AND 
+    (SELECT MAX("RunDate") FROM "RunLog")`,
 
   longestRun: `SELECT
-        MAX(CAST(Distance AS decimal(5, 2))) as LongestRun
-        FROM 
-            dbo.RunLog
-        WHERE 
-            RunDate BETWEEN 
-            (SELECT MIN(RunDate) FROM dbo.RunLog) AND 
-            (SELECT MAX(RunDate) FROM dbo.RunLog)`,
-
-  averageDistancePerDayMonthYear: `WITH
-   monthlyData AS (
-    SELECT 
-        SUM(CAST(Distance AS decimal)) as TotalDistance
+    MAX(CAST("Distance" AS decimal(5, 2))) as Longest_Run
     FROM 
-        dbo.RunLog
+    "RunLog"
     WHERE 
-        DATEPART(MONTH, RunDate) = {month} AND 
-        DATEPART(YEAR, RunDate) = {year}
-    )
+    "RunDate" BETWEEN 
+    (SELECT MIN("RunDate") FROM "RunLog") AND 
+    (SELECT MAX("RunDate") FROM "RunLog")`,
 
-    SELECT 
-        TotalDistance / DAY(EOMONTH(CONVERT(DATE,CONVERT(NVARCHAR(4), {year}) + '-' + CONVERT(NVARCHAR(2), {month}) + '-1'))) as AverageDistancePerMonth
-    FROM 
-        monthlyData`,
-
-  totalDistanceMonthYear: `SELECT 
-    (SUM(CAST(Distance AS decimal(5,2)))) as TotalDistance
-    FROM 
-        dbo.RunLog
-    WHERE 
-        MONTH(RunDate) = {month} AND 
-        YEAR(RunDate) = {year}`,
-
-  totalDistanceSoFarThisWeek: `WITH
-   weeklyData AS (
-    SELECT 
-        SUM(CAST(Distance AS decimal(5,2))) as TotalDistance
-    FROM 
-        dbo.RunLog
+  averageDistancePerDayMonthYear: `WITH monthly_data AS (
+    SELECT
+    SUM(CAST("Distance" AS decimal)) AS total_distance
+    FROM
+    "RunLog"
     WHERE
-        RunDate >= DATEADD(week, DATEDIFF(week, 0, GETDATE() - 1), 0) 
+    EXTRACT(MONTH FROM "RunDate") = {month} AND
+    EXTRACT(YEAR FROM "RunDate") = {year}
+    )   
+    SELECT
+    total_distance / EXTRACT(DAY FROM (date_trunc('month', TO_TIMESTAMP(CONCAT({year}, '-', {month}, '-01'), 'YYYY-MM-DD')) + INTERVAL '1 month' - INTERVAL '1 day')) AS average_Daily_Distance_Month_Year
+    FROM
+    monthly_data;`,
+
+  totalDistanceMonthYear: `SELECT
+    SUM(CAST("Distance" AS decimal)) AS total_distance
+    FROM
+    "RunLog"
+    WHERE
+    EXTRACT(MONTH FROM "RunDate") = {month} AND
+    EXTRACT(YEAR FROM "RunDate") = {year};`,
+
+  totalDistanceSoFarThisWeek: `WITH weekly_data AS (
+    SELECT 
+    SUM(CAST("Distance" AS decimal(5,2))) AS total_distance
+    FROM 
+    "RunLog"
+    WHERE
+    "RunDate" >= date_trunc('week', NOW())::date
     AND 
-        RunDate <= GETDATE()
+    "RunDate" <= NOW()::date
     )
     SELECT 
-        TotalDistance as TotalDistanceWeek
+    total_distance AS Total_Distance_Week
     FROM 
-        weeklyData`,
+    weekly_data;`,
 
-  TotalDistanceLast6Months: `WITH
-   months AS (
-    SELECT
-        CONVERT(DATE,CONVERT(NVARCHAR(4), YEAR(GETDATE())) + '-' + CONVERT(NVARCHAR(2), MONTH(GETDATE())) + '-1') as month
-    UNION ALL
-    SELECT
-        DATEADD(month, -1, month) FROM months WHERE DATEADD(month, -1, month) >= DATEADD(month, -5, CONVERT(DATE,CONVERT(NVARCHAR(4), YEAR(GETDATE())) + '-' + CONVERT(NVARCHAR(2), MONTH(GETDATE())) + '-1'))
+  TotalDistanceLast6Months: `WITH months AS (
+    SELECT generate_series(date_trunc('month', CURRENT_DATE) - interval '5 months',
+    date_trunc('month', CURRENT_DATE),
+    '1 month') AS month
     ),
 
-    monthlyData as (
-    SELECT
-        DATENAME(MONTH, months.month) as Month,
-        ISNULL(SUM(CAST(Distance AS decimal)), 0) as TotalDistance
-    FROM
-        months
-    LEFT JOIN
-        dbo.RunLog
-    ON
-        months.month = DATEADD(month, DATEDIFF(month, 0, RunDate), 0)
-    GROUP BY
-        DATENAME(MONTH, months.month), months.month
+    monthly_data AS (
+    SELECT to_char(months.month, 'Month') AS Month,
+    COALESCE(SUM("Distance"::decimal), 0) AS TotalDistance
+    FROM months
+    LEFT JOIN "RunLog"
+    ON months.month = date_trunc('month', "RunDate")
+    GROUP BY to_char(months.month, 'Month'), months.month
     )
 
     SELECT *
-    FROM 
-        monthlyData`,
+    FROM monthly_data;
+    `,
 };
 
 module.exports = analyticsQueries;
