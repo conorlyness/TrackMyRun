@@ -1,0 +1,18 @@
+.closeBtn {
+  display: flex;
+  justify-content: end;
+  margin-bottom: 20px;
+}
+
+.imageContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.imageContainer img {
+  height: 550px;
+  max-width: 100%;
+  object-fit: contain;
+}
