@@ -1,28 +1,36 @@
 var config = require('./config');
-const sql = require('mssql');
+const { Client } = require('pg');
 const analyticsQueries = require('./sqlQueries/analytics');
 const coreQueries = require('./sqlQueries/core');
 
 class Database {
   constructor() {
-    this.connection = null;
+    this.clent = null;
   }
 
   connect = async () => {
+    this.client = new Client({
+      user: config.user,
+      password: config.password,
+      host: config.host,
+      database: config.database,
+      port: config.port,
+      ssl: config.ssl,
+      keepAlive: config.keepAlive,
+    });
+
     try {
-      this.connection = await sql.connect(config);
-      console.log('Connected to database successfully');
-    } catch (error) {
-      console.log(error);
+      await this.client.connect();
+      console.log('Connected to Bit.io database successfully.');
+    } catch (err) {
+      console.error('Error connecting to Bit.io database:', err.stack);
     }
   };
 
   viewAllRuns = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(coreQueries.viewAllRuns);
-      return result.recordset;
+      const result = await this.client.query(coreQueries.viewAllRuns);
+      return result.rows;
     } catch (err) {
       console.log(err);
     }
@@ -37,8 +45,8 @@ class Database {
       }
     );
     try {
-      const result = await this.connection.request().query(query);
-      return result.recordset;
+      const result = await this.client.query(query);
+      return result.rows;
     } catch (err) {
       console.log(err);
     }
@@ -55,7 +63,8 @@ class Database {
           if (match === '{run.rpe}') return run.rpe;
         }
       );
-      const result = await this.connection.request().query(query);
+      const result = await this.client.query(query);
+      console.log(result);
       return result;
     } catch (err) {
       console.log(err);
@@ -73,7 +82,7 @@ class Database {
           if (match === '{run.rpe}') return run.rpe;
         }
       );
-      const result = await this.connection.request().query(query);
+      const result = await this.client.query(query);
       return result;
     } catch (err) {
       console.log(err);
@@ -90,7 +99,7 @@ class Database {
           if (match === '{run.notes}') return run.notes;
         }
       );
-      const result = await this.connection.request().query(query);
+      const result = await this.client.query(query);
       return result;
     } catch (err) {
       console.log(err);
@@ -99,10 +108,8 @@ class Database {
 
   sumOfRunsOnDaysOfWeek = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(analyticsQueries.distanceByDay);
-      return result.recordset;
+      const result = await this.client.query(analyticsQueries.distanceByDay);
+      return result.rows;
     } catch (err) {
       console.log(err);
     }
@@ -117,8 +124,9 @@ class Database {
           if (match === '{year}') return year;
         }
       );
-      const result = await this.connection.request().query(query);
-      return result.recordset[0];
+      const result = await this.client.query(query);
+      console.log(result.rows[0]);
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
@@ -133,8 +141,9 @@ class Database {
           if (match === '{year}') return year;
         }
       );
-      const result = await this.connection.request().query(query);
-      return result.recordset[0];
+      const result = await this.client.query(query);
+      console.log(result.rows[0]);
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
@@ -142,10 +151,8 @@ class Database {
 
   totalDistanceRan = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(analyticsQueries.totalDistanceRan);
-      return result.recordset[0];
+      const result = await this.client.query(analyticsQueries.totalDistanceRan);
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
@@ -153,10 +160,8 @@ class Database {
 
   longestRun = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(analyticsQueries.longestRun);
-      return result.recordset[0];
+      const result = await this.client.query(analyticsQueries.longestRun);
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
@@ -164,10 +169,11 @@ class Database {
 
   totalDistanceThisCurrentWeek = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(analyticsQueries.totalDistanceSoFarThisWeek);
-      return result.recordset[0];
+      const result = await this.client.query(
+        analyticsQueries.totalDistanceSoFarThisWeek
+      );
+      console.log(result.rows[0]);
+      return result.rows[0];
     } catch (err) {
       console.log(err);
     }
@@ -175,10 +181,10 @@ class Database {
 
   totalDistanceLast6Months = async () => {
     try {
-      const result = await this.connection
-        .request()
-        .query(analyticsQueries.TotalDistanceLast6Months);
-      return result.recordset;
+      const result = await this.client.query(
+        analyticsQueries.TotalDistanceLast6Months
+      );
+      return result.rows;
     } catch (err) {
       console.log(err);
     }
