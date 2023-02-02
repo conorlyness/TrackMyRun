@@ -10,6 +10,14 @@ const API_PORT = 3001;
 app.use(express.json());
 app.use(cors());
 
+app.use((req, res, next) => {
+  res.setTimeout(30 * 60 * 1000, () => {
+    console.log('Request has timed out.');
+    res.send(408);
+  });
+  next();
+});
+
 //swagger stats
 var swStats = require('swagger-stats');
 var tlBucket = 60000;
