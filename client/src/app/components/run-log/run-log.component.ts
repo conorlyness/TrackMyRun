@@ -253,16 +253,18 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
     this.totalMiles = 0;
     this.subscriptions.add(
-      this.runningService.getSpecificRuns(startDate, endDate).subscribe({
-        next: (runs: Array<Run>) => {
-          this.runInfo = runs;
-          this.runInfo.forEach((run) => {
-            this.totalMiles += Number(run.Distance);
-          });
-          this.sortedData = this.runInfo.slice();
-        },
-        error: (error) => console.log('caught an error: ', error),
-      })
+      this.runningService
+        .getSpecificRuns(startDate.toString(), endDate.toString())
+        .subscribe({
+          next: (runs: Array<Run>) => {
+            this.runInfo = runs;
+            this.runInfo.forEach((run) => {
+              this.totalMiles += Number(run.Distance);
+            });
+            this.sortedData = this.runInfo.slice();
+          },
+          error: (error) => console.log('caught an error: ', error),
+        })
     );
   }
 

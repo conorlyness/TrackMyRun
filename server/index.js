@@ -101,20 +101,18 @@ app.post('/specificRuns', async (req, res) => {
 
 app.post('/logRun', async (req, res) => {
   console.log('calling /logRun');
-  const { date, distance, notes } = req.body;
   const result = await db.logRun(req.body);
   if (result) {
-    return res.status(200).json(result);
+    return res.status(200).json(res.statusCode);
   }
   res.status(404);
 });
 
 app.post('/editRun', async (req, res) => {
   console.log('calling /editRun');
-  const { date, distance, notes } = req.body;
   const result = await db.editRun(req.body);
   if (result) {
-    return res.status(200).json(result);
+    return res.status(200).json(res.statusCode);
   }
   res.status(404);
 });
@@ -123,7 +121,7 @@ app.post('/deleteRun', async (req, res) => {
   console.log('calling /deleteRun');
   const result = await db.deleteRun(req.body);
   if (result) {
-    return res.status(200).json(result);
+    return res.status(200).json(res.statusCode);
   }
   res.status(404);
 });

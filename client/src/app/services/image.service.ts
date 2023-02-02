@@ -11,7 +11,7 @@ export class ImageService {
 
   constructor(private http: HttpClient) {}
 
-  getAllImages() {
-    return this.http.get<Observable<any>>(this.ApiUrl);
+  getAllImages(): Observable<string[]> {
+    return this.http.get<string[]>(this.ApiUrl);
   }
 }
