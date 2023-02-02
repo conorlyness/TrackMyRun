@@ -1,16 +1,17 @@
 <div class="gallery-container">
   <div class="uploadContainer">
     <h1 class="title">Gallery</h1>
-    <button
-      [title]="fileUpload ? 'Hide Upload' : 'Upload'"
-      mat-fab
+    <app-button
+      [customContent]="true"
+      [content]="fileUpload ? 'file_upload_off' : 'upload'"
+      [customClass]="'material-symbols-outlined'"
+      (clickEvnt)="toggleUploader()"
       class="toggleUploadBtn"
-      (click)="toggleUploader()"
-    >
-      <span class="material-symbols-outlined">
-        {{ fileUpload ? "file_upload_off" : "upload" }}
-      </span>
-    </button>
+      [matStyle]="'mat-fab'"
+      [toolTip]="fileUpload ? 'Hide Upload' : 'Upload'"
+      [border]="true"
+      [hoverColour]="'rgb(18, 128, 44)'"
+    ></app-button>
     <ng-container *ngIf="fileUpload">
       <div class="file-upload">
         <mat-card class="cardContent">

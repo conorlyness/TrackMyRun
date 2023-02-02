@@ -86,10 +86,7 @@
           <button
             class="expandRowBtn"
             mat-mini-fab
-            (click)="
-              expandedRow = expandedRow === run ? null : run;
-              $event.stopPropagation()
-            "
+            (click)="expandRow($event, run)"
           >
             <mat-icon>{{
               expandedRow !== run ? "keyboard_arrow_down" : "keyboard_arrow_up"
@@ -118,13 +115,13 @@
                 <h3 class="rpeNotesTitle">Rated Perceived Exertion (RPE)</h3>
                 <mat-icon
                   matTooltip="Rate of Perceived Exertion (RPE) refers to a 1-10 scale to self-report the intensity of an effort.
-    RPE 1-2: Recovery
-    RPE 3-4: Easy
-    RPE 5-6: Easy-Moderate
-    RPE 7: Moderate
-    RPE 8: Moderate-Hard
-    RPE 9: Hard
-    RPE 10: Max Effort"
+                  RPE 1-2: Recovery
+                  RPE 3-4: Easy
+                  RPE 5-6: Easy-Moderate
+                  RPE 7: Moderate
+                  RPE 8: Moderate-Hard
+                  RPE 9: Hard
+                  RPE 10: Max Effort"
                   matTooltipClass="rpeInfo"
                   [matTooltipPosition]="'after'"
                   >info</mat-icon
@@ -151,7 +148,7 @@
       ></tr>
       <tr
         mat-row
-        class="tableRow"
+        [ngClass]="{ tableRowDark: darkTheme, tableRowLight: !darkTheme }"
         *matRowDef="let row; columns: columnsToDisplayWithExpand"
         (click)="editRow(row)"
       ></tr>
@@ -162,20 +159,25 @@
       ></tr>
     </table>
   </div>
-  <button
+  <app-button
+    [matStyle]="'mat-mini-fab'"
+    (clickEvnt)="openExportDialog()"
+    [toolTip]="'Download current search'"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    [customContent]="true"
+    [customClass]="'material-symbols-outlined'"
+    [content]="'download'"
     class="downloadCsvButton"
-    mat-mini-fab
-    (click)="openExportDialog()"
-    title="Download current search"
-  >
-    <span class="material-symbols-outlined"> download </span>
-  </button>
+  ></app-button>
 
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">
       <div class="paginationControlsContainer">
         <pagination-controls
-          class="paginationControls"
+          [ngClass]="{
+            paginationControlsDark: darkTheme,
+            paginationControlsLight: !darkTheme
+          }"
           (pageChange)="p = $event"
           [autoHide]="true"
         ></pagination-controls>

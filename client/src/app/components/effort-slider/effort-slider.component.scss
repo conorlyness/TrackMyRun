@@ -1,9 +1,11 @@
+$darkBlue: #101820ff;
 .sliderContent {
   width: 350px;
   margin: auto;
 }
 
-.rpeSlider {
+.rpeSliderLight,
+.rpeSliderDark {
   width: 360px;
 }
 
@@ -17,9 +19,24 @@
   padding-bottom: 5px;
 }
 
-::ng-deep .mat-slider-thumb-label {
-  display: none;
+.rpeSliderLight::ng-deep .mat-slider-thumb {
+  background-color: black !important;
 }
+
+.rpeSliderLight ::ng-deep .mat-slider-thumb-label {
+  background-color: black !important;
+  color: white !important;
+}
+
+.rpeSliderDark::ng-deep .mat-slider-thumb {
+  background-color: white !important;
+}
+
+.rpeSliderDark ::ng-deep .mat-slider-thumb-label {
+  background-color: $darkBlue !important;
+  color: white !important;
+}
+
 ::ng-deep .mat-slider-track-fill {
   background: linear-gradient(to right, yellow 0%, red 100%);
 }

@@ -1,0 +1,17 @@
+<div class="dialogContent" mat-dialog-content>
+  <div class="closeBtn">
+    <app-button
+      (clickEvnt)="onNoClick()"
+      [customContent]="true"
+      [border]="true"
+      [hoverColour]="'rgb(144, 30, 30)'"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'close'"
+      [matStyle]="'mat-mini-fab'"
+    ></app-button>
+  </div>
+
+  <div class="imageContainer">
+    <img src="{{ data.image }}" alt="" />
+  </div>
+</div>

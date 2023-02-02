@@ -20,6 +20,7 @@ import {
 import { MatTableExporterDirective } from 'mat-table-exporter';
 import { MatPaginator } from '@angular/material/paginator';
 import { LogRunComponent } from '../log-run/log-run.component';
+import { ThemeService } from 'src/app/services/theme.service';
 
 export type Range = {
   start: any;
@@ -43,7 +44,6 @@ export type Range = {
 })
 export class RunLogComponent implements OnInit, OnDestroy {
   private clearRangeSubject: Subject<boolean> = new Subject();
-
   displayedColumns: string[] = ['RunDate', 'Distance'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedRow!: Run | null;
@@ -57,6 +57,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   last30Filter: boolean = false;
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
+  darkTheme!: boolean;
   subscriptions = new Subscription();
 
   //pagination variables
@@ -72,10 +73,14 @@ export class RunLogComponent implements OnInit, OnDestroy {
   constructor(
     private runningService: RunningDataService,
     public dialog: MatDialog,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private themeService: ThemeService
   ) {}
 
   ngOnInit(): void {
+    this.themeService.getTheme().subscribe((theme) => {
+      this.darkTheme = theme;
+    });
     this.showAllRunsOnStart();
   }
 
@@ -248,16 +253,18 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
     this.totalMiles = 0;
     this.subscriptions.add(
-      this.runningService.getSpecificRuns(startDate, endDate).subscribe({
-        next: (runs: Array<Run>) => {
-          this.runInfo = runs;
-          this.runInfo.forEach((run) => {
-            this.totalMiles += Number(run.Distance);
-          });
-          this.sortedData = this.runInfo.slice();
-        },
-        error: (error) => console.log('caught an error: ', error),
-      })
+      this.runningService
+        .getSpecificRuns(startDate.toString(), endDate.toString())
+        .subscribe({
+          next: (runs: Array<Run>) => {
+            this.runInfo = runs;
+            this.runInfo.forEach((run) => {
+              this.totalMiles += Number(run.Distance);
+            });
+            this.sortedData = this.runInfo.slice();
+          },
+          error: (error) => console.log('caught an error: ', error),
+        })
     );
   }
 
@@ -318,6 +325,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
         this.showAllRunsOnStart();
       }
     });
+  }
+
+  expandRow(event: any, run: Run) {
+    this.expandedRow = this.expandedRow === run ? null : run;
+    event.stopPropagation();
   }
 
   ngOnDestroy(): void {

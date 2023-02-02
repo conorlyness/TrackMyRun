@@ -37,13 +37,22 @@ table {
   width: 100%;
 }
 
-tr.tableRow {
+tr.tableRowDark {
   cursor: pointer;
   height: 70px !important;
+
+  &:hover {
+    background-color: $darkBlue;
+  }
 }
 
-tr.tableRow:hover {
-  background-color: rgba(0, 80, 7, 0.356);
+tr.tableRowLight {
+  cursor: pointer;
+  height: 70px !important;
+
+  &:hover {
+    background-color: rgba(18, 128, 44, 0.76);
+  }
 }
 
 ::ng-deep tr {
@@ -63,12 +72,26 @@ table th {
   max-width: 15ch;
 }
 
-.paginationControls ::ng-deep .ngx-pagination .current {
+.paginationControlsLight::ng-deep .ngx-pagination .current {
   background: $accentGreen;
 }
 
-.paginationControls ::ng-deep.ngx-pagination a {
-  color: $accentGreen !important;
+.paginationControlsDark::ng-deep .ngx-pagination .current {
+  background: $accentGreen;
+}
+
+.paginationControlsLight ::ng-deep.ngx-pagination a {
+  color: black !important;
+  &:hover {
+    background-color: rgba(177, 177, 177, 0.808);
+  }
+}
+
+.paginationControlsDark ::ng-deep.ngx-pagination a {
+  color: white !important;
+  &:hover {
+    background-color: rgb(31, 31, 31);
+  }
 }
 
 .paginationControlsContainer {
@@ -139,7 +162,6 @@ tr.notesRow {
 
 .expandRowBtn {
   background: black;
-  border: 1px solid white;
 
   &:hover {
     background-color: $accentGreen;
@@ -154,17 +176,10 @@ tr.notesRow {
 }
 
 .downloadCsvButton {
-  color: black;
-  background-color: transparent;
   bottom: 0;
   left: 0;
   position: absolute;
   margin: 5px;
-}
-
-.downloadCsvButton:hover {
-  color: white;
-  background-color: $accentGreen;
 }
 
 .distanceData {

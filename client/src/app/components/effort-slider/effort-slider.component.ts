@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSliderChange } from '@angular/material/slider';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-effort-slider',
@@ -12,6 +13,7 @@ export class EffortSliderComponent implements OnInit {
   step: number = 1;
   thumbLabel: boolean = false;
   showTicks: boolean = true;
+  darkTheme!: boolean;
   private _value: number = 1;
   @Output() effortValue: EventEmitter<number> = new EventEmitter();
   @Input() set value(value: number) {
@@ -21,9 +23,12 @@ export class EffortSliderComponent implements OnInit {
     return this._value;
   }
 
-  constructor() {}
+  constructor(private ThemeService: ThemeService) {}
 
   ngOnInit(): void {
+    this.ThemeService.getTheme().subscribe((theme) => {
+      this.darkTheme = theme;
+    });
     this.effortValue.emit(this.value);
   }
 

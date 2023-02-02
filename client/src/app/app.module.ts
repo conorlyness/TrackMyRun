@@ -45,6 +45,7 @@ import { DeleteRunComponent } from './components/delete-run/delete-run.component
 import { EffortSliderComponent } from './components/effort-slider/effort-slider.component';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { ImageViewerComponent } from './components/gallery/image-viewer/image-viewer.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     ButtonComponent,
     DeleteRunComponent,
     EffortSliderComponent,
+    ImageViewerComponent,
   ],
   imports: [
     BrowserModule,

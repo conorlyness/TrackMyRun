@@ -8,7 +8,7 @@ import {
 } from '@angular/material/dialog';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-
+import { ImageViewerComponent } from './image-viewer/image-viewer.component';
 const URL = environment.imageUploadUrl;
 
 export interface DialogData {
@@ -78,10 +78,7 @@ export class GalleryComponent implements OnInit {
   }
 
   openDialog(data: any) {
-    this.dialog.open(ImageDialog, {
-      height: '650px',
-      width: '700px',
-      panelClass: 'image-dialog',
+    this.dialog.open(ImageViewerComponent, {
       data: {
         image: data.image,
       },
@@ -90,21 +87,5 @@ export class GalleryComponent implements OnInit {
 
   toggleUploader() {
     this.fileUpload = !this.fileUpload;
-  }
-}
-
-@Component({
-  selector: 'image-dialog',
-  templateUrl: 'image-dialog.html',
-  styleUrls: ['./gallery.component.scss'],
-})
-export class ImageDialog {
-  constructor(
-    public dialogRef: MatDialogRef<ImageDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData
-  ) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
   }
 }

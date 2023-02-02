@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { catchError, retry, Observable, throwError } from 'rxjs';
+import { catchError, retry, Observable, throwError, tap } from 'rxjs';
 import {
+  DailyAvgMonthAndYear,
   DistanceByDay,
   LongestDistance,
+  MonthlyTotalMonthAndYear,
   OverallTotal,
+  SixMonthTotals,
   WeeklyTotal,
 } from '../types';
 
@@ -23,19 +26,25 @@ export class AnalyticsService {
     );
   }
 
-  getTotalForMonthInYear(month: number, year: number): Observable<any> {
+  getTotalForMonthInYear(
+    month: number,
+    year: number
+  ): Observable<MonthlyTotalMonthAndYear> {
     const url = environment.getTotalMilesForMonthInYear;
     const body = { month: month, year: year };
-    return this.http.post<any>(url, body).pipe(
+    return this.http.post<MonthlyTotalMonthAndYear>(url, body).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
   }
 
-  getDailyAvgForMonthInYear(month: number, year: number): Observable<any> {
+  getDailyAvgForMonthInYear(
+    month: number,
+    year: number
+  ): Observable<DailyAvgMonthAndYear> {
     const url = environment.averageDistancePerDayMonthYear;
     const body = { month: month, year: year };
-    return this.http.post<any>(url, body).pipe(
+    return this.http.post<DailyAvgMonthAndYear>(url, body).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
@@ -65,9 +74,9 @@ export class AnalyticsService {
     );
   }
 
-  getLast6MonthsTotals(): Observable<any> {
+  getLast6MonthsTotals(): Observable<Array<SixMonthTotals>> {
     const url = environment.totalLast6Months;
-    return this.http.get<any>(url, {}).pipe(
+    return this.http.get<Array<SixMonthTotals>>(url, {}).pipe(
       retry(1),
       catchError((error) => this.handleError(error))
     );
