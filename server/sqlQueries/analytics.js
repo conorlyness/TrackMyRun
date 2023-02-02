@@ -85,6 +85,7 @@ let analyticsQueries = {
     LEFT JOIN "RunLog"
     ON months.month = date_trunc('month', "RunDate")
     GROUP BY to_char(months.month, 'Month'), months.month
+    ORDER BY months.month ASC
     )
 
     SELECT *
