@@ -75,9 +75,9 @@ export class AnalyticsComponent implements OnInit {
       .subscribe((val: Array<DistanceByDay>) => {
         this.distanceByDayData = val;
         this.distanceByDayData.forEach((el) => {
-          if (+el.TotalMiles.toFixed(2) > this.highestMileage) {
-            this.highestMileage = el.TotalMiles;
-            this.highestMileageDay = el.DayOfWeek;
+          if (+el.total_miles > this.highestMileage) {
+            this.highestMileage = el.total_miles;
+            this.highestMileageDay = el.day_of_week;
           }
         });
 
@@ -151,11 +151,11 @@ export class AnalyticsComponent implements OnInit {
     new Chart(ctx, {
       type: 'pie',
       data: {
-        labels: this.distanceByDayData.map((x) => x.DayOfWeek),
+        labels: this.distanceByDayData.map((x) => x.day_of_week),
         datasets: [
           {
             label: 'Total Miles',
-            data: this.distanceByDayData.map((x) => x.TotalMiles),
+            data: this.distanceByDayData.map((x) => x.total_miles),
             backgroundColor: [
               'rgb(0, 153, 153)',
               'rgb(54, 162, 235)',
@@ -210,11 +210,11 @@ export class AnalyticsComponent implements OnInit {
     new Chart(ctx, {
       type: 'line',
       data: {
-        labels: this.sixMonthTotalsData.map((x) => x.Month),
+        labels: this.sixMonthTotalsData.map((x) => x.month),
         datasets: [
           {
             label: 'Distance by month',
-            data: this.sixMonthTotalsData.map((x) => x.TotalDistance),
+            data: this.sixMonthTotalsData.map((x) => x.totaldistance),
             fill: false,
             borderColor: 'rgb(15, 123, 20)',
             tension: 0.1,
