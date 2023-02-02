@@ -11,7 +11,7 @@ import { ThemeService } from './services/theme.service';
 })
 export class AppComponent implements OnInit {
   darkThemePref: string = '';
-  toggleControl = new FormControl();
+  toggleControl: FormControl<boolean> = new FormControl();
   @HostBinding('class') className = '';
   constructor(
     private overlay: OverlayContainer,

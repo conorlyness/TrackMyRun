@@ -18,7 +18,7 @@
 <div class="sliderContent">
   <mat-slider
     [thumbLabel]="true"
-    class="rpeSlider"
+    [ngClass]="{ rpeSliderDark: darkTheme, rpeSliderLight: !darkTheme }"
     [max]="max"
     [min]="min"
     [step]="step"
