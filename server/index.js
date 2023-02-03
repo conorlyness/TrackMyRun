@@ -9,15 +9,6 @@ const API_PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
-
-app.use((req, res, next) => {
-  res.setTimeout(30 * 60 * 1000, () => {
-    console.log('Request has timed out.');
-    res.send(408);
-  });
-  next();
-});
-
 //swagger stats
 var swStats = require('swagger-stats');
 var tlBucket = 60000;
@@ -202,8 +193,12 @@ app.get('/last6MonthsTotal', async (req, res) => {
 });
 
 app.listen(API_PORT, () => {
-  db.connect();
-  console.log(`listening on port ${API_PORT}`);
+  try {
+    db.connect();
+    console.log(`listening on port ${API_PORT}`);
+  } catch (err) {
+    console.log('Error on port: ', err);
+  }
 });
 
 module.exports = app;
