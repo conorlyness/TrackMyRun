@@ -5,23 +5,50 @@ const coreQueries = require('./sqlQueries/core');
 
 class Database {
   constructor() {
-    this.clent = null;
+    this.client = null;
   }
 
   connect = async () => {
-    this.client = new Client({
-      user: config.user,
-      password: config.password,
-      host: config.host,
-      database: config.database,
-      port: config.port,
-      ssl: config.ssl,
-      keepAlive: config.keepAlive,
-    });
-
     try {
+      this.client = new Client({
+        user: config.user,
+        password: config.password,
+        host: config.host,
+        database: config.database,
+        port: config.port,
+        ssl: config.ssl,
+        max: config.maxConnections,
+        idleTimeoutMillis: config.idleTimeout,
+      });
       await this.client.connect();
-      console.log('Connected to Bit.io database successfully.');
+      console.log('Connected to database successfully.');
+      //we keep pinging the db to ensure the connection is kept alive
+      setInterval(() => {
+        this.keepConnectionAlive();
+      }, 30000);
+
+      //we end the connection after 50 mins due to a 60 min hard limit
+      //on connections to the db.
+      setTimeout(() => {
+        this.client.end((err) => {
+          console.log('disconnected from db');
+          if (err) {
+            console.log('error disconnecting from db: ', err);
+          }
+        });
+      }, 50 * 60 * 1000);
+
+      //we listen for the end event and then reconnect
+      this.client.on('end', async () => {
+        console.log('Connection to db has ended. Reconnecting...');
+        await this.connect();
+      });
+
+      //if there is an error emitted then we reconnect
+      this.client.on('error', async () => {
+        console.log('Error with the db. Reconnecting...');
+        await this.connect();
+      });
     } catch (err) {
       console.error('Error connecting to Bit.io database:', err.stack);
     }
@@ -187,6 +214,16 @@ class Database {
       return result.rows;
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  keepConnectionAlive = async () => {
+    try {
+      // send a simple query to the database
+      await this.client.query('SELECT 1');
+      console.log('Keep-alive query sent');
+    } catch (error) {
+      console.error(`Error sending keep-alive query: ${error}`);
     }
   };
 }
