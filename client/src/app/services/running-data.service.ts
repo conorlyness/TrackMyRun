@@ -49,9 +49,16 @@ export class RunningDataService {
     runDate: any,
     distance: number,
     notes: string,
-    rpe: number
+    rpe: number,
+    id: number
   ): Observable<HttpStatusCode> {
-    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
+    const body = {
+      date: runDate,
+      distance: distance,
+      notes: notes,
+      rpe: rpe,
+      id: id,
+    };
     const url = environment.editRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
       retry(1),
@@ -62,9 +69,10 @@ export class RunningDataService {
   deleteRun(
     runDate: string,
     distance: number,
-    notes: string
+    notes: string,
+    rpe: number
   ): Observable<HttpStatusCode> {
-    const body = { date: runDate, distance: distance, notes: notes };
+    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
     const url = environment.deleteRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
       retry(1),

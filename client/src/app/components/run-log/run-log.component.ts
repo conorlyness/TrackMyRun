@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Run } from '../../types';
+import { EditDialogData, Run } from '../../types';
 import {
   animate,
   state,
@@ -160,13 +160,14 @@ export class RunLogComponent implements OnInit, OnDestroy {
     return (a < b ? -1 : 1) * (isAsc ? 1 : -1);
   }
 
-  openEditDialog(data: any) {
+  openEditDialog(data: EditDialogData) {
     const dialogRef = this.dialog.open(EditDialogComponent, {
       data: {
         date: data.date,
         distance: data.distance,
         notes: data.notes,
         rpe: data.rpe,
+        id: data.id,
       },
     });
 
@@ -190,6 +191,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       distance: row.Distance,
       notes: row.Notes,
       rpe: row.RPE,
+      id: row.id,
     };
     this.openEditDialog(runObj);
   }

@@ -39,3 +39,11 @@ export type DailyAvgMonthAndYear = {
 export type MonthlyTotalMonthAndYear = {
   total_distance: number;
 };
+
+export type EditDialogData = {
+  date: string;
+  distance: number;
+  notes: string;
+  rpe: number;
+  id: number;
+};

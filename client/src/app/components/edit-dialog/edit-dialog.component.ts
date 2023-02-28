@@ -9,6 +9,7 @@ import { RunningDataService } from 'src/app/services/running-data.service';
 import { DeleteRunComponent } from '../delete-run/delete-run.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import * as moment from 'moment';
+import { EditDialogData } from 'src/app/types';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -20,7 +21,7 @@ export class EditDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
+    @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
     private toast: ToastrService,
     public dialog: MatDialog,
     private runningService: RunningDataService
@@ -32,15 +33,15 @@ export class EditDialogComponent implements OnInit {
     this.dialogRef.close();
   }
 
-  isNaN(value: any) {
-    if (isNaN(value)) {
+  isNaN(value: unknown) {
+    if (isNaN(value as number)) {
       return true;
     } else {
       return false;
     }
   }
 
-  verifyEdit(data: any) {
+  verifyEdit(data: EditDialogData) {
     if (!data.distance) {
       this.toast.error('A distance is required');
     } else if (isNaN(data.distance)) {
@@ -52,7 +53,8 @@ export class EditDialogComponent implements OnInit {
             moment(data.date).format('YYYY-MM-DD'),
             data.distance,
             data.notes,
-            data.rpe
+            data.rpe,
+            data.id
           )
           .subscribe({
             error: (error) => console.log('caught an error: ', error),
@@ -62,12 +64,13 @@ export class EditDialogComponent implements OnInit {
     }
   }
 
-  openDeleteDialog(data: any) {
+  openDeleteDialog(data: EditDialogData) {
     const deleteDialogref = this.dialog.open(DeleteRunComponent, {
       data: {
         date: data.date,
         distance: data.distance,
         notes: data.notes,
+        rpe: data.rpe,
       },
       disableClose: true,
     });
@@ -79,7 +82,8 @@ export class EditDialogComponent implements OnInit {
             .deleteRun(
               moment(data.date).format('YYYY-MM-DD'),
               data.distance,
-              data.notes
+              data.notes,
+              data.rpe
             )
             .subscribe({
               error: (error) => console.log('caught an error: ', error),
