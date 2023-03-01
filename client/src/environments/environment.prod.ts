@@ -1,6 +1,7 @@
 export const environment = {
   production: true,
   getAllRunsUrl: 'http://localhost:3001/allRuns',
+  getAllPbsUrl: 'http://localhost:3001/allPbs',
   getSpecificRunsUrl: 'http://localhost:3001/specificRuns',
   logNewRunUrl: 'http://localhost:3001/logRun',
   editRunUrl: 'http://localhost:3001/editRun',

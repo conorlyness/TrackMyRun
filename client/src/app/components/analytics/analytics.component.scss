@@ -105,15 +105,9 @@ mat-grid-list {
   margin: auto;
 }
 
-.imgContainer {
-  margin: 10px;
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-}
-
-.brandingImgTile {
-  background-color: $darkBlue;
+.personalBestEfforts {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

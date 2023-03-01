@@ -46,6 +46,7 @@ import { EffortSliderComponent } from './components/effort-slider/effort-slider.
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ImageViewerComponent } from './components/gallery/image-viewer/image-viewer.component';
+import { PersonalBestsComponent } from './personal-bests/personal-bests.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { ImageViewerComponent } from './components/gallery/image-viewer/image-vi
     DeleteRunComponent,
     EffortSliderComponent,
     ImageViewerComponent,
+    PersonalBestsComponent,
   ],
   imports: [
     BrowserModule,

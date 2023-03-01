@@ -1,0 +1,35 @@
+$darkBlue: #101820ff;
+
+.personalBestTable {
+}
+
+table {
+  width: 287px;
+}
+
+::ng-deep tr {
+  font-size: 5px;
+}
+
+table th {
+  font-style: italic;
+  font-size: 24px;
+  color: white !important;
+  background-color: $darkBlue;
+}
+
+tr.tableRowDark {
+  cursor: pointer;
+
+  &:hover {
+    background-color: $darkBlue;
+  }
+}
+
+tr.tableRowLight {
+  cursor: pointer;
+
+  &:hover {
+    background-color: rgba(18, 128, 44, 0.76);
+  }
+}

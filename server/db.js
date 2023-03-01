@@ -228,6 +228,15 @@ class Database {
       console.error(`Error sending keep-alive query: ${error}`);
     }
   };
+
+  getAllPersonalBests = async () => {
+    try {
+      const result = await this.client.query(coreQueries.viewAllPersonalBests);
+      return result.rows;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 module.exports = new Database();

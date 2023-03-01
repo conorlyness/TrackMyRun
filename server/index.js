@@ -89,6 +89,15 @@ app.get('/allRuns', async (req, res) => {
   res.status(404);
 });
 
+app.get('/allPbs', async (req, res) => {
+  console.log('calling /allPbs');
+  const viewAllPbs = await db.getAllPersonalBests();
+  if (viewAllPbs) {
+    return res.status(201).json(viewAllPbs);
+  }
+  res.status(404);
+});
+
 app.post('/specificRuns', async (req, res) => {
   console.log('calling /specificRuns');
   const viewAllRuns = await db.viewallRunsInRange(req.body.start, req.body.end);

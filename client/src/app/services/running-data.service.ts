@@ -22,6 +22,14 @@ export class RunningDataService {
     );
   }
 
+  getAllPbs(): Observable<any> {
+    const url = environment.getAllPbsUrl;
+    return this.http.get(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   getSpecificRuns(start: string, end: string): Observable<Run[]> {
     const body = { start: start, end: end };
     const url = environment.getSpecificRunsUrl;

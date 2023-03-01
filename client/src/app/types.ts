@@ -47,3 +47,8 @@ export type EditDialogData = {
   rpe: number;
   id: number;
 };
+
+export type PersonalBest = {
+  Distance: string;
+  Time: any;
+};
