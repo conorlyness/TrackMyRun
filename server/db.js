@@ -237,6 +237,22 @@ class Database {
       console.log(error);
     }
   };
+
+  editPersonalBest = async (run) => {
+    try {
+      let query = coreQueries.editPersonalBest.replace(
+        /({time})|({distance})/g,
+        function (match) {
+          if (match === '{time}') return run.time;
+          if (match === '{distance}') return run.distance;
+        }
+      );
+      const result = await this.client.query(query);
+      return result.rows;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 }
 
 module.exports = new Database();

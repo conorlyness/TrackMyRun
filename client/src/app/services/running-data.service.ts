@@ -30,6 +30,15 @@ export class RunningDataService {
     );
   }
 
+  editPb(distance: string, time: string): Observable<any> {
+    const url = environment.editPbUrl;
+    const body = { distance: distance, time: time };
+    return this.http.post<HttpStatusCode>(url, body).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   getSpecificRuns(start: string, end: string): Observable<Run[]> {
     const body = { start: start, end: end };
     const url = environment.getSpecificRunsUrl;

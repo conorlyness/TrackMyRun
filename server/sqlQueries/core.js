@@ -4,7 +4,8 @@ let coreQueries = {
   logRun: `Insert into "RunLog" values ('{run.date}', '{run.distance}', '{run.notes}', '{run.rpe}');`,
   editRun: `UPDATE "RunLog" SET "Distance" = '{run.distance}', "Notes" = '{run.notes}', "RPE" = '{run.rpe}' WHERE "RunDate" = '{run.date}' AND "id" = '{run.id}';`,
   deleteRun: `DELETE FROM "RunLog" WHERE "RunDate" = '{run.date}' AND "Distance" = '{run.distance}' AND "Notes" = '{run.notes}' AND "RPE" = '{run.rpe}';`,
-  viewAllPersonalBests: `SELECT * FROM "PersonalBests";`,
+  viewAllPersonalBests: `SELECT * FROM "PersonalBests" ORDER BY "Time" ASC;`,
+  editPersonalBest: `UPDATE "PersonalBests" SET "Time" = '{time}' WHERE "Distance" = '{distance}'`,
 };
 
 module.exports = coreQueries;

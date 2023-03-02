@@ -1,17 +1,16 @@
 $darkBlue: #101820ff;
 
-.personalBestTable {
-}
-
 table {
-  width: 287px;
+  display: block;
 }
 
 ::ng-deep tr {
   font-size: 5px;
+  font-weight: 300;
 }
 
 table th {
+  width: 100%;
   font-style: italic;
   font-size: 24px;
   color: white !important;

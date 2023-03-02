@@ -98,6 +98,15 @@ app.get('/allPbs', async (req, res) => {
   res.status(404);
 });
 
+app.post('/editPb', async (req, res) => {
+  console.log('calling /editPb');
+  const editPb = await db.editPersonalBest(req.body);
+  if (editPb) {
+    return res.status(201).json(editPb);
+  }
+  res.status(404);
+});
+
 app.post('/specificRuns', async (req, res) => {
   console.log('calling /specificRuns');
   const viewAllRuns = await db.viewallRunsInRange(req.body.start, req.body.end);
