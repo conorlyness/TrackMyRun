@@ -1,8 +1,9 @@
 $accentGreen: rgb(18, 128, 44);
 
 @mixin inputStyles {
-  width: 350px;
+  width: 80px;
   font-size: 20px;
+  padding: 10px;
 }
 
 .dialogBtns {
@@ -31,14 +32,14 @@ $accentGreen: rgb(18, 128, 44);
   opacity: 0.3;
 }
 
-.dateText {
+.distanceText {
   text-align: center;
   word-wrap: break-word;
   line-height: 1.6;
 }
 
 .inputs {
-  display: grid;
+  display: flex;
   margin: 0 auto;
   justify-content: center;
 }
@@ -47,11 +48,7 @@ $accentGreen: rgb(18, 128, 44);
   display: none;
 }
 
-.distance {
-  @include inputStyles;
-}
-
-.notes {
+.time {
   @include inputStyles;
 }
 
@@ -60,7 +57,7 @@ $accentGreen: rgb(18, 128, 44);
   display: inline-flex;
 }
 
-.notesLabel {
+.timeLabel {
   font-weight: 100;
   display: inline-flex;
 }

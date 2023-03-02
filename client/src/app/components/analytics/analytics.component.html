@@ -1,6 +1,7 @@
 <div class="analyticsContent">
   <mat-grid-list cols="5" [gutterSize]="'10px'">
     <mat-grid-tile class="sixMonthTotalTile" [colspan]="2" [rowspan]="1">
+      <p class="tileTitle">Total miles in last 6 months</p>
       <div class="sixMonthTotalsLine">
         <canvas #sixMonthTotalsLine></canvas>
       </div>
@@ -80,11 +81,13 @@
 
     <mat-grid-tile class="personalBestTile" [colspan]="1">
       <div class="personalBestEfforts">
+        <p class="personalBestTitle">Best Efforts</p>
         <app-personal-bests></app-personal-bests>
       </div>
     </mat-grid-tile>
 
     <mat-grid-tile class="distanceByDayTile" [colspan]="2">
+      <p class="tileTitle">Total miles by day</p>
       <div class="distanceByDayPie">
         <canvas #distanceByDay></canvas>
       </div>

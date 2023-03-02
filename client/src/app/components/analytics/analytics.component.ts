@@ -193,7 +193,7 @@ export class AnalyticsComponent implements OnInit {
           },
           title: {
             display: true,
-            text: 'Total miles on days of the week',
+            // text: 'Total miles on days of the week',
             font: {
               size: 22,
               family: 'Open Sans',
@@ -226,7 +226,7 @@ export class AnalyticsComponent implements OnInit {
         plugins: {
           title: {
             display: true,
-            text: 'Total Miles in last 6 months',
+            // text: 'Total Miles in last 6 months',
             font: {
               size: 22,
               family: 'Open Sans',

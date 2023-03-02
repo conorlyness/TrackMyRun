@@ -35,6 +35,14 @@ mat-grid-list {
   padding-top: 5px;
 }
 
+.personalBestTitle {
+  font-weight: lighter;
+  font-size: 22px;
+  text-align: center;
+  top: 0;
+  padding-top: 5px;
+}
+
 .tileData {
   display: flex;
   align-items: baseline;
@@ -108,6 +116,5 @@ mat-grid-list {
 .personalBestEfforts {
   height: 100%;
   width: 100%;
-  display: flex;
-  justify-content: center;
+  overflow-y: scroll;
 }
