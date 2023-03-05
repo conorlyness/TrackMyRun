@@ -20,7 +20,7 @@ export class ButtonComponent implements OnInit {
   @Input() hoverColour!: string;
   @Input() disabled!: boolean;
   @Input() customContent!: boolean;
-  @Input() content!: string;
+  @Input() content!: string | number;
   @Input() customClass!: string;
   @Input() toolTip!: string;
   @Output() clickEvnt = new EventEmitter();

@@ -2,7 +2,7 @@
   <h1 class="logTitle">Running Log</h1>
   <div class="contentCards">
     <mat-card class="totalMiles" [ngClass]="{ cardMargin: rangePicker }">
-      Total Miles in current search
+      Total Miles
       <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
       <div class="controlBtns">
         <app-button
@@ -62,7 +62,12 @@
       multiTemplateDataRows
     >
       <ng-container matColumnDef="RunDate">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="RunDate">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="RunDate"
+          class="dateColumn"
+        >
           Date
         </th>
         <td mat-cell *matCellDef="let run" class="dateData">
@@ -71,7 +76,12 @@
       </ng-container>
 
       <ng-container matColumnDef="Distance">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header="Distance">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header="Distance"
+          class="distanceColumn"
+        >
           Distance
           <p class="miLabel">(Mi)</p>
         </th>
@@ -81,7 +91,7 @@
       </ng-container>
 
       <ng-container matColumnDef="expand">
-        <th mat-header-cell *matHeaderCellDef>Notes</th>
+        <th mat-header-cell *matHeaderCellDef class="notesColumn">Notes</th>
         <td mat-cell *matCellDef="let run">
           <button
             class="expandRowBtn"
@@ -159,16 +169,26 @@
       ></tr>
     </table>
   </div>
-  <app-button
-    [matStyle]="'mat-mini-fab'"
-    (clickEvnt)="openExportDialog()"
-    [toolTip]="'Download current search'"
-    [hoverColour]="'rgb(18, 128, 44)'"
-    [customContent]="true"
-    [customClass]="'material-symbols-outlined'"
-    [content]="'download'"
-    class="downloadCsvButton"
-  ></app-button>
+  <div class="groupedButtons">
+    <app-button
+      [matStyle]="'mat-mini-fab'"
+      (clickEvnt)="openExportDialog()"
+      [toolTip]="'Download current search'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customContent]="true"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'download'"
+      class="downloadCsvButton"
+    ></app-button>
+    <app-button
+      [matStyle]="'mat-mini-fab'"
+      [toolTip]="'Current daily run streak'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customContent]="true"
+      [content]="runningStreak"
+      class="runningStreak"
+    ></app-button>
+  </div>
 
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">

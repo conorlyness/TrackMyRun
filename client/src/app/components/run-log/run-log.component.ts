@@ -58,6 +58,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
   darkTheme!: boolean;
+  runningStreak!: number;
   subscriptions = new Subscription();
 
   //pagination variables
@@ -93,6 +94,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
             this.totalMiles += Number(run.Distance);
           });
           this.sortedData = this.runInfo.slice();
+          this.calculateRunningStreak();
         },
         error: (error) => console.log('caught an error: ', error),
       })
@@ -332,6 +334,54 @@ export class RunLogComponent implements OnInit, OnDestroy {
   expandRow(event: any, run: Run) {
     this.expandedRow = this.expandedRow === run ? null : run;
     event.stopPropagation();
+  }
+
+  calculateRunningStreak() {
+    const runs = this.sortedData;
+    let runStreak = 0;
+    let todaysDate = new Date();
+
+    //check if there is a run logged from today
+    if (
+      moment(runs[0].RunDate).toString().substring(0, 10) ===
+      todaysDate.toString().substring(0, 10)
+    ) {
+      runStreak++;
+    }
+
+    let yesterdaysDate = new Date(
+      todaysDate.getFullYear(),
+      todaysDate.getMonth(),
+      todaysDate.getDate() - 1
+    );
+
+    for (let i = 0; i < runs.length; i++) {
+      let runDate = moment(runs[i].RunDate);
+      if (
+        runDate.toString().substring(0, 10) ===
+        yesterdaysDate.toString().substring(0, 10)
+      ) {
+        runStreak++;
+        // continue checking previous days
+        for (let j = i + 1; j >= 0; j++) {
+          let prevRunDate = moment(runs[j].RunDate);
+
+          // check if the previous run was on the day before the current run
+          if (
+            prevRunDate.toString().substring(0, 10) ===
+            moment(runDate).subtract(1, 'days').toString().substring(0, 10)
+          ) {
+            runStreak++;
+            runDate.subtract(1, 'days');
+          } else {
+            break; // exit the loop if there is no consecutive date
+          }
+        }
+        break; // exit the loop after finding the streak for the most recent run
+      }
+    }
+
+    this.runningStreak = runStreak;
   }
 
   ngOnDestroy(): void {
