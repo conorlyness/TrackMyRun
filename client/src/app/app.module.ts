@@ -48,6 +48,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ImageViewerComponent } from './components/gallery/image-viewer/image-viewer.component';
 import { PersonalBestsComponent } from './components/personal-bests/personal-bests.component';
 import { EditRecordComponent } from './components/personal-bests/edit-record/edit-record.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { EditRecordComponent } from './components/personal-bests/edit-record/edi
     NgxElectronModule,
     MatSliderModule,
     MatTooltipModule,
+    MatExpansionModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

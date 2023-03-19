@@ -52,3 +52,13 @@ export type PersonalBest = {
   Distance: string;
   Time: any;
 };
+
+export type DistanceFilter = {
+  min: number | undefined;
+  max: number | undefined;
+};
+
+export type Range = {
+  start: any;
+  end: any;
+};

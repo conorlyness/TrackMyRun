@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { EditDialogData, Run } from '../../types';
+import { DistanceFilter, EditDialogData, Run, Range } from '../../types';
 import {
   animate,
   state,
@@ -21,11 +21,6 @@ import { MatTableExporterDirective } from 'mat-table-exporter';
 import { MatPaginator } from '@angular/material/paginator';
 import { LogRunComponent } from '../log-run/log-run.component';
 import { ThemeService } from 'src/app/services/theme.service';
-
-export type Range = {
-  start: any;
-  end: any;
-};
 
 @Component({
   selector: 'app-run-log',
@@ -55,6 +50,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   last7Filter: boolean = false;
   last14Filter: boolean = false;
   last30Filter: boolean = false;
+  distanceFilter: DistanceFilter = { min: undefined, max: undefined };
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
   darkTheme!: boolean;
@@ -112,6 +108,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
       this.last7Filter = false;
       this.last30Filter = false;
       this.last30Filter = false;
+      for (const key in this.distanceFilter) {
+        if (Object.hasOwnProperty(key)) {
+          this.distanceFilter[key as keyof DistanceFilter] = undefined;
+        }
+      }
       this.totalMiles = 0;
       this.subscriptions.add(
         this.runningService.getSpecificRuns(startDate, endDate).subscribe({
@@ -127,6 +128,19 @@ export class RunLogComponent implements OnInit, OnDestroy {
         })
       );
     }
+  }
+
+  searchByDistance(range: Range) {
+    this.totalMiles = 0;
+    this.subscriptions.add(
+      this.runningService.getRunsByDistance(range).subscribe((runs) => {
+        this.runInfo = runs;
+        this.runInfo.forEach((run) => {
+          this.totalMiles += Number(run.Distance);
+        });
+        this.sortedData = this.runInfo.slice();
+      })
+    );
   }
 
   clearSearch() {
@@ -204,6 +218,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
         last7: this.last7Filter,
         last14: this.last14Filter,
         last30: this.last30Filter,
+        distance: this.distanceFilter,
         resetToDefault: undefined,
         cancel: false,
       },
@@ -215,6 +230,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
       this.last7Filter = this.dialogAnswer?.last7;
       this.last14Filter = this.dialogAnswer?.last14;
       this.last30Filter = this.dialogAnswer?.last30;
+      this.distanceFilter = this.dialogAnswer?.distance;
+      const { min, max } = this.distanceFilter;
       if (this.dialogAnswer === undefined) {
         console.log('no filters');
       } else if (this.dialogAnswer.cancel) {
@@ -237,7 +254,18 @@ export class RunLogComponent implements OnInit, OnDestroy {
           this.last7Filter = false;
           this.last14Filter = false;
           this.last30Filter = false;
+          for (const key in this.distanceFilter) {
+            if (Object.hasOwnProperty(key)) {
+              this.distanceFilter[key as keyof DistanceFilter] = undefined;
+            }
+          }
           this.clearSearch();
+        } else if (min != undefined && max != undefined) {
+          const range: Range = {
+            start: min,
+            end: max,
+          };
+          this.searchByDistance(range);
         }
       }
     });

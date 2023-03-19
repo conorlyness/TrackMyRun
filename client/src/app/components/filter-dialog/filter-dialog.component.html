@@ -14,6 +14,24 @@
   </section>
 </div>
 
+<ng-container *ngIf="showDistancePanel">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title> Filter by Distance </mat-panel-title>
+    </mat-expansion-panel-header>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Min</mat-label>
+      <input matInput type="number" [(ngModel)]="data.distance.min" />
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Max</mat-label>
+      <input matInput type="number" min="1" [(ngModel)]="data.distance.max" />
+    </mat-form-field>
+  </mat-expansion-panel>
+</ng-container>
+
 <div class="buttons">
   <ng-container *ngIf="!noFilters">
     <app-button

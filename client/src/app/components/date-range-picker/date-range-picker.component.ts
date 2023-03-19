@@ -9,7 +9,7 @@ import {
 import { FormGroup, FormControl } from '@angular/forms';
 import { Observable } from 'rxjs/internal/Observable';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { Range } from '../run-log/run-log.component';
+import { Range } from '../../types';
 
 @Component({
   selector: 'app-date-range-picker',

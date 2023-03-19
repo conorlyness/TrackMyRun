@@ -4,9 +4,17 @@ import {
   HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, retry, tap, throwError } from 'rxjs';
+import {
+  catchError,
+  filter,
+  map,
+  Observable,
+  retry,
+  tap,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Run } from '../types';
+import { Run, Range } from '../types';
 
 @Injectable({
   providedIn: 'root',
@@ -17,6 +25,19 @@ export class RunningDataService {
   getAllRuns(): Observable<Run[]> {
     const url = environment.getAllRunsUrl;
     return this.http.get<Run[]>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getRunsByDistance(range: Range): Observable<Run[]> {
+    const url = environment.getAllRunsUrl;
+    return this.http.get<Run[]>(url, {}).pipe(
+      map((runs) =>
+        runs.filter(
+          (run) => run.Distance >= range.start && run.Distance <= range.end
+        )
+      ),
       retry(1),
       catchError((error) => this.handleError(error))
     );
