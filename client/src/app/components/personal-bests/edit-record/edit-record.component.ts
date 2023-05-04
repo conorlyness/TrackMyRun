@@ -22,7 +22,7 @@ export class EditRecordComponent implements OnInit {
   seconds!: number;
 
   ngOnInit(): void {
-    if (this.data.Time === null) {
+    if (this.data.Time === null || this.data.Time === 'undefined') {
       this.hours = 0;
       this.minutes = 0;
       this.seconds = 0;
@@ -39,8 +39,7 @@ export class EditRecordComponent implements OnInit {
   }
 
   verifyEdit() {
-    let newPb = this.buildTime(this.hours, this.minutes, this.seconds);
-    this.data.Time = newPb;
+    this.buildTime(this.hours, this.minutes, this.seconds);
     this.dialogRef.close(this.data);
   }
 
