@@ -1,13 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import {
-  LogRunComponent,
-  RunInfoDialog,
-} from './components/log-run/log-run.component';
+import { LogRunComponent } from './components/log-run/log-run.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -49,12 +45,17 @@ import { ImageViewerComponent } from './components/gallery/image-viewer/image-vi
 import { PersonalBestsComponent } from './components/personal-bests/personal-bests.component';
 import { EditRecordComponent } from './components/personal-bests/edit-record/edit-record.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatDividerModule } from '@angular/material/divider';
+import { ShoesComponent } from './components/shoes/shoes.component';
+import { AddNewShoeComponent } from './components/shoes/add-new-shoe/add-new-shoe.component';
+import { MatMenuModule } from '@angular/material/menu';
+import { HighMileageComponent } from './components/shoes/high-mileage/high-mileage.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LogRunComponent,
-    RunInfoDialog,
     RunLogComponent,
     GalleryComponent,
     EditDialogComponent,
@@ -69,6 +70,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     ImageViewerComponent,
     PersonalBestsComponent,
     EditRecordComponent,
+    ShoesComponent,
+    AddNewShoeComponent,
+    HighMileageComponent,
   ],
   imports: [
     BrowserModule,
@@ -101,6 +105,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatSliderModule,
     MatTooltipModule,
     MatExpansionModule,
+    MatStepperModule,
+    MatDividerModule,
+    MatMenuModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

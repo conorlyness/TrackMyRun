@@ -3,13 +3,14 @@
     #btn
     mat-button
     class="btn"
-    [ngClass]="{ borderBtn: border }"
+    [ngClass]="{ borderBtn: border, warning: warning }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
     matTooltip="{{ toolTip }}"
   >
+    <ng-content></ng-content>
     <span *ngIf="customContent" class="{{ customClass }}">
       {{ content }}
     </span>
@@ -25,7 +26,7 @@
     #btn
     mat-fab
     class="fabBtn"
-    [ngClass]="{ borderBtn: border }"
+    [ngClass]="{ borderBtn: border, warning: warning }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
@@ -47,7 +48,7 @@
     #btn
     mat-mini-fab
     class="btn"
-    [ngClass]="{ borderBtn: border }"
+    [ngClass]="{ borderBtn: border, warning: warning }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
