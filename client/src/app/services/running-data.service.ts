@@ -73,9 +73,16 @@ export class RunningDataService {
     runDate: any,
     distance: number,
     notes: string,
-    rpe: number
+    rpe: number,
+    shoe: string
   ): Observable<HttpStatusCode> {
-    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
+    const body = {
+      date: runDate,
+      distance: distance,
+      notes: notes,
+      rpe: rpe,
+      shoes: shoe,
+    };
     const url = environment.logNewRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
       retry(1),
@@ -88,7 +95,8 @@ export class RunningDataService {
     distance: number,
     notes: string,
     rpe: number,
-    id: number
+    id: number,
+    shoe: string
   ): Observable<HttpStatusCode> {
     const body = {
       date: runDate,
@@ -96,6 +104,7 @@ export class RunningDataService {
       notes: notes,
       rpe: rpe,
       id: id,
+      shoe: shoe,
     };
     const url = environment.editRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
@@ -108,9 +117,16 @@ export class RunningDataService {
     runDate: string,
     distance: number,
     notes: string,
-    rpe: number
+    rpe: number,
+    shoe: string
   ): Observable<HttpStatusCode> {
-    const body = { date: runDate, distance: distance, notes: notes, rpe: rpe };
+    const body = {
+      date: runDate,
+      distance: distance,
+      notes: notes,
+      rpe: rpe,
+      shoe: shoe,
+    };
     const url = environment.deleteRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
       retry(1),

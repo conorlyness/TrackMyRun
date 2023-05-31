@@ -10,6 +10,7 @@ import { DeleteRunComponent } from '../delete-run/delete-run.component';
 import { Subscription } from 'rxjs/internal/Subscription';
 import * as moment from 'moment';
 import { EditDialogData } from 'src/app/types';
+import { ShoesService } from 'src/app/services/shoes.service';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -18,16 +19,27 @@ import { EditDialogData } from 'src/app/types';
 })
 export class EditDialogComponent implements OnInit {
   subscriptions = new Subscription();
+  distanceBeforeEdit!: number;
+  shoeBrand!: string;
+  shoeName!: string;
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: EditDialogData,
     private toast: ToastrService,
     public dialog: MatDialog,
-    private runningService: RunningDataService
+    private runningService: RunningDataService,
+    private shoeService: ShoesService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.distanceBeforeEdit = this.data.distance;
+    if (this.data.shoe) {
+      const splitIndex = this.data.shoe.indexOf(' ');
+      this.shoeBrand = this.data.shoe.slice(0, splitIndex);
+      this.shoeName = this.data.shoe.slice(splitIndex + 1);
+    }
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
@@ -47,6 +59,23 @@ export class EditDialogComponent implements OnInit {
     } else if (isNaN(data.distance)) {
       this.toast.error('Distance must be a number');
     } else {
+      if (this.data.distance != this.distanceBeforeEdit) {
+        this.shoeService
+          .decreaseShoeMileage(
+            this.distanceBeforeEdit,
+            this.shoeBrand,
+            this.shoeName
+          )
+          .subscribe(() => {
+            this.shoeService
+              .increaseShoeMileage(
+                this.data.distance,
+                this.shoeBrand,
+                this.shoeName
+              )
+              .subscribe();
+          });
+      }
       this.subscriptions.add(
         this.runningService
           .editRun(
@@ -54,7 +83,8 @@ export class EditDialogComponent implements OnInit {
             data.distance,
             data.notes,
             data.rpe,
-            data.id
+            data.id,
+            data.shoe
           )
           .subscribe({
             error: (error) => console.log('caught an error: ', error),
@@ -71,6 +101,7 @@ export class EditDialogComponent implements OnInit {
         distance: data.distance,
         notes: data.notes,
         rpe: data.rpe,
+        shoe: data.shoe,
       },
       disableClose: true,
     });
@@ -83,14 +114,25 @@ export class EditDialogComponent implements OnInit {
               moment(data.date).format('YYYY-MM-DD'),
               data.distance,
               data.notes,
-              data.rpe
+              data.rpe,
+              data.shoe
             )
             .subscribe({
+              next: () => {
+                this.shoeService
+                  .decreaseShoeMileage(
+                    data.distance,
+                    this.shoeBrand,
+                    this.shoeName
+                  )
+                  .subscribe(() => {
+                    deleteDialogref.close('deleted run');
+                    this.dialogRef.close('deleted');
+                  });
+              },
               error: (error) => console.log('caught an error: ', error),
             })
         );
-        deleteDialogref.close('deleted run');
-        this.dialogRef.close('deleted');
       } else {
         deleteDialogref.close('cancelled delete');
       }
@@ -99,6 +141,10 @@ export class EditDialogComponent implements OnInit {
     deleteDialogref.afterClosed().subscribe((event) => {
       console.log(event);
     });
+  }
+
+  changeShoe(shoe: any) {
+    this.data.shoe = shoe.displayName;
   }
 
   ngOnDestroy() {

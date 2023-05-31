@@ -23,13 +23,15 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .centerDiv {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  height: 650px;
-  width: 500px;
+  // position: absolute;
+  // left: 50%;
+  // top: 50%;
+  // transform: translate(-50%, -50%);
+  // height: 650px;
+  // width: 500px;
   // padding: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .title {
@@ -71,8 +73,9 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .datePickerContainer {
+  display: grid;
   text-align: center;
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
 .distance {
@@ -93,8 +96,9 @@ $accentGreen: rgb(18, 128, 44);
   text-align: center;
   text-transform: uppercase;
   font-weight: 100;
-  font-size: 28px;
-  padding-top: 5px;
+  font-size: 14px;
+  margin: 0;
+  padding-right: 5px;
   padding-bottom: 15px;
 }
 
@@ -129,18 +133,39 @@ $accentGreen: rgb(18, 128, 44);
   justify-content: space-evenly;
 }
 
-.dialogDetails {
-  text-align: left;
-}
-
 .closeBtn {
   display: flex;
   justify-content: end;
 }
 
-.submitBtn {
+::ng-deep.mat-step-icon-content {
+  font-size: initial !important;
+}
+
+.log-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.navBtns {
   display: flex;
   justify-content: center;
-  padding-top: 50px;
-  scale: 1.2;
+  padding-top: 20px;
+
+  app-button {
+    margin: 5px;
+  }
+}
+
+.additionalContent {
+  padding-top: 30px;
+  display: grid;
+  justify-content: center;
+}
+
+.runReview {
+  display: grid;
+  justify-content: center;
+  font-size: medium;
+  font-weight: 400;
 }

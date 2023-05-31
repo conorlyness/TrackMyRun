@@ -1,4 +1,5 @@
-<div class="home-content">
+<div class="log-content">
+  <h1 class="title">Log run</h1>
   <app-button
     class="closeBtn"
     [icon]="'close'"
@@ -7,59 +8,135 @@
     [border]="true"
     [hoverColour]="'rgb(144, 30, 30)'"
   ></app-button>
-  <div class="centerDiv">
-    <h1 class="title">Log run</h1>
-    <div class="datePickerContainer">
-      <mat-form-field appearance="fill" class="datePicker">
-        <mat-label class="chooseDateText">Run Date</mat-label>
-        <input
-          class="pickerText"
-          matInput
-          [matDatepicker]="picker"
-          readonly
-          [formControl]="date"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker [startAt]="currentDate"></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="distance">
-        <mat-label class="addMilesText"
-          >Distance
-          <p class="miLabel">Mi</p></mat-label
-        >
-        <input
-          matInput
-          type="number"
-          min="1"
-          [(ngModel)]="distance"
-          class="distanceInput"
-          title="please enter positive numbers only"
-          autocomplete="off"
-          required="required"
-        />
-      </mat-form-field>
-      <mat-form-field appearance="fill" class="notes">
-        <mat-label class="addNotesText">Notes...</mat-label>
-        <input
-          matInput
-          [(ngModel)]="notes"
-          class="notesInput"
-          autocomplete="off"
-        />
-      </mat-form-field>
+</div>
+
+<mat-stepper
+  class="stepper"
+  [orientation]="(stepperOrientation | async)!"
+  [linear]="true"
+  #stepper
+>
+  <mat-step
+    label="Run Info"
+    [hasError]="!distance"
+    [errorMessage]="'Distance is Required'"
+  >
+    <div class="centerDiv">
+      <div class="datePickerContainer">
+        <mat-form-field appearance="fill" class="datePicker">
+          <mat-label class="chooseDateText">Run Date</mat-label>
+          <input
+            class="pickerText"
+            matInput
+            [matDatepicker]="picker"
+            readonly
+            [formControl]="date"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker [startAt]="currentDate"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="distance">
+          <mat-label class="addMilesText"
+            >Distance
+            <p class="miLabel">Mi</p></mat-label
+          >
+          <input
+            matInput
+            type="number"
+            min="1"
+            [(ngModel)]="distance"
+            class="distanceInput"
+            title="please enter positive numbers only"
+            autocomplete="off"
+            required="required"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="notes">
+          <mat-label class="addNotesText">Notes...</mat-label>
+          <input
+            matInput
+            [(ngModel)]="notes"
+            class="notesInput"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <div class="navBtns">
+          <app-button
+            class="nextBtn"
+            [icon]="'navigate_next'"
+            matStepperNext
+            [matStyle]="'mat-button'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="next()"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+  <mat-step label="Additional">
+    <div class="additionalContent">
       <app-effort-slider
         (effortValue)="storeEffort($event)"
       ></app-effort-slider>
-      <app-button
-        class="submitBtn"
-        [disabled]="distance != undefined && distance <= 0"
-        [customContent]="true"
-        [content]="'Submit' | uppercase"
-        [matStyle]="'mat-button'"
-        [border]="true"
-        [hoverColour]="'rgb(18, 128, 44)'"
-        (click)="confirmSelection()"
-      ></app-button>
+      <app-shoes (chosenShoe)="storeShoe($event)"></app-shoes>
+      <div class="navBtns">
+        <app-button
+          class="backBtn"
+          [icon]="'navigate_before'"
+          matStepperNext
+          [matStyle]="'mat-button'"
+          [hoverColour]="'rgb(18, 128, 44)'"
+          (clickEvnt)="previous()"
+        ></app-button>
+        <ng-container *ngIf="distance && shoe">
+          <app-button
+            class="nextBtn"
+            [icon]="'navigate_next'"
+            matStepperNext
+            [matStyle]="'mat-button'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="next()"
+          ></app-button>
+        </ng-container>
+      </div>
     </div>
-  </div>
-</div>
+  </mat-step>
+  <ng-container *ngIf="distance && shoe">
+    <mat-step label="Review">
+      <div>
+        <h1 class="areTheseCorrect">Are these details correct?</h1>
+        <hr class="horizontalSpacer" />
+        <div class="runReview">
+          <p class="dateText">
+            Completed on {{ date.value | date : "fullDate" }}
+          </p>
+          <p class="distanceText">Ran {{ distance }} Miles</p>
+          <p class="notesText">Run Notes: {{ notes || "N/A" }}</p>
+          <p class="rpeText">Percieved effort of {{ rpe }}</p>
+          <p class="shoesText">Shoes were {{ shoe }}</p>
+        </div>
+        <div class="navBtns">
+          <app-button
+            [icon]="'navigate_before'"
+            matStepperNext
+            [matStyle]="'mat-button'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="previous()"
+          ></app-button>
+          <app-button
+            [disabled]="distance != undefined && distance <= 0"
+            [customContent]="true"
+            [content]="'Submit' | uppercase"
+            [matStyle]="'mat-button'"
+            [border]="true"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (click)="confirmSelection()"
+          ></app-button>
+        </div>
+      </div>
+    </mat-step>
+  </ng-container>
+</mat-stepper>

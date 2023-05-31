@@ -23,6 +23,7 @@ export class ButtonComponent implements OnInit {
   @Input() content!: string | number;
   @Input() customClass!: string;
   @Input() toolTip!: string;
+  @Input() warning!: boolean;
   @Output() clickEvnt = new EventEmitter();
   @ViewChild('btn', { read: ElementRef }) btn!: ElementRef<HTMLButtonElement>;
 

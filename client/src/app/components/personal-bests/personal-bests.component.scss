@@ -19,6 +19,7 @@ table th {
 
 tr.tableRowDark {
   cursor: pointer;
+  font-weight: 300;
 
   &:hover {
     background-color: $darkBlue;
@@ -27,6 +28,7 @@ tr.tableRowDark {
 
 tr.tableRowLight {
   cursor: pointer;
+  font-weight: 300;
 
   &:hover {
     background-color: rgba(18, 128, 44, 0.76);

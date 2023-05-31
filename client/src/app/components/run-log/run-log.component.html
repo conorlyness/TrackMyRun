@@ -142,6 +142,12 @@
                 {{ run.RPE ? run.RPE : "N/A" }}
               </p>
             </div>
+            <div class="ShoesFromRun">
+              <h3 class="expandedRowTitle">Shoes Used for this run</h3>
+              <p class="expandedRowShoes">
+                {{ run.Shoe ? run.Shoe : "N/A" }}
+              </p>
+            </div>
           </div>
         </td>
       </ng-container>
@@ -188,6 +194,20 @@
       [content]="runningStreak"
       class="runningStreak"
     ></app-button>
+
+    <ng-container *ngIf="highMileageShoes.length > 0">
+      <app-button
+        [matStyle]="'mat-mini-fab'"
+        (clickEvnt)="openShoeInfoDialog()"
+        [toolTip]="'View high mileage shoe(s)'"
+        [hoverColour]="'rgba(242, 187, 67, 0.501)'"
+        [customContent]="true"
+        [customClass]="'material-symbols-outlined'"
+        [content]="'warning'"
+        class="highMileageButton"
+        [warning]="true"
+      ></app-button>
+    </ng-container>
   </div>
 
   <ng-container *ngIf="sortedData">

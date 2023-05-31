@@ -9,7 +9,7 @@ import { ToastrService } from 'ngx-toastr';
 import { FilterDialogComponent } from '../filter-dialog/filter-dialog.component';
 import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
-import { DistanceFilter, EditDialogData, Run, Range } from '../../types';
+import { DistanceFilter, EditDialogData, Run, Range, Shoe } from '../../types';
 import {
   animate,
   state,
@@ -21,6 +21,8 @@ import { MatTableExporterDirective } from 'mat-table-exporter';
 import { MatPaginator } from '@angular/material/paginator';
 import { LogRunComponent } from '../log-run/log-run.component';
 import { ThemeService } from 'src/app/services/theme.service';
+import { ShoesService } from 'src/app/services/shoes.service';
+import { HighMileageComponent } from '../shoes/high-mileage/high-mileage.component';
 
 @Component({
   selector: 'app-run-log',
@@ -55,6 +57,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
   rangePicker: boolean = false;
   darkTheme!: boolean;
   runningStreak!: number;
+  allShoes: Shoe[] = [];
+  highMileageShoes: Shoe[] = [];
   subscriptions = new Subscription();
 
   //pagination variables
@@ -71,7 +75,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
     private runningService: RunningDataService,
     public dialog: MatDialog,
     private toast: ToastrService,
-    private themeService: ThemeService
+    private themeService: ThemeService,
+    private shoeService: ShoesService
   ) {}
 
   ngOnInit(): void {
@@ -79,6 +84,16 @@ export class RunLogComponent implements OnInit, OnDestroy {
       this.darkTheme = theme;
     });
     this.showAllRunsOnStart();
+    this.shoeService.getAllShoes().subscribe((shoes) => {
+      this.allShoes = shoes;
+      this.allShoes.forEach((shoe) => {
+        if (shoe.Active) {
+          if (shoe.Distance > 300) {
+            this.highMileageShoes.push(shoe);
+          }
+        }
+      });
+    });
   }
 
   showAllRunsOnStart() {
@@ -184,7 +199,10 @@ export class RunLogComponent implements OnInit, OnDestroy {
         notes: data.notes,
         rpe: data.rpe,
         id: data.id,
+        shoe: data.shoe,
       },
+      width: '500px',
+      // height: '650px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -208,6 +226,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       notes: row.Notes,
       rpe: row.RPE,
       id: row.id,
+      shoe: row.Shoe,
     };
     this.openEditDialog(runObj);
   }
@@ -335,8 +354,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   openLogRun() {
     const dialogRef = this.dialog.open(LogRunComponent, {
-      width: '600px',
-      height: '750px',
+      width: '650px',
+      height: '650px',
       disableClose: true,
     });
 
@@ -410,6 +429,17 @@ export class RunLogComponent implements OnInit, OnDestroy {
     }
 
     this.runningStreak = runStreak;
+  }
+
+  openShoeInfoDialog() {
+    const dialogRef = this.dialog.open(HighMileageComponent, {
+      data: {
+        shoes: this.highMileageShoes,
+        disableClose: true,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe();
   }
 
   ngOnDestroy(): void {
