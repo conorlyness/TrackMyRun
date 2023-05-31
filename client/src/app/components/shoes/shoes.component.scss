@@ -1,0 +1,110 @@
+.shoeContent {
+  display: grid;
+  padding-top: 30px;
+  padding-bottom: 30px;
+}
+
+.addBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.shoeSelect {
+  font-size: 14px;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 14px;
+  margin: 0;
+  padding-right: 5px;
+  padding-bottom: 15px;
+}
+
+.titleInfo {
+  justify-content: center;
+  display: flex;
+}
+
+::ng-deep .mat-tooltip {
+  white-space: pre-line !important;
+}
+
+.cardContent {
+  display: flex;
+}
+
+.allShoeStatus {
+  display: block;
+  justify-content: center;
+
+  h4 {
+    text-align: center;
+  }
+}
+
+//table styles
+$darkBlue: #101820ff;
+
+table {
+  width: 100%;
+}
+
+::ng-deep tr {
+  font-size: 5px;
+  font-weight: 300;
+}
+
+table th {
+  // width: 100%;
+  font-style: italic;
+  font-size: 24px;
+  color: white !important;
+  background-color: $darkBlue;
+}
+
+.activeShoe {
+  background-color: rgba(7, 48, 14, 0.774);
+  font-weight: 300;
+  &:hover {
+    background-color: rgba(72, 175, 72, 0.774);
+  }
+}
+
+.retiredShoe {
+  background-color: rgba(85, 19, 19, 0.774);
+  font-weight: 300;
+  &:hover {
+    background-color: rgba(139, 49, 49, 0.774);
+  }
+}
+
+.columnHeader {
+  // text-align: left;
+}
+
+.contextMenu {
+}
+
+.shoeTable {
+}
+
+.shoeHeader {
+  width: 50%;
+}
+
+.distanceHeader {
+  width: 30%;
+}
+
+.actionsHeader {
+  width: 20%;
+}
+
+.analyticsAddBtn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+}
