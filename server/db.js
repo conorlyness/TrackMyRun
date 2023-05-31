@@ -82,16 +82,16 @@ class Database {
   logRun = async (run) => {
     try {
       let query = coreQueries.logRun.replace(
-        /({run.date})|({run.distance})|({run.notes})|({run.rpe})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.shoes})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
           if (match === '{run.notes}') return run.notes;
           if (match === '{run.rpe}') return run.rpe;
+          if (match === '{run.shoes}') return run.shoes;
         }
       );
       const result = await this.client.query(query);
-      console.log(result);
       return result;
     } catch (err) {
       console.log(err);
@@ -101,13 +101,14 @@ class Database {
   editRun = async (run) => {
     try {
       let query = coreQueries.editRun.replace(
-        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.id})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.id})|({run.shoe})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
           if (match === '{run.notes}') return run.notes;
           if (match === '{run.rpe}') return run.rpe;
           if (match === '{run.id}') return run.id;
+          if (match === '{run.shoe}') return run.shoe;
         }
       );
       const result = await this.client.query(query);
@@ -120,12 +121,13 @@ class Database {
   deleteRun = async (run) => {
     try {
       let query = coreQueries.deleteRun.replace(
-        /({run.date})|({run.distance})|({run.notes})|({run.rpe})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.shoe})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
           if (match === '{run.notes}') return run.notes;
           if (match === '{run.rpe}') return run.rpe;
+          if (match === '{run.shoe}') return run.shoe;
         }
       );
       const result = await this.client.query(query);
@@ -154,7 +156,6 @@ class Database {
         }
       );
       const result = await this.client.query(query);
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       console.log(err);
@@ -171,7 +172,6 @@ class Database {
         }
       );
       const result = await this.client.query(query);
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       console.log(err);
@@ -201,7 +201,6 @@ class Database {
       const result = await this.client.query(
         analyticsQueries.totalDistanceSoFarThisWeek
       );
-      console.log(result.rows[0]);
       return result.rows[0];
     } catch (err) {
       console.log(err);
@@ -251,6 +250,114 @@ class Database {
       return result.rows;
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  getAllShoes = async () => {
+    try {
+      const result = await this.client.query(coreQueries.viewAllShoes);
+      return result.rows;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  addNewShoes = async (shoe) => {
+    try {
+      let query = coreQueries.addNewShoes.replace(
+        /({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      console.log(result);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  increaseShoeDistance = async (shoe) => {
+    try {
+      let query = coreQueries.increaseShoeDistance.replace(
+        /({shoe.distance})|({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.distance}') return shoe.distance;
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  decreaseShoeDistance = async (shoe) => {
+    try {
+      let query = coreQueries.decreaseShoeDistance.replace(
+        /({shoe.distance})|({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.distance}') return shoe.distance;
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  reactivateShoe = async (shoe) => {
+    try {
+      let query = coreQueries.reactivateShoe.replace(
+        /({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  retireShoe = async (shoe) => {
+    try {
+      let query = coreQueries.retireShoe.replace(
+        /({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  deleteShoe = async (shoe) => {
+    try {
+      let query = coreQueries.deleteShoe.replace(
+        /({shoe.brand})|({shoe.name})/g,
+        function (match) {
+          if (match === '{shoe.brand}') return shoe.brand;
+          if (match === '{shoe.name}') return shoe.name;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
     }
   };
 }
