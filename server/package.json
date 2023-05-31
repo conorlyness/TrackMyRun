@@ -1,11 +1,12 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "description": "",
+  "description": "Server for Track my Run",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "pm2 start index.js --watch --log"
+    "start": "pm2 start index.js --watch --log",
+    "startDocker": "node index.js"
   },
   "author": "conor lyness",
   "license": "ISC",
