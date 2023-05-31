@@ -210,6 +210,69 @@ app.get('/last6MonthsTotal', async (req, res) => {
   res.status(404);
 });
 
+app.get('/allShoes', async (req, res) => {
+  console.log('calling /allShoes');
+  const result = await db.getAllShoes();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.post('/addShoe', async (req, res) => {
+  console.log('calling /addShoe');
+  const result = await db.addNewShoes(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/increaseShoeDistance', async (req, res) => {
+  console.log('calling /increaseShoeDistance');
+  const result = await db.increaseShoeDistance(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/decreaseShoeDistance', async (req, res) => {
+  console.log('calling /decreaseShoeDistance');
+  const result = await db.decreaseShoeDistance(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/retire', async (req, res) => {
+  console.log('calling /retire');
+  const result = await db.retireShoe(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/reactivate', async (req, res) => {
+  console.log('calling /reactivate');
+  const result = await db.reactivateShoe(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/deleteShoe', async (req, res) => {
+  console.log('calling /deleteShoe');
+  const result = await db.deleteShoe(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
 app.listen(API_PORT, () => {
   try {
     db.connect();
