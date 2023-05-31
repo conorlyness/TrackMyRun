@@ -19,6 +19,13 @@ export const environment = {
   currentWeekTotal: 'http://localhost:3001/currentWeekTotal',
   totalLast6Months: 'http://localhost:3001/last6MonthsTotal',
   imageUploadUrl: 'http://localhost:3001/api/upload',
+  getAllShoesUrl: 'http://localhost:3001/allShoes',
+  addNewShoesUrl: 'http://localhost:3001/addShoe',
+  increaseShoeMileageUrl: 'http://localhost:3001/increaseShoeDistance',
+  decreaseShoeMileageUrl: 'http://localhost:3001/decreaseShoeDistance',
+  retireShoeUrl: 'http://localhost:3001/retire',
+  reactivateShoeUrl: 'http://localhost:3001/reactivate',
+  deleteShoeUrl: 'http://localhost:3001/deleteShoe',
 };
 
 /*
