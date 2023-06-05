@@ -35,7 +35,7 @@ export class RunningDataService {
     return this.http.get<Run[]>(url, {}).pipe(
       map((runs) =>
         runs.filter(
-          (run) => run.Distance >= range.start && run.Distance <= range.end
+          (run) => run.distance >= range.start && run.distance <= range.end
         )
       ),
       retry(1),

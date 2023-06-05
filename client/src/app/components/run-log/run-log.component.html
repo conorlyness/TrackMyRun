@@ -1,130 +1,135 @@
 <div class="log-content">
-  <h1 class="logTitle">Running Log</h1>
-  <div class="contentCards">
-    <mat-card class="totalMiles" [ngClass]="{ cardMargin: rangePicker }">
-      Total Miles
-      <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
-      <div class="controlBtns">
-        <app-button
-          [matStyle]="'mat-fab'"
-          [toolTip]="'Filters'"
-          (clickEvnt)="openFilters()"
-          [border]="true"
-          [hoverColour]="'rgb(18, 128, 44)'"
-          [customContent]="true"
-          [customClass]="'material-symbols-outlined'"
-          [content]="'filter_alt'"
-        >
-        </app-button>
-        <app-button
-          [matStyle]="'mat-fab'"
-          [toolTip]="'Date range'"
-          (clickEvnt)="toggleRange()"
-          [border]="true"
-          [hoverColour]="'rgb(18, 128, 44)'"
-          [icon]="'date_range'"
-        >
-        </app-button>
-        <app-button
-          [matStyle]="'mat-fab'"
-          [toolTip]="'Log Run'"
-          (clickEvnt)="openLogRun()"
-          [border]="true"
-          [hoverColour]="'rgb(18, 128, 44)'"
-          [icon]="'add'"
-        >
-        </app-button>
+  <div class="navAndTable">
+    <div class="sideNav">
+      <div class="navContnet">
+        <div class="controlBtns">
+          <app-button
+            [matStyle]="'mat-fab'"
+            [toolTip]="'Log Run'"
+            (clickEvnt)="openLogRun()"
+            [border]="true"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            [icon]="'add'"
+          >
+          </app-button>
+          <mat-divider></mat-divider>
+          <app-button
+            [matStyle]="'mat-fab'"
+            [toolTip]="'Filters'"
+            (clickEvnt)="openFilters()"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'filter_alt'"
+          >
+          </app-button>
+          <mat-divider></mat-divider>
+          <app-button
+            [matStyle]="'mat-fab'"
+            [toolTip]="'Date range'"
+            (clickEvnt)="toggleRange()"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            [icon]="'date_range'"
+          >
+          </app-button>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="totalMiles">
+          <p>Total Miles</p>
+          <mat-divider></mat-divider>
+          <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
+        </div>
       </div>
-    </mat-card>
+    </div>
 
-    <ng-container *ngIf="rangePicker">
-      <mat-card class="dateRangeComp">
-        <app-date-range-picker
-          (clearSearches)="clearSearch()"
-          (searchRange)="search($event)"
-          [clearRange]="clearRangeObs$"
-        ></app-date-range-picker>
-      </mat-card>
-    </ng-container>
-  </div>
-
-  <div class="resultsTable">
-    <table
-      matTableExporter
-      #exporter="matTableExporter"
-      [hiddenColumns]="[2]"
-      mat-table
-      [dataSource]="
-        sortedData | paginate : { itemsPerPage: pageSize, currentPage: p }
-      "
-      matSort
-      (matSortChange)="sortData($event)"
-      multiTemplateDataRows
-    >
-      <ng-container matColumnDef="RunDate">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header="RunDate"
-          class="dateColumn"
-        >
-          Date
-        </th>
-        <td mat-cell *matCellDef="let run" class="dateData">
-          {{ run.RunDate | date : "fullDate" }}
-        </td>
+    <div class="resultsTable">
+      <ng-container *ngIf="rangePicker">
+        <div class="dateRangeComp">
+          <app-date-range-picker
+            (clearSearches)="clearSearch()"
+            (searchRange)="search($event)"
+            [clearRange]="clearRangeObs$"
+          ></app-date-range-picker>
+        </div>
       </ng-container>
-
-      <ng-container matColumnDef="Distance">
-        <th
-          mat-header-cell
-          *matHeaderCellDef
-          mat-sort-header="Distance"
-          class="distanceColumn"
-        >
-          Distance
-          <p class="miLabel">(Mi)</p>
-        </th>
-        <td mat-cell *matCellDef="let run" class="distanceData">
-          {{ run.Distance }}
-        </td>
-      </ng-container>
-
-      <ng-container matColumnDef="expand">
-        <th mat-header-cell *matHeaderCellDef class="notesColumn">Notes</th>
-        <td mat-cell *matCellDef="let run">
-          <button
-            class="expandRowBtn"
-            mat-mini-fab
-            (click)="expandRow($event, run)"
+      <table
+        matTableExporter
+        #exporter="matTableExporter"
+        [hiddenColumns]="[2]"
+        mat-table
+        [dataSource]="
+          sortedData | paginate : { itemsPerPage: pageSize, currentPage: p }
+        "
+        matSort
+        (matSortChange)="sortData($event)"
+        multiTemplateDataRows
+      >
+        <ng-container matColumnDef="RunDate">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="RunDate"
+            class="dateColumn"
           >
-            <mat-icon>{{
-              expandedRow !== run ? "keyboard_arrow_down" : "keyboard_arrow_up"
-            }}</mat-icon>
-          </button>
-        </td>
-      </ng-container>
+            Date
+          </th>
+          <td mat-cell *matCellDef="let run" class="dateData">
+            {{ run?.rundate | date : "fullDate" }}
+          </td>
+        </ng-container>
 
-      <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-      <ng-container matColumnDef="expandedDetail">
-        <td
-          mat-cell
-          *matCellDef="let run"
-          [attr.colspan]="columnsToDisplayWithExpand.length"
-        >
-          <div
-            class="expandedRowWithNotes"
-            [@detailExpand]="run == expandedRow ? 'expanded' : 'collapsed'"
+        <ng-container matColumnDef="Distance">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header="Distance"
+            class="distanceColumn"
           >
-            <div class="runNotesSection">
-              <h3 class="expandedRowTitle">Notes from this run</h3>
-              <p class="expandedRowNotes">
-                {{ run.Notes ? run.Notes : "N/A" }}
-              </p>
-              <div class="titleAndIcon">
-                <h3 class="rpeNotesTitle">Rated Perceived Exertion (RPE)</h3>
-                <mat-icon
-                  matTooltip="Rate of Perceived Exertion (RPE) refers to a 1-10 scale to self-report the intensity of an effort.
+            Distance
+            <p class="miLabel">(Mi)</p>
+          </th>
+          <td mat-cell *matCellDef="let run" class="distanceData">
+            {{ run?.distance }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="expand">
+          <th mat-header-cell *matHeaderCellDef class="notesColumn">Notes</th>
+          <td mat-cell *matCellDef="let run">
+            <button
+              class="expandRowBtn"
+              mat-mini-fab
+              (click)="expandRow($event, run)"
+            >
+              <mat-icon>{{
+                expandedRow !== run
+                  ? "keyboard_arrow_down"
+                  : "keyboard_arrow_up"
+              }}</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+        <ng-container matColumnDef="expandedDetail">
+          <td
+            mat-cell
+            *matCellDef="let run"
+            [attr.colspan]="columnsToDisplayWithExpand.length"
+          >
+            <div
+              class="expandedRowWithNotes"
+              [@detailExpand]="run == expandedRow ? 'expanded' : 'collapsed'"
+            >
+              <div class="runNotesSection">
+                <h3 class="expandedRowTitle">Notes from this run</h3>
+                <p class="expandedRowNotes">
+                  {{ run.notes ? run.notes : "N/A" }}
+                </p>
+                <div class="titleAndIcon">
+                  <h3 class="rpeNotesTitle">Rated Perceived Exertion (RPE)</h3>
+                  <mat-icon
+                    matTooltip="Rate of Perceived Exertion (RPE) refers to a 1-10 scale to self-report the intensity of an effort.
                   RPE 1-2: Recovery
                   RPE 3-4: Easy
                   RPE 5-6: Easy-Moderate
@@ -132,82 +137,49 @@
                   RPE 8: Moderate-Hard
                   RPE 9: Hard
                   RPE 10: Max Effort"
-                  matTooltipClass="rpeInfo"
-                  [matTooltipPosition]="'after'"
-                  >info</mat-icon
-                >
+                    matTooltipClass="rpeInfo"
+                    [matTooltipPosition]="'after'"
+                    >info</mat-icon
+                  >
+                </div>
+
+                <p class="expandedRowRpe">
+                  {{ run.rpe ? run.rpe : "N/A" }}
+                </p>
               </div>
-
-              <p class="expandedRowRpe">
-                {{ run.RPE ? run.RPE : "N/A" }}
-              </p>
+              <div class="ShoesFromRun">
+                <h3 class="expandedRowTitle">Shoes Used for this run</h3>
+                <p class="expandedRowShoes">
+                  {{ run.shoe ? run.shoe : "N/A" }}
+                </p>
+              </div>
             </div>
-            <div class="ShoesFromRun">
-              <h3 class="expandedRowTitle">Shoes Used for this run</h3>
-              <p class="expandedRowShoes">
-                {{ run.Shoe ? run.Shoe : "N/A" }}
-              </p>
-            </div>
-          </div>
-        </td>
-      </ng-container>
+          </td>
+        </ng-container>
 
-      <tr class="noDataRow" *matNoDataRow>
-        <td class="noData" [attr.colspan]="displayedColumns.length">
-          No data matching the filter.
-        </td>
-      </tr>
-      <tr
-        class="headerRows"
-        mat-header-row
-        *matHeaderRowDef="columnsToDisplayWithExpand; sticky: true"
-      ></tr>
-      <tr
-        mat-row
-        [ngClass]="{ tableRowDark: darkTheme, tableRowLight: !darkTheme }"
-        *matRowDef="let row; columns: columnsToDisplayWithExpand"
-        (click)="editRow(row)"
-      ></tr>
-      <tr
-        mat-row
-        *matRowDef="let row; columns: ['expandedDetail']"
-        class="notesRow"
-      ></tr>
-    </table>
-  </div>
-  <div class="groupedButtons">
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      (clickEvnt)="openExportDialog()"
-      [toolTip]="'Download current search'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [customClass]="'material-symbols-outlined'"
-      [content]="'download'"
-      class="downloadCsvButton"
-    ></app-button>
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      [toolTip]="'Current daily run streak'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [content]="runningStreak"
-      class="runningStreak"
-    ></app-button>
-
-    <ng-container *ngIf="highMileageShoes.length > 0">
-      <app-button
-        [matStyle]="'mat-mini-fab'"
-        (clickEvnt)="openShoeInfoDialog()"
-        [toolTip]="'View high mileage shoe(s)'"
-        [hoverColour]="'rgba(242, 187, 67, 0.501)'"
-        [customContent]="true"
-        [customClass]="'material-symbols-outlined'"
-        [content]="'warning'"
-        class="highMileageButton"
-        [warning]="true"
-      ></app-button>
-    </ng-container>
+        <tr class="noDataRow" *matNoDataRow>
+          <td class="noData" [attr.colspan]="displayedColumns.length">
+            No data matching the filter.
+          </td>
+        </tr>
+        <tr
+          class="headerRows"
+          mat-header-row
+          *matHeaderRowDef="columnsToDisplayWithExpand; sticky: true"
+        ></tr>
+        <tr
+          mat-row
+          [ngClass]="{ tableRowDark: darkTheme, tableRowLight: !darkTheme }"
+          *matRowDef="let row; columns: columnsToDisplayWithExpand"
+          (click)="editRow(row)"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['expandedDetail']"
+          class="notesRow"
+        ></tr>
+      </table>
+    </div>
   </div>
 
   <ng-container *ngIf="sortedData">
@@ -237,4 +209,37 @@
       </div>
     </ng-container>
   </ng-container>
+
+  <div class="groupedButtons">
+    <app-button
+      [matStyle]="'mat-mini-fab'"
+      (clickEvnt)="openExportDialog()"
+      [toolTip]="'Download current search'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customContent]="true"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'download'"
+      class="downloadCsvButton"
+    ></app-button>
+    <app-button
+      [matStyle]="'mat-mini-fab'"
+      [toolTip]="'Current daily run streak'"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customContent]="true"
+      [content]="runningStreak"
+      class="runningStreak"
+    ></app-button>
+    <app-button
+      *ngIf="highMileageShoes.length > 0"
+      [matStyle]="'mat-mini-fab'"
+      (clickEvnt)="openShoeInfoDialog()"
+      [toolTip]="'View high mileage shoe(s)'"
+      [hoverColour]="'rgba(242, 187, 67, 0.501)'"
+      [customContent]="true"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'warning'"
+      class="highMileageButton"
+      [warning]="true"
+    ></app-button>
+  </div>
 </div>

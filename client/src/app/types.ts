@@ -1,9 +1,9 @@
 export type Run = {
-  Distance: string;
-  Notes: String;
-  RunDate: string;
-  RPE: number;
-  Shoe: String;
+  distance: string;
+  notes: String;
+  rundate: string;
+  rpe: number;
+  shoe: String;
 };
 
 export type DistanceByDay = {
@@ -51,8 +51,8 @@ export type EditDialogData = {
 };
 
 export type PersonalBest = {
-  Distance: string;
-  Time: any;
+  distance: string;
+  time: any;
 };
 
 export type DistanceFilter = {
@@ -66,8 +66,8 @@ export type Range = {
 };
 
 export type Shoe = {
-  Brand: string;
-  Name: string;
-  Distance: number;
-  Active: boolean;
+  brand: string;
+  name: string;
+  distance: number;
+  active: boolean;
 };

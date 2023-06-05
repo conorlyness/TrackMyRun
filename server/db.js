@@ -17,8 +17,6 @@ class Database {
         database: config.database,
         port: config.port,
         ssl: config.ssl,
-        max: config.maxConnections,
-        idleTimeoutMillis: config.idleTimeout,
       });
       await this.client.connect();
       console.log('Connected to database successfully.');

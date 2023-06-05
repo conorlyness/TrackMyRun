@@ -23,13 +23,6 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .centerDiv {
-  // position: absolute;
-  // left: 50%;
-  // top: 50%;
-  // transform: translate(-50%, -50%);
-  // height: 650px;
-  // width: 500px;
-  // padding: 10px;
   display: flex;
   justify-content: center;
 }
@@ -121,16 +114,6 @@ $accentGreen: rgb(18, 128, 44);
 
 .dateText {
   @include dialogValues;
-}
-
-.dialogWrapper {
-  overflow: auto;
-}
-
-.dialogButtons {
-  padding-top: 100px;
-  display: flex;
-  justify-content: space-evenly;
 }
 
 .closeBtn {

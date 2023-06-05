@@ -79,21 +79,25 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="personalBestTile">
-      <div class="personalBestEfforts">
+    <mat-grid-tile>
+      <div class="personalBestTile">
         <p class="personalBestTitle">Best Efforts</p>
-        <app-personal-bests></app-personal-bests>
+        <div class="personalBestTable">
+          <app-personal-bests></app-personal-bests>
+        </div>
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="shoesTile" [colspan]="2">
-      <div class="allShoeContent">
+    <mat-grid-tile [colspan]="2">
+      <div class="allShoesTile">
         <p class="shoesTitle">Running Shoes</p>
-        <app-shoes [analyticMode]="true"></app-shoes>
+        <div class="shoeTable">
+          <app-shoes [analyticMode]="true"></app-shoes>
+        </div>
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="distanceByDayTile">
+    <mat-grid-tile>
       <p class="tileTitle">Total miles by day</p>
       <div class="distanceByDayPie">
         <canvas #distanceByDay></canvas>
