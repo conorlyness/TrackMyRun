@@ -12,8 +12,8 @@ The database can be installed locally or you can use an online hosted service. Y
 Copy the contents of this text file and execute this as a new sql query, ensure you use the query corresponding to your database choice. This will create the DB and all the required tables:  
 [SQL_TrackMyRun_DB_Creation.txt](https://github.com/conorlyness/TrackMyRun/files/10513324/SQL_TrackMyRun_DB_Creation.txt)
 
+<h1>Starting the server</h1>
 <ul>
-<h1> Starting the server </h1>
     <li>CD into server folder</li>  
     <li>run npm install</li>
     <li>run npm start to start the server</li>  
@@ -28,9 +28,8 @@ Go ahead and:</p>
     <li>run: docker build -t <NAME GOES HERE> .</li>
     <li>run: docker run --restart always -p 3001:3001 -d <NAME OF IMAGE></li>
 </ul>
-
-<ul>
 <h1>Starting the client </h1>
+<ul>
     <li>CD into client folder</li>  
     <li>run npm install</li>
     <li>run npm run build</li>
