@@ -43,9 +43,9 @@ export class ShoesComponent implements OnInit {
 
   setShoe(shoe: Shoe) {
     const chosenShoe = {
-      brand: shoe.Brand,
-      name: shoe.Name,
-      displayName: `${shoe.Brand} ${shoe.Name}`,
+      brand: shoe.brand,
+      name: shoe.name,
+      displayName: `${shoe.brand} ${shoe.name}`,
     };
     this.chosenShoe.emit(chosenShoe);
   }
@@ -74,10 +74,10 @@ export class ShoesComponent implements OnInit {
   retireShoe(shoe: Shoe) {
     console.log('going to retire shoe: ', shoe);
     this.shoeService
-      .updateShoeStatus(shoe.Brand, shoe.Name, true)
+      .updateShoeStatus(shoe.brand, shoe.name, true)
       .subscribe(() => {
         this.toast.info(
-          `${shoe.Brand} '' ${shoe.Name} has now been retired 👋`
+          `${shoe.brand} '' ${shoe.name} has now been retired 👋`
         );
         this.shoeService.getAllShoes().subscribe((shoes) => {
           this.shoes = shoes;
@@ -87,10 +87,10 @@ export class ShoesComponent implements OnInit {
 
   reactivateShoe(shoe: Shoe) {
     this.shoeService
-      .updateShoeStatus(shoe.Brand, shoe.Name, false)
+      .updateShoeStatus(shoe.brand, shoe.name, false)
       .subscribe(() => {
         this.toast.info(
-          `${shoe.Brand} '' ${shoe.Name} has now been reactivated 👟`
+          `${shoe.brand} '' ${shoe.name} has now been reactivated 👟`
         );
         this.shoeService.getAllShoes().subscribe((shoes) => {
           this.shoes = shoes;
@@ -99,8 +99,8 @@ export class ShoesComponent implements OnInit {
   }
 
   deleteShoe(shoe: Shoe) {
-    this.shoeService.deleteShoe(shoe.Brand, shoe.Name).subscribe(() => {
-      this.toast.info(`${shoe.Brand} '' ${shoe.Name} has been deleted`);
+    this.shoeService.deleteShoe(shoe.brand, shoe.name).subscribe(() => {
+      this.toast.info(`${shoe.brand} '' ${shoe.name} has been deleted`);
       this.shoeService.getAllShoes().subscribe((shoes) => {
         this.shoes = shoes;
       });

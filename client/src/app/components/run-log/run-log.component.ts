@@ -84,16 +84,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       this.darkTheme = theme;
     });
     this.showAllRunsOnStart();
-    this.shoeService.getAllShoes().subscribe((shoes) => {
-      this.allShoes = shoes;
-      this.allShoes.forEach((shoe) => {
-        if (shoe.Active) {
-          if (shoe.Distance > 300) {
-            this.highMileageShoes.push(shoe);
-          }
-        }
-      });
-    });
+    this.highMileageCheck();
   }
 
   showAllRunsOnStart() {
@@ -102,7 +93,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
         next: (runs: Array<Run>) => {
           this.runInfo = runs;
           this.runInfo.forEach((run) => {
-            this.totalMiles += Number(run.Distance);
+            this.totalMiles += Number(run.distance);
           });
           this.sortedData = this.runInfo.slice();
           this.calculateRunningStreak();
@@ -134,7 +125,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
           next: (runs: any) => {
             this.runInfo = runs;
             this.runInfo.forEach((run) => {
-              this.totalMiles += Number(run.Distance);
+              this.totalMiles += Number(run.distance);
             });
 
             this.sortedData = this.runInfo.slice();
@@ -151,7 +142,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       this.runningService.getRunsByDistance(range).subscribe((runs) => {
         this.runInfo = runs;
         this.runInfo.forEach((run) => {
-          this.totalMiles += Number(run.Distance);
+          this.totalMiles += Number(run.distance);
         });
         this.sortedData = this.runInfo.slice();
       })
@@ -174,12 +165,12 @@ export class RunLogComponent implements OnInit, OnDestroy {
       const isAsc = sort.direction === 'asc';
       switch (sort.active) {
         case 'RunDate':
-          return this.compare(a.RunDate, b.RunDate, isAsc);
+          return this.compare(a.rundate, b.rundate, isAsc);
         case 'Distance':
           if (isAsc) {
-            return Number(b.Distance - a.Distance);
+            return Number(b.distance - a.distance);
           } else {
-            return Number(a.Distance - b.Distance);
+            return Number(a.distance - b.distance);
           }
         default:
           return 0;
@@ -211,6 +202,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
         this.toast.success(`Successfully ${this.dialogAnswer}`);
         setTimeout(() => {
           this.totalMiles = 0;
+          this.highMileageCheck();
           this.showAllRunsOnStart();
         }, 50);
       } else {
@@ -221,12 +213,12 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   editRow(row: any) {
     const runObj = {
-      date: row.RunDate,
-      distance: row.Distance,
-      notes: row.Notes,
-      rpe: row.RPE,
+      date: row.rundate,
+      distance: row.distance,
+      notes: row.notes,
+      rpe: row.rpe,
       id: row.id,
-      shoe: row.Shoe,
+      shoe: row.shoe,
     };
     this.openEditDialog(runObj);
   }
@@ -310,7 +302,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
           next: (runs: Array<Run>) => {
             this.runInfo = runs;
             this.runInfo.forEach((run) => {
-              this.totalMiles += Number(run.Distance);
+              this.totalMiles += Number(run.distance);
             });
             this.sortedData = this.runInfo.slice();
           },
@@ -373,6 +365,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       if (event === 'cancel') {
       } else if (event === 'logged') {
         this.totalMiles = 0;
+        this.highMileageCheck();
         this.showAllRunsOnStart();
       }
     });
@@ -387,11 +380,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
     const runs = this.sortedData;
     let runStreak = 0;
     let todaysDate = new Date();
-
     //check if there is a run logged from today
     if (
-      moment(runs[0].RunDate).toString().substring(0, 10) ===
-      todaysDate.toString().substring(0, 10)
+      runs.length != 0 &&
+      moment(runs[0]?.rundate).toString().substring(0, 10) ===
+        todaysDate.toString().substring(0, 10)
     ) {
       runStreak++;
     }
@@ -403,7 +396,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
     );
 
     for (let i = 0; i < runs.length; i++) {
-      let runDate = moment(runs[i].RunDate);
+      let runDate = moment(runs[i].rundate);
       if (
         runDate.toString().substring(0, 10) ===
         yesterdaysDate.toString().substring(0, 10)
@@ -411,7 +404,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
         runStreak++;
         // continue checking previous days
         for (let j = i + 1; j >= 0; j++) {
-          let prevRunDate = moment(runs[j].RunDate);
+          let prevRunDate = moment(runs[j].rundate);
 
           // check if the previous run was on the day before the current run
           if (
@@ -440,6 +433,18 @@ export class RunLogComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe();
+  }
+
+  highMileageCheck() {
+    this.shoeService.getAllShoes().subscribe((shoes) => {
+      this.allShoes = shoes;
+      this.highMileageShoes = [];
+      this.allShoes.forEach((shoe) => {
+        if (shoe.active && shoe.distance > 300) {
+          this.highMileageShoes.push(shoe);
+        }
+      });
+    });
   }
 
   ngOnDestroy(): void {

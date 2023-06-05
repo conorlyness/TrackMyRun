@@ -2,8 +2,15 @@ $accentGreen: rgb(18, 128, 44);
 $darkBlue: #101820ff;
 
 .controlBtns {
-  display: flex;
-  justify-content: space-evenly;
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+
+  app-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
 }
 
 @mixin greenBoxShadow {
@@ -15,20 +22,25 @@ $darkBlue: #101820ff;
   min-height: calc(100vh - 64px);
 }
 
-.logTitle {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 100;
-  font-size: 28px;
-  padding-top: 5px;
+.navAndTable {
+  display: flex;
+  height: 750px;
+}
+
+.sideNav {
+  width: 100px;
+  min-height: calc(100vh - 64px);
+  background-color: none;
+  border-right: 1px solid $darkBlue;
+  z-index: 1;
 }
 
 .resultsTable {
   margin: 0 auto;
   width: 90%;
-  height: 600px;
   position: relative;
   overflow: auto;
+  margin-top: 30px;
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
     rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
@@ -100,8 +112,8 @@ table th {
 }
 
 .paginationControlsContainer {
-  justify-content: center;
   display: flex;
+  justify-content: center;
 }
 
 .pageSizeMatSelect {
@@ -109,41 +121,19 @@ table th {
   width: 50px;
 }
 
-.contentCards {
-  display: flex;
-  justify-content: center;
-  margin: 10px;
-}
-
 .totalMiles {
   text-align: center;
-  height: 75px;
-  width: fit-content;
-  margin-bottom: 40px;
-  font-weight: 200;
-}
-
-.cardMargin {
-  text-align: center;
-  height: 75px;
-  width: fit-content;
-  margin-bottom: 40px;
-  margin-right: 10px;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 30px;
 }
 
 .dateRangeComp {
-  text-align: center;
+  text-align: left;
   height: 75px;
   width: fit-content;
-  margin-bottom: 40px;
-}
-
-.dateRangeComp:hover {
-  @include greenBoxShadow;
-}
-
-.totalMiles:hover {
-  @include greenBoxShadow;
+  margin-top: 1px;
+  margin-bottom: 1px;
 }
 
 .mileage {
@@ -186,6 +176,7 @@ tr.notesRow {
   position: absolute;
   margin: 5px;
   display: flex;
+  z-index: 2;
 
   .downloadCsvButton {
     margin-right: 10px;

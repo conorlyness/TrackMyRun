@@ -1,7 +1,19 @@
-<mat-toolbar>
-  <img src="assets/WhiteTrackMyRun.png" alt="productBranding" />
+<mat-toolbar
+  [ngClass]="{
+    lightThemeToolbar: !toggleControl.value,
+    darkThemeToolbar: toggleControl.value
+  }"
+>
+  <div class="appTitle">
+    <a>T M R</a>
+  </div>
 
-  <div class="navMenu">
+  <div
+    [ngClass]="{
+      lightNavMenu: !toggleControl.value,
+      darkNavMenu: toggleControl.value
+    }"
+  >
     <a
       routerLink="/"
       routerLinkActive="activeLink"
@@ -21,10 +33,13 @@
       >Gallery</a
     >
   </div>
-  <div class="change-theme">
+  <div>
     <button
       (click)="switchTheme()"
-      class="changeThemeBtn"
+      [ngClass]="{
+        lightThemeBtn: !toggleControl.value,
+        darkThemeBtn: toggleControl.value
+      }"
       title="{{
         toggleControl.value ? 'Switch to light theme' : 'Switch to dark theme'
       }}"

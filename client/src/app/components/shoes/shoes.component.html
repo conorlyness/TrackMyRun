@@ -16,12 +16,12 @@
         <mat-label>Shoes</mat-label>
         <mat-select [(value)]="selectedShoe">
           <ng-container *ngFor="let shoe of shoes">
-            <ng-container *ngIf="shoe.Active">
+            <ng-container *ngIf="shoe.active">
               <mat-option
                 class="shoeOption"
                 (click)="setShoe(shoe)"
                 value="{{ shoe }}"
-                >{{ shoe.Brand }}{{ " " }}{{ shoe.Name }}</mat-option
+                >{{ shoe.brand }}{{ " " }}{{ shoe.name }}</mat-option
               >
             </ng-container>
           </ng-container>
@@ -49,15 +49,17 @@
       <ng-container matColumnDef="Name">
         <th mat-header-cell *matHeaderCellDef class="shoeHeader">Shoe</th>
         <td mat-cell *matCellDef="let shoe">
-          {{ shoe.Brand }}
-          {{ shoe.Name }}
+          {{ shoe.brand }}
+          {{ shoe.name }}
         </td>
       </ng-container>
       <ng-container matColumnDef="Distance">
         <th mat-header-cell *matHeaderCellDef class="distanceHeader">
           Distance
         </th>
-        <td mat-cell *matCellDef="let shoe">{{ shoe.Distance }} Miles</td>
+        <td mat-cell *matCellDef="let shoe">
+          {{ shoe.distance | number : "1.2-2" }} Miles
+        </td>
       </ng-container>
       <ng-container matColumnDef="options">
         <th mat-header-cell *matHeaderCellDef class="actionsHeader">Actions</th>
@@ -74,13 +76,13 @@
             <button mat-menu-item (click)="deleteShoe(shoe)">
               <p>Delete</p>
             </button>
-            <ng-container *ngIf="!shoe.Active">
+            <ng-container *ngIf="!shoe.active">
               <button mat-menu-item (click)="reactivateShoe(shoe)">
                 <p>Reactivate</p>
               </button>
             </ng-container>
 
-            <ng-container *ngIf="shoe.Active">
+            <ng-container *ngIf="shoe.active">
               <button mat-menu-item (click)="retireShoe(shoe)">
                 <p>Retire</p>
               </button>
@@ -91,7 +93,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr
-        [ngClass]="{ activeShoe: row.Active, retiredShoe: !row.Active }"
+        [ngClass]="{ activeShoe: row.active, retiredShoe: !row.active }"
         mat-row
         *matRowDef="let row; columns: displayedColumns"
       ></tr>

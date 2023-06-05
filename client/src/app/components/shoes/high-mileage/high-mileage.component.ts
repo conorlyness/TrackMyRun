@@ -16,7 +16,7 @@ export class HighMileageComponent implements OnInit {
 
   ngOnInit(): void {
     this.data.shoes.forEach((shoe: Shoe) => {
-      if (shoe.Distance > 300) {
+      if (shoe.distance > 300) {
         this.highMileageShoes.push(shoe);
       }
     });

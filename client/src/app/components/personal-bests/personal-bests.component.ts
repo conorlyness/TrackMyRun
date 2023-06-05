@@ -39,8 +39,8 @@ export class PersonalBestsComponent implements OnInit {
 
   editRow(row: PersonalBest) {
     const runObj = {
-      Distance: row.Distance,
-      Time: row.Time,
+      distance: row.distance,
+      time: row.time,
     };
     this.openEditPbDialog(runObj);
   }
@@ -48,15 +48,15 @@ export class PersonalBestsComponent implements OnInit {
   openEditPbDialog(data: PersonalBest) {
     const dialogRef = this.dialog.open(EditRecordComponent, {
       data: {
-        Distance: data.Distance,
-        Time: data.Time,
+        Distance: data.distance,
+        Time: data.time,
       },
       disableClose: true,
     });
 
     dialogRef.afterClosed().subscribe((val) => {
       if (val !== 'cancelled') {
-        this.runningService.editPb(val.Distance, val.Time).subscribe({
+        this.runningService.editPb(val.distance, val.time).subscribe({
           error: (error) => console.log('caught an error: ', error),
         });
         setTimeout(() => {

@@ -2,15 +2,59 @@ $darkBlue: #101820ff;
 $accentGreen: rgb(18, 128, 44);
 
 mat-toolbar {
-  background-color: $darkBlue !important;
+  // background-color: $darkBlue !important;
+  border-bottom: 1px solid $darkBlue;
+}
+
+.lightThemeToolbar {
+  color: black;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  background-color: #fafafa;
+  a {
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    display: inline-flex;
+    transition: all 0.2s ease-in-out;
+  }
+}
+
+.darkThemeToolbar {
   color: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 30px 10%;
+  background-color: #303030;
+  a {
+    color: white;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: 400;
+    display: inline-flex;
+    transition: all 0.2s ease-in-out;
+  }
 }
 
-.navMenu a {
+.lightNavMenu a {
+  color: black;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: 300;
+  display: inline-flex;
+  margin: 40px;
+  transition: all 0.2s ease-in-out;
+  &:hover {
+    color: $accentGreen;
+    cursor: pointer;
+  }
+}
+
+.darkNavMenu a {
   color: white;
   text-decoration: none;
   text-transform: uppercase;
@@ -18,23 +62,14 @@ mat-toolbar {
   display: inline-flex;
   margin: 40px;
   transition: all 0.2s ease-in-out;
-}
-
-.navMenu a:hover {
-  color: $accentGreen;
-  cursor: pointer;
-}
-
-img {
-  height: 64px;
+  &:hover {
+    color: $accentGreen;
+    cursor: pointer;
+  }
 }
 
 .activeLink {
   color: $accentGreen !important;
-}
-
-.change-theme {
-  color: white;
 }
 
 mat-slide-toggle {
@@ -46,13 +81,22 @@ mat-slide-toggle {
   margin-right: 2px;
 }
 
-.changeThemeBtn {
+.darkThemeBtn {
   display: flex;
   justify-content: center;
   align-items: center;
   background: transparent !important;
   border: none;
   border-left: solid 1px white !important;
+}
+
+.lightThemeBtn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent !important;
+  border: none;
+  border-left: solid 1px black !important;
 }
 
 .lightThemeBg {
@@ -63,7 +107,7 @@ mat-slide-toggle {
 }
 
 .darkThemeBg {
-  color: white;
+  color: black;
   &:hover {
     color: #8a8a8a;
   }

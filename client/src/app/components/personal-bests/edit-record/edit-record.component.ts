@@ -22,12 +22,12 @@ export class EditRecordComponent implements OnInit {
   seconds!: number;
 
   ngOnInit(): void {
-    if (this.data.Time === null || this.data.Time === 'undefined') {
+    if (this.data.time === null || this.data.time === 'undefined') {
       this.hours = 0;
       this.minutes = 0;
       this.seconds = 0;
     } else {
-      let splittedTime = this.data.Time.split(':');
+      let splittedTime = this.data.time.split(':');
       this.hours = splittedTime[0];
       this.minutes = splittedTime[1];
       this.seconds = splittedTime[2];
@@ -51,6 +51,6 @@ export class EditRecordComponent implements OnInit {
 
     // concatenate the parts of the time string with the appropriate separator
     const timeString = `${paddedHours}:${paddedMinutes}:${paddedSeconds}`;
-    this.data.Time = timeString;
+    this.data.time = timeString;
   }
 }
