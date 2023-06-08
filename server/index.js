@@ -63,21 +63,45 @@ app.post('/api/upload', upload.single('image'), function (req, res) {
     });
   } else {
     console.log('File is available!');
-    return res.send({
-      success: true,
-    });
+    return res.status(200).send(req.file.filename);
   }
+});
+
+app.post('/addImageToDb', async (req, res) => {
+  const imgToAdd = {
+    url: req.body.filename,
+    description: req.body.description,
+    tags: req.body.tags,
+  };
+
+  const insertImg = db.addImage(imgToAdd);
+  if (insertImg) {
+    return res.status(201).json(insertImg);
+  }
+  res.status(404);
 });
 
 app.get('/allImages', async (req, res) => {
   allImages = [];
   res.set('Content-Type', 'image/jpeg');
-  fs.readdirSync('./uploads').forEach((file) => {
-    var img = 'http://localhost:3001/' + file;
-    allImages.push(img);
-  });
-
-  res.send(allImages);
+  const imagesFromDb = await db.getAllImages();
+  if (imagesFromDb.rows) {
+    const allDbImages = imagesFromDb.rows;
+    fs.readdirSync(PATH).forEach((file) => {
+      allDbImages.forEach((imgObj) => {
+        if (imgObj.url == file) {
+          const filePath = 'http://localhost:3001/' + file;
+          const img = {
+            url: filePath,
+            description: imgObj.description,
+            tags: imgObj.tags,
+          };
+          allImages.push(img);
+        }
+      });
+    });
+    return res.status(201).json(allImages);
+  }
 });
 
 app.get('/allRuns', async (req, res) => {

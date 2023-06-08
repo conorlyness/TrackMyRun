@@ -358,6 +358,33 @@ class Database {
       console.log(err);
     }
   };
+
+  addImage = async (img) => {
+    try {
+      let query = coreQueries.addImage.replace(
+        /({img.url})|({img.description})|({img.tags})/g,
+        function (match) {
+          if (match === '{img.url}') return img.url;
+          if (match === '{img.description}') return img.description;
+          if (match === '{img.tags}') return img.tags;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getAllImages = async () => {
+    try {
+      let query = coreQueries.getAllImages;
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = new Database();

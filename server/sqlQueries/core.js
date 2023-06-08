@@ -13,6 +13,8 @@ let coreQueries = {
   reactivateShoe: `UPDATE public.shoes SET "active" = true WHERE "brand" = '{shoe.brand}' AND "name" = '{shoe.name}';`,
   retireShoe: `UPDATE public.shoes SET "active" = false WHERE "brand" = '{shoe.brand}' AND "name" = '{shoe.name}';`,
   deleteShoe: `DELETE FROM public.shoes WHERE "brand" = '{shoe.brand}' AND "name" = '{shoe.name}';`,
+  addImage: `Insert into public.images ("url", "description", "tags") values ('{img.url}', '{img.description}', '{img.tags}');`,
+  getAllImages: `SELECT * FROM public.images;`,
 };
 
 module.exports = coreQueries;

@@ -19,6 +19,7 @@ export const environment = {
   currentWeekTotal: 'http://localhost:3001/currentWeekTotal',
   totalLast6Months: 'http://localhost:3001/last6MonthsTotal',
   imageUploadUrl: 'http://localhost:3001/api/upload',
+  addImgToDbUrl: 'http://localhost:3001/addImageToDb',
   getAllShoesUrl: 'http://localhost:3001/allShoes',
   addNewShoesUrl: 'http://localhost:3001/addShoe',
   increaseShoeMileageUrl: 'http://localhost:3001/increaseShoeDistance',
