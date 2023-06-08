@@ -1,6 +1,29 @@
-<div class="dialogContent" mat-dialog-content>
-  <div class="closeBtn">
+<div class="dialogContent">
+  <div class="imgButtons">
     <app-button
+      class="zoom-in-btn"
+      (clickEvnt)="zoomIn()"
+      [customContent]="true"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'zoom_in'"
+      [matStyle]="'mat-mini-fab'"
+      [disabled]="zoomLevel == 150"
+      [toolTip]="'Zoom In'"
+    ></app-button>
+    <app-button
+      class="zoom-out-btn"
+      (clickEvnt)="zoomOut()"
+      [customContent]="true"
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [customClass]="'material-symbols-outlined'"
+      [content]="'zoom_out'"
+      [matStyle]="'mat-mini-fab'"
+      [disabled]="zoomLevel == 30"
+      [toolTip]="'Zoom Out'"
+    ></app-button>
+    <app-button
+      class="closeBtn"
       (clickEvnt)="onNoClick()"
       [customContent]="true"
       [border]="true"
@@ -10,8 +33,8 @@
       [matStyle]="'mat-mini-fab'"
     ></app-button>
   </div>
-
+  <p class="imgDescription">{{ data.description }}</p>
   <div class="imageContainer">
-    <img src="{{ data.image }}" alt="" />
+    <img #img src="{{ data.image }}" alt="{{ data.description }}" />
   </div>
 </div>

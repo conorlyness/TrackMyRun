@@ -1,0 +1,52 @@
+.imgUploaderContainer {
+  height: 500px;
+  width: 450px;
+}
+
+.file-upload {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  text-align: center;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+  padding-bottom: 15px;
+}
+
+.horizontalSpacer {
+  width: 318px;
+  opacity: 0.3;
+}
+
+.uploadBtns {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.hiddenUploader {
+  visibility: hidden;
+  position: absolute;
+  overflow: hidden;
+  width: 0px;
+  height: 0px;
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.fileChosenTag {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.imgInputs {
+  display: grid;
+  width: 350px;
+  font-size: 20px;
+}

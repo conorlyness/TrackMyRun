@@ -1,18 +1,43 @@
-.closeBtn {
+.dialogContent {
+  width: 950px;
+  height: auto; /* Remove fixed height */
+}
+
+.imgButtons {
   display: flex;
-  justify-content: end;
-  margin-bottom: 20px;
+  align-items: center;
+  justify-content: space-between;
+  border: none;
+  background-color: none;
+}
+
+.zoom-in-btn,
+.zoom-out-btn {
+  margin-right: 10px; /* Add margin to create spacing between buttons */
+}
+
+.closeBtn {
+  margin-left: auto; /* Push the button to the far right */
 }
 
 .imageContainer {
+  margin-top: 20px;
+  max-height: 800px;
+  max-width: 100%; /* Adjust to the desired width */
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: auto;
 }
 
-.imageContainer img {
-  height: 550px;
-  max-width: 100%;
+img {
+  height: 700px !important;
+  width: fit-content;
   object-fit: contain;
+}
+
+.imgDescription {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 300;
 }
