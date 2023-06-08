@@ -1,11 +1,9 @@
 $accentGreen: rgb(18, 128, 44);
+$darkBlue: #101820ff;
+
 .gallery-container {
   min-height: calc(100vh - 64px);
   flex-wrap: wrap;
-}
-
-.image {
-  padding: 5px;
 }
 
 .image img {
@@ -15,58 +13,188 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .imageGallery {
-  padding-top: 10px;
+  padding-top: 20px;
   box-sizing: border-box;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
 }
 
-.file-upload {
+.searchBar {
   display: flex;
   justify-content: center;
 }
 
-.uploadBtns {
+.uploadBtnContainer {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
 }
 
-.uploadContainer {
+.searchInput {
   width: 100%;
-  text-align: center;
-  padding-top: 10px;
 }
 
-.file-upload {
-  padding-top: 10px;
-  text-align: center;
-}
-
-.title {
-  text-align: center;
-  text-transform: uppercase;
-  font-weight: 100;
-  font-size: 28px;
-  padding-top: 5px;
-}
-
-.uploadTitle {
-  font-weight: 100;
-}
-
-.toggleUploadBtn {
+.imageContainer {
+  position: relative;
+  width: 1000px;
+  background-color: rgba(0, 0, 0, 0.459);
   display: flex;
   justify-content: center;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  img {
+    border-radius: 10px;
+    object-fit: scale-down;
+    width: 750px;
+    height: 600px;
+    overflow-y: auto;
+  }
 }
 
-.hiddenUploader {
-  visibility: hidden;
+.prevBtn,
+.nextBtn {
   position: absolute;
-  overflow: hidden;
-  width: 0px;
-  height: 0px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
   border: none;
-  margin: 0;
+  color: white;
+  font-size: 24px;
+}
+
+.prevBtn {
+  left: 10px;
+  &:hover {
+    color: $accentGreen;
+  }
+}
+
+.nextBtn {
+  right: 10px;
+  &:hover {
+    color: $accentGreen;
+  }
+}
+
+.image-indicators {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+}
+
+.image-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.473);
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.image-indicator.active {
+  background-color: rgb(255, 255, 255);
+}
+
+.noImageMessage {
+  text-align: center;
+}
+
+.imgTagContainer {
+  display: flex;
+  .matChip {
+    margin-right: 10px;
+    background-color: rgb(18, 128, 44);
+  }
+}
+
+.imgTagContainerCard {
+  height: 100px;
+  margin-top: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 300px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  .matChip {
+    margin: 10px;
+    background-color: rgb(18, 128, 44);
+  }
+}
+
+//search bar styles
+.searchBar {
+  padding-top: 10px;
+  text-align: center;
+}
+
+.searchInput {
+  width: 300px;
+  border: none;
   padding: 0;
+
+  input {
+    height: 30px;
+  }
+}
+
+.clearSearchButton {
+  border: none;
+  background-color: transparent;
+}
+
+.clearSearchButton:hover {
+  color: red;
+}
+
+.inputAndButton {
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-start,
+::ng-deep
+  .mat-form-field-appearance-outline.mat-focused
+  .mat-form-field-outline-end {
+  border-color: grey;
+}
+
+.mat-form-field-appearance-outline:not(.mat-form-field-disabled)
+  .mat-form-field-flex:hover
+  .mat-form-field-outline {
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+//img card styles
+.imgCardDescription {
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 200px; /* Adjust the max-width value as needed */
+}
+
+.searchResults {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Adjust the gap value as needed */
+}
+
+.cardImg {
+  display: flex;
+  height: 115px;
+  margin: auto;
+  width: 130px;
+  object-fit: contain;
+}
+
+.cardContainer {
+  height: 300px;
+  width: 200px;
+  margin: 10px;
+  border-bottom: 1px solid $darkBlue;
+  border-right: 1px solid $darkBlue;
 }

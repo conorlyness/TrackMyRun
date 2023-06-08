@@ -1,4 +1,10 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
 import { ImageService } from 'src/app/services/image.service';
 import {
@@ -9,83 +15,117 @@ import {
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { ImageViewerComponent } from './image-viewer/image-viewer.component';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { fromEvent } from 'rxjs/internal/observable/fromEvent';
+import { ImageUploaderComponent } from './image-uploader/image-uploader.component';
+import { Image } from 'src/app/types';
 const URL = environment.imageUploadUrl;
 
 export interface DialogData {
-  image: any;
+  image: string;
+  description: string;
+  tags: string;
 }
 
 @Component({
   selector: 'app-gallery',
   templateUrl: './gallery.component.html',
   styleUrls: ['./gallery.component.scss'],
+  animations: [
+    trigger('imageTransition', [
+      transition(':enter', [
+        style({ opacity: 0 }),
+        animate('500ms', style({ opacity: 1 })),
+      ]),
+      transition(':leave', [animate('500ms', style({ opacity: 0 }))]),
+    ]),
+  ],
 })
 export class GalleryComponent implements OnInit {
-  public uploader: FileUploader = new FileUploader({
-    url: URL,
-    itemAlias: 'image',
-  });
-
   constructor(
     private imageService: ImageService,
     public dialog: MatDialog,
     private toast: ToastrService
   ) {}
 
-  allImages!: any;
+  allImages: Image[] = [];
   dialogAnswer: any;
+  search: string = '';
+  original: Image[] = [];
   fileUpload: boolean = false;
-  fileNameDisplay?: File;
+  showCarousel: boolean = false;
+  isSearchMode: boolean = false;
+
+  @ViewChild('searchInput') searchInput!: ElementRef;
 
   ngOnInit(): void {
     this.getAllImages();
-
-    this.uploader.onAfterAddingFile = (file) => {
-      file.withCredentials = false;
-    };
-    this.uploader.onCompleteItem = (item: any, status: any) => {
-      console.log('Uploaded File Details:', item);
-      this.toast.success('Image uploaded successfully');
-      this.getAllImages();
-    };
-  }
-
-  onFileSelected(event: any) {
-    const file: File = event[0].name;
-    this.fileNameDisplay = file;
   }
 
   getAllImages() {
-    this.imageService.getAllImages().subscribe((image) => {
-      console.log('the images coming from the server: ', image);
-      this.allImages = image;
+    this.imageService.getAllImages().subscribe((images) => {
+      images.forEach((image: any) => {
+        const imgTags = image.tags.split(',');
+        image.tags = imgTags;
+      });
+      console.log(images);
+      this.allImages = images;
+      this.original = this.allImages;
+      this.showCarousel = true;
     });
   }
 
-  viewInNewTab(img: any) {
-    console.log('clicked: ', img);
-    window.open(img, '_blank')?.focus();
-  }
-
   viewSpecificImage(img: any) {
-    const imgObj = { image: img };
+    console.log('specific::', img);
+    const imgObj = {
+      image: img.url,
+      description: img.description,
+      tags: img.tags,
+    };
     this.openDialog(imgObj);
-  }
-
-  upload() {
-    this.uploader.uploadAll();
-    this.fileNameDisplay = undefined;
   }
 
   openDialog(data: any) {
     this.dialog.open(ImageViewerComponent, {
       data: {
         image: data.image,
+        description: data.description,
+        tags: data.tags,
       },
     });
   }
 
-  toggleUploader() {
+  openUploader() {
     this.fileUpload = !this.fileUpload;
+    const dialogRef = this.dialog.open(ImageUploaderComponent, {});
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result == 'getAllImages') {
+        this.getAllImages();
+      }
+    });
+  }
+
+  filterSearch(search: string) {
+    console.log('filter search with:', search);
+    let searchTerm = search.toLowerCase();
+
+    let filteredImages = this.original.filter((img: any) => {
+      const descriptionMatch = img.description
+        .toLowerCase()
+        .includes(searchTerm);
+      const tagsMatch = img.tags.some((tag: string) =>
+        tag.toLowerCase().includes(searchTerm)
+      );
+      return descriptionMatch || tagsMatch;
+    });
+
+    this.allImages = filteredImages;
+  }
+
+  clearSearch() {
+    this.searchInput.nativeElement.value = '';
+    this.search = '';
+    this.filterSearch('');
   }
 }

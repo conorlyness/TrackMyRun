@@ -51,6 +51,9 @@ import { ShoesComponent } from './components/shoes/shoes.component';
 import { AddNewShoeComponent } from './components/shoes/add-new-shoe/add-new-shoe.component';
 import { MatMenuModule } from '@angular/material/menu';
 import { HighMileageComponent } from './components/shoes/high-mileage/high-mileage.component';
+import { CarouselDirective } from './directives/carousel.directive';
+import { MatChipsModule } from '@angular/material/chips';
+import { ImageUploaderComponent } from './components/gallery/image-uploader/image-uploader.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +76,8 @@ import { HighMileageComponent } from './components/shoes/high-mileage/high-milea
     ShoesComponent,
     AddNewShoeComponent,
     HighMileageComponent,
+    CarouselDirective,
+    ImageUploaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -108,6 +113,7 @@ import { HighMileageComponent } from './components/shoes/high-mileage/high-milea
     MatStepperModule,
     MatDividerModule,
     MatMenuModule,
+    MatChipsModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

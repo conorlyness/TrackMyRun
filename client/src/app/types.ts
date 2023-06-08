@@ -71,3 +71,9 @@ export type Shoe = {
   distance: number;
   active: boolean;
 };
+
+export type Image = {
+  url: string;
+  description: string;
+  tags: string[];
+};

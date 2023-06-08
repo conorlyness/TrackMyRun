@@ -1,69 +1,124 @@
 <div class="gallery-container">
-  <div class="uploadContainer">
-    <h1 class="title">Gallery</h1>
-    <app-button
-      [customContent]="true"
-      [content]="fileUpload ? 'file_upload_off' : 'upload'"
-      [customClass]="'material-symbols-outlined'"
-      (clickEvnt)="toggleUploader()"
-      class="toggleUploadBtn"
-      [matStyle]="'mat-fab'"
-      [toolTip]="fileUpload ? 'Hide Upload' : 'Upload'"
-      [border]="true"
-      [hoverColour]="'rgb(18, 128, 44)'"
-    ></app-button>
-    <ng-container *ngIf="fileUpload">
-      <div class="file-upload">
-        <mat-card class="cardContent">
-          <h1 class="uploadTitle">Image Upload</h1>
-          <p>
-            File Chosen:
-            {{ fileNameDisplay ? fileNameDisplay : "None selected" }}
-          </p>
-          <div class="uploadBtns">
-            <div class="hiddenUploader">
-              <input
-                class="chooseFile"
-                type="file"
-                name="image"
-                ng2FileSelect
-                [uploader]="uploader"
-                accept="image/x-png,image/gif,image/jpeg"
-                (onFileSelected)="onFileSelected($event)"
-                #fileInput
-              />
-            </div>
-            <app-button
-              [customContent]="true"
-              [customClass]="'material-symbols-outlined'"
-              [content]="'folder_open'"
-              [border]="true"
-              [hoverColour]="'rgb(17, 103, 201)'"
-              [matStyle]="'mat-button'"
-              (clickEvnt)="fileInput.click()"
-              [toolTip]="'Choose file'"
-            ></app-button>
-            <app-button
-              [matStyle]="'mat-button'"
-              [border]="true"
-              [customContent]="true"
-              [customClass]="'material-symbols-outlined'"
-              [content]="'upload'"
-              [hoverColour]="'rgb(18, 128, 44)'"
-              [disabled]="!uploader.getNotUploadedItems().length"
-              (clickEvnt)="upload()"
-              [toolTip]="'Upload image'"
-            ></app-button>
+  <div class="controlsContainer">
+    <div class="searchBar" #content>
+      <form class="form">
+        <mat-form-field class="searchInput" appearance="outline">
+          <div class="inputAndButton">
+            <input
+              autocomplete="off"
+              #searchInput
+              type="search"
+              matInput
+              placeholder="Search..."
+              name="search"
+              (ngModelChange)="filterSearch($event)"
+              [(ngModel)]="search"
+            />
+            <ng-container *ngIf="searchInput.value.length > 0"
+              ><button class="clearSearchButton" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+              </button></ng-container
+            >
           </div>
-        </mat-card>
-      </div>
-    </ng-container>
+        </mat-form-field>
+      </form>
+    </div>
+
+    <div class="uploadBtnContainer">
+      <app-button
+        [customContent]="true"
+        [content]="'upload'"
+        [customClass]="'material-symbols-outlined'"
+        (clickEvnt)="openUploader()"
+        class="toggleUploadBtn"
+        [matStyle]="'mat-fab'"
+        [toolTip]="'Upload Image'"
+        [border]="true"
+        [hoverColour]="'rgb(18, 128, 44)'"
+      ></app-button>
+    </div>
   </div>
+
   <div class="imageGallery">
-    <ng-container *ngFor="let image of allImages">
-      <div class="image">
-        <img src="{{ image }}" alt="" (click)="viewSpecificImage(image)" />
+    <ng-container *ngIf="search.length > 0">
+      <div class="searchResults">
+        <ng-container *ngFor="let img of allImages">
+          <mat-card (click)="viewSpecificImage(img)" class="cardContainer">
+            <h3
+              class="imgCardDescription"
+              [matTooltipPosition]="'above'"
+              [matTooltip]="img.description"
+            >
+              {{ img.description }}
+            </h3>
+            <img class="cardImg" [src]="img.url" [alt]="img.description" />
+            <div class="imgTagContainerCard">
+              <ng-container *ngFor="let tag of img.tags">
+                <mat-chip-list>
+                  <mat-chip class="matChip">
+                    {{ tag }}
+                  </mat-chip>
+                </mat-chip-list>
+              </ng-container>
+            </div>
+          </mat-card>
+        </ng-container>
       </div>
     </ng-container>
+    <ng-container *ngIf="search.length == 0">
+      <ng-container *ngIf="showCarousel && allImages.length > 0; else noImages">
+        <div
+          *carousel="
+            allImages;
+            let img = currentImage;
+            let idx = currentIdx;
+            let ctrl = controller
+          "
+          class="carouselContainer"
+        >
+          <div class="imageContainer">
+            <button (click)="ctrl.prev()" class="prevBtn">
+              <span class="material-symbols-outlined"> arrow_back_ios </span>
+            </button>
+            <img
+              [@imageTransition]="'imageAnimation'"
+              [src]="img.url"
+              (click)="viewSpecificImage(img)"
+            />
+            <div class="image-indicators">
+              <ng-container *ngFor="let image of allImages; let i = index">
+                <span class="image-indicator" [class.active]="idx === i"></span>
+              </ng-container>
+            </div>
+            <button (click)="ctrl.next(true)" class="nextBtn">
+              <span class="material-symbols-outlined"> arrow_forward_ios </span>
+            </button>
+          </div>
+          <div class="imgTagContainer">
+            <ng-container *ngFor="let tag of img.tags">
+              <mat-chip-list>
+                <mat-chip class="matChip">
+                  {{ tag }}
+                </mat-chip>
+              </mat-chip-list>
+            </ng-container>
+          </div>
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #noImages>
+      <div class="noImageMessage">
+        <h3>Click on the upload button to get started!</h3>
+        <p>Please upload one image at a time.</p>
+      </div>
+    </ng-template>
+
+    <ng-template #noSearchResults>
+      <div class="noImageMessage">
+        <h3>No search results found</h3>
+        <p>Try to include key words or tags from an image</p>
+      </div>
+    </ng-template>
   </div>
 </div>
