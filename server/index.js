@@ -9,28 +9,11 @@ const API_PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
-//swagger stats
-var swStats = require('swagger-stats');
-var tlBucket = 60000;
-
-// Load your swagger specification
-// var apiSpec = require('./swagger.json');
-
-// Enable swagger-stats middleware
-app.use(
-  swStats.getMiddleware({
-    name: 'swagger-stats-TrackMyRun',
-    version: '0.99.2',
-    timelineBucketDuration: tlBucket,
-    uriPath: '/swagger-stats',
-    elasticsearch: 'http://127.0.0.1:9200',
-  })
-);
 
 //API routes
 
 app.get('/', function (req, res) {
-  res.redirect('/swagger-stats/');
+  res.send('WELCOME TO TMR SERVER');
 });
 
 // express.static to make the images im the upload folder accessible
@@ -297,7 +280,7 @@ app.post('/deleteShoe', async (req, res) => {
   res.status(404);
 });
 
-app.listen(API_PORT, () => {
+app.listen(3001, () => {
   try {
     db.connect();
     console.log(`listening on port ${API_PORT}`);
