@@ -48,7 +48,7 @@ class Database {
         await this.connect();
       });
     } catch (err) {
-      console.error('Error connecting to Bit.io database:', err.stack);
+      console.error('Error connecting to database:', err.stack);
     }
   };
 
