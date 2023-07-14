@@ -1,38 +1,27 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/internal/Observable';
 import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
-import { ElectronService } from 'ngx-electron';
+import { ElectronService } from './electron.service';
+import { Subject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ThemeService {
-  initialTheme!: boolean;
-
-  private themeSubject!: BehaviorSubject<boolean>;
+  private themeSubject!: Subject<boolean>;
   theme$?: Observable<boolean>;
-  darkThemePref!: string;
+  darkTheme?: boolean;
 
   constructor(private electronService: ElectronService) {
-    if (this.electronService.isElectronApp) {
-      this.darkThemePref =
-        this.electronService.ipcRenderer.sendSync('getThemeSettings');
-    } else {
-      this.darkThemePref = localStorage.getItem('sliderVal') || '';
-    }
-
-    if (this.darkThemePref === 'true') {
-      this.themeSubject = new BehaviorSubject(true);
-    } else {
-      this.themeSubject = new BehaviorSubject(false);
-    }
+    this.themeSubject = new Subject<boolean>();
+    this.theme$ = this.themeSubject?.asObservable();
   }
 
   setTheme(data: boolean) {
     this.themeSubject.next(data);
+    this.darkTheme = data;
   }
 
   getTheme() {
-    return (this.theme$ = this.themeSubject.asObservable());
+    return this.darkTheme;
   }
 }

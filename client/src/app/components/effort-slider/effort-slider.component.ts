@@ -13,7 +13,7 @@ export class EffortSliderComponent implements OnInit {
   step: number = 1;
   thumbLabel: boolean = false;
   showTicks: boolean = true;
-  darkTheme!: boolean;
+  darkTheme?: boolean;
   private _value: number = 1;
   @Output() effortValue: EventEmitter<number> = new EventEmitter();
   @Input() set value(value: number) {
@@ -23,10 +23,11 @@ export class EffortSliderComponent implements OnInit {
     return this._value;
   }
 
-  constructor(private ThemeService: ThemeService) {}
+  constructor(private themeService: ThemeService) {}
 
   ngOnInit(): void {
-    this.ThemeService.getTheme().subscribe((theme) => {
+    this.darkTheme = this.themeService.getTheme();
+    this.themeService.theme$?.subscribe((theme) => {
       this.darkTheme = theme;
     });
     this.effortValue.emit(this.value);
