@@ -21,10 +21,11 @@ export class PersonalBestsComponent implements OnInit {
 
   personalBests: any[] = [];
   displayedColumns: string[] = ['Distance', 'Time'];
-  darkTheme!: boolean;
+  darkTheme?: boolean;
 
   ngOnInit(): void {
-    this.themeService.getTheme().subscribe((theme) => {
+    this.darkTheme = this.themeService.getTheme();
+    this.themeService.theme$?.subscribe((theme) => {
       this.darkTheme = theme;
     });
 

@@ -55,7 +55,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   distanceFilter: DistanceFilter = { min: undefined, max: undefined };
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
-  darkTheme!: boolean;
+  darkTheme?: boolean;
   runningStreak!: number;
   allShoes: Shoe[] = [];
   highMileageShoes: Shoe[] = [];
@@ -80,7 +80,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.themeService.getTheme().subscribe((theme) => {
+    this.darkTheme = this.themeService.getTheme();
+    this.themeService.theme$?.subscribe((theme) => {
       this.darkTheme = theme;
     });
     this.showAllRunsOnStart();

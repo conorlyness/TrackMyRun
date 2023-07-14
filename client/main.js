@@ -17,13 +17,17 @@ fs.readFile(filePath, "utf8", (err, themeSettings) => {
   try {
     const settings = JSON.parse(themeSettings);
     darkThemeSetting = settings.darkTheme;
+    if (darkThemeSetting == "") {
+      //if its an empty string then this is the first time running the app (default to dark)
+      darkThemeSetting = "true";
+    }
   } catch (err) {
     console.log("Error parsing JSON string:", err);
   }
 });
 
 ipcMain.on("getThemeSettings", (event) => {
-  event.returnValue = darkThemeSetting;
+  event.sender.send("getThemeSettings", darkThemeSetting);
 });
 
 ipcMain.on("setThemeSettings", (event, value) => {
@@ -64,6 +68,8 @@ async function createWindow() {
       contextIsolation: false,
     },
   });
+  //uncomment if you want to have dev tools open
+  // win.webContents.openDevTools();
   win.removeMenu(true);
   win.maximize();
   win.loadFile("./dist/track-my-run/index.html");

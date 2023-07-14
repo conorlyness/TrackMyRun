@@ -1,8 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import * as moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
+import { ThemeService } from 'src/app/services/theme.service';
 import {
   DailyAvgMonthAndYear,
   DistanceByDay,
@@ -31,6 +38,8 @@ export class AnalyticsComponent implements OnInit {
   distanceByDayData: DistanceByDay[] = [];
   sixMonthTotalsData: SixMonthTotals[] = [];
   displayMonth: string = moment().month(moment().format('MMM')).format('MMMM');
+  darkTheme?: boolean;
+  pieRef?: any;
 
   months = {
     Jan: 1,
@@ -55,11 +64,21 @@ export class AnalyticsComponent implements OnInit {
   @ViewChild('sixMonthTotalsLine', { static: true })
   lineChartContainer!: ElementRef;
 
-  constructor(private analyticsService: AnalyticsService) {
+  constructor(
+    private analyticsService: AnalyticsService,
+    private themeService: ThemeService,
+    private cdr: ChangeDetectorRef
+  ) {
     Chart.register(ChartDataLabels);
   }
 
   ngOnInit(): void {
+    this.darkTheme = this.themeService.getTheme();
+    this.themeService.theme$?.subscribe((theme) => {
+      //we recall function to create pie chart because config has changed
+      this.distanceByDays();
+      this.darkTheme = theme;
+    });
     this.distanceByDays();
     this.last6MonthsTotals();
     this.totalDistanceRan();
@@ -148,7 +167,19 @@ export class AnalyticsComponent implements OnInit {
   populateDistanceByDayPie() {
     console.log(this.distanceByDayData);
     let ctx = this.pieChartContainer.nativeElement.getContext('2d');
-    new Chart(ctx, {
+    // Destroy the previous Chart object, if it exists
+    if (this.pieRef) {
+      this.pieRef.destroy();
+    }
+
+    // Clear the canvas
+    ctx.clearRect(
+      0,
+      0,
+      this.pieChartContainer.nativeElement.width,
+      this.pieChartContainer.nativeElement.height
+    );
+    this.pieRef = new Chart(ctx, {
       type: 'pie',
       data: {
         labels: this.distanceByDayData.map((x) => x.day_of_week),
@@ -175,16 +206,16 @@ export class AnalyticsComponent implements OnInit {
           datalabels: {
             display: false,
             labels: {
-              // value: {
-              //   color: 'black',
-              // },
+              value: {
+                color: this.darkTheme ? 'white' : 'black',
+              },
             },
           },
           legend: {
             position: 'bottom',
             align: 'center',
             labels: {
-              color: 'rgb(54, 162, 23)',
+              color: this.darkTheme ? 'white' : 'black',
               boxWidth: 15,
               font: {
                 size: 12,
