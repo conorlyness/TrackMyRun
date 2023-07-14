@@ -10,7 +10,9 @@ The database can be installed locally or you can use an online hosted service. Y
 3. DB_HOST = <The host for the db, eg. localhost or the address if its hosted online>
 
 Copy the contents of this text file and execute this as a new sql query, ensure you use the query corresponding to your database choice. This will create the DB and all the required tables:  
-[SQL_TrackMyRun_DB_Creation.txt](https://github.com/conorlyness/TrackMyRun/files/10513324/SQL_TrackMyRun_DB_Creation.txt)
+[SQL_TrackMyRun_DB_Creation.txt](https://github.com/conorlyness/TrackMyRun/files/12053439/SQL_TrackMyRun_DB_Creation.txt)
+
+
 
 <h1>Starting the server</h1>
 <ul>
@@ -42,3 +44,6 @@ Go ahead and:</p>
     node_modules/ngx-electron/lib/electron.service.d.ts and comment out the 'readonly remote: Electron.Remote;' and then try to rebuild
     
 *****************************************
+What to Expect from the app:
+![log](https://github.com/conorlyness/TrackMyRun/assets/56432950/2eb37831-8900-4f49-ac0c-a7d1afe56b23)
+![analyticsDash](https://github.com/conorlyness/TrackMyRun/assets/56432950/7673a484-8979-47c3-ba25-296343fa74e5)
