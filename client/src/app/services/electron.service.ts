@@ -18,21 +18,30 @@ export class ElectronService {
       console.warn("Electron's IPC was not loaded");
     }
   }
+
   public on(channel: string, listener: any): void {
+    console.log('Setting up IPC listener for channel:', channel);
     if (!this._ipc) {
+      console.warn("Electron's IPC was not loaded");
       return;
     }
-    this._ipc.on(channel, listener);
+
+    this._ipc.on(channel, (event, ...args) => {
+      console.log(`Received IPC message on channel ${channel}:`, ...args);
+      listener(event, ...args);
+    });
   }
 
   public send(channel: string, ...args: any[]): void {
+    console.log('Sending IPC message on channel:', channel);
     if (!this._ipc) {
       return;
     }
-    this._ipc.sendSync(channel, ...args);
+    this._ipc.send(channel, ...args);
   }
 
   public onOnce(channel: string): Promise<any> {
+    console.log('Setting up one-time IPC listener for channel:', channel);
     return new Promise((resolve, reject) => {
       if (!this._ipc) {
         reject(new Error("Electron's IPC is not available."));
@@ -43,7 +52,13 @@ export class ElectronService {
         if (this._ipc) {
           this._ipc.off(channel, onceListener);
         }
-        resolve.apply(null, [args]);
+        console.log(
+          'Received IPC message on channel:',
+          channel,
+          'with args:',
+          args
+        );
+        resolve(args);
       };
 
       this._ipc.once(channel, onceListener);

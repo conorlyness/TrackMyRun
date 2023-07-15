@@ -35,7 +35,6 @@ import { AnalyticsComponent } from './components/analytics/analytics.component';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MonthYearSelectsComponent } from './components/month-year-selects/month-year-selects.component';
-import { NgxElectronModule } from 'ngx-electron';
 import { ButtonComponent } from './components/button/button.component';
 import { DeleteRunComponent } from './components/delete-run/delete-run.component';
 import { EffortSliderComponent } from './components/effort-slider/effort-slider.component';
@@ -54,6 +53,7 @@ import { HighMileageComponent } from './components/shoes/high-mileage/high-milea
 import { CarouselDirective } from './directives/carousel.directive';
 import { MatChipsModule } from '@angular/material/chips';
 import { ImageUploaderComponent } from './components/gallery/image-uploader/image-uploader.component';
+import { ElectronService } from './services/electron.service';
 
 @NgModule({
   declarations: [
@@ -106,7 +106,6 @@ import { ImageUploaderComponent } from './components/gallery/image-uploader/imag
     MatTableExporterModule,
     MatGridListModule,
     MatSlideToggleModule,
-    NgxElectronModule,
     MatSliderModule,
     MatTooltipModule,
     MatExpansionModule,
@@ -118,7 +117,7 @@ import { ImageUploaderComponent } from './components/gallery/image-uploader/imag
       positionClass: 'toast-top-right',
     }),
   ],
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, ElectronService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
