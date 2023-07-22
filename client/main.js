@@ -4,7 +4,7 @@ const fs = require("fs");
 const url = require("url");
 let darkThemeSetting = "true";
 const directoryPath = __dirname;
-const fileName = "themeSettings.json";
+const fileName = "/themeSettings.json";
 const filePath = path.join(directoryPath, fileName);
 
 let splashWindow;
@@ -78,7 +78,6 @@ function createSplashWindow() {
   const loadingUrl = url.format({
     pathname: path.join(
       __dirname,
-      "../",
       "angular-electron",
       "dist",
       "angular-electron",
@@ -102,7 +101,7 @@ function createSplashWindow() {
 
 let tray = null;
 app.whenReady().then(() => {
-  tray = new Tray("./src/assets/TMR.ico");
+  tray = new Tray(path.join(__dirname, "./src/assets/TMR.ico"));
   const contextMenu = Menu.buildFromTemplate([
     // leave out the show more tray menu option until component is completed
     // { label: "More Info", click: () => showMoreInfoWindow() },
@@ -118,7 +117,7 @@ function showMoreInfoWindow() {
   moreInfoWindow = new BrowserWindow({
     width: 700,
     height: 600,
-    icon: "./src/assets/TMR.ico",
+    icon: path.join(__dirname, "./src/assets/TMR.ico"),
     frame: false,
     transparent: false,
     alwaysOnTop: true,
@@ -135,7 +134,7 @@ function showMoreInfoWindow() {
   const moreUrl = url.format({
     pathname: path.join(
       __dirname,
-      "../angular-electron/dist/angular-electron/index.html"
+      "angular-electron/dist/angular-electron/index.html"
     ),
     protocol: "file:",
     slashes: true,
