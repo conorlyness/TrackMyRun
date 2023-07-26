@@ -6,15 +6,24 @@ let darkThemeSetting = "true";
 const directoryPath = __dirname;
 const fileName = "/themeSettings.json";
 const filePath = path.join(directoryPath, fileName);
+const log = require("electron-log");
+//Set the log level (suggested: error, warn, info, verbose, debug, silly)
+log.transports.file.level = "debug";
+
+//Customize the log format
+log.transports.file.format = "{h}:{i}:{s} [{level}]: {text}";
+log.transports.file.maxSize = 5 * 1024 * 1024; // Max file size in bytes
+log.transports.file.maxDays = 7; // Max number of days to keep log files
 
 let splashWindow;
 let mainWindow;
 
 function readThemeSettings() {
+  log.info("Getting theme settings");
   return new Promise((resolve, reject) => {
     fs.readFile(filePath, "utf8", (err, themeSettings) => {
       if (err) {
-        console.log("Error reading file from disk:", err);
+        log.error("Error reading file from disk:", err);
         reject(err);
       } else {
         try {
@@ -25,7 +34,7 @@ function readThemeSettings() {
           }
           resolve();
         } catch (err) {
-          console.log("Error parsing JSON string:", err);
+          log.error("Error parsing JSON string:", err);
           reject(err);
         }
       }
@@ -51,6 +60,7 @@ async function createWindow() {
   mainWindow.loadFile("./dist/track-my-run/index.html");
 
   mainWindow.once("ready-to-show", () => {
+    log.info("Main window ready");
     setTimeout(() => {
       splashWindow.close();
       mainWindow.show();
@@ -59,6 +69,14 @@ async function createWindow() {
       mainWindow.removeMenu(true);
       mainWindow.maximize();
     }, 1000);
+  });
+
+  mainWindow.webContents.on("render-process-gone", (event, details) => {
+    log.error("render process gone", details.reason);
+  });
+
+  mainWindow.webContents.on("destroyed", () => {
+    log.error("Web contents destroyed");
   });
 }
 
@@ -166,10 +184,10 @@ ipcMain.on("getThemeSettings", (event) => {
 
 ipcMain.on("setThemeSettings", (event, value) => {
   themeVal = value;
-  console.log("going to set theme to: ", themeVal);
+  log.info("going to set theme to: ", themeVal);
   fs.readFile(filePath, (err, settings) => {
     if (err) {
-      console.log("Error reading file:", err);
+      log.error("Error reading file:", err);
       return;
     }
     try {
@@ -180,12 +198,12 @@ ipcMain.on("setThemeSettings", (event, value) => {
         filePath,
         JSON.stringify(darkThemeSetting, null, 2),
         (err) => {
-          if (err) console.log("Error writing file:", err);
+          if (err) log.error("Error writing file:", err);
           event.returnValue = darkThemeSetting.darkTheme;
         }
       );
     } catch (err) {
-      console.log("Error parsing JSON string:", err);
+      log.error("Error parsing JSON string:", err);
     }
   });
 });
