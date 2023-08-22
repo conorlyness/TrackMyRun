@@ -28,7 +28,7 @@
           <p>{{ shoe.brand }} {{ shoe.name }}</p>
           <div class="shoeMileage">
             <p>Mileage:</p>
-            <p class="distanceText">{{ shoe.distance }}</p>
+            <p class="distanceText">{{ shoe.distance | number : "1.2-2" }}</p>
           </div>
         </div>
       </mat-card>
