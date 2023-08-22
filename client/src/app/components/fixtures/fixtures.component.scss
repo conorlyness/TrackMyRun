@@ -1,0 +1,20 @@
+.fixturesContainer {
+  height: auto;
+  flex-wrap: wrap;
+}
+
+.frameContainer {
+  display: flex; /* or display: grid; */
+  align-items: center; /* Horizontally center */
+  justify-content: center; /* Vertically center */
+  height: calc(100vh - 64px); /* Adjust for header height */
+  overflow: auto; /* Automatically show scrollbar when content overflows */
+}
+
+.frame {
+  width: 80%; /* Set the width of the iframe */
+  height: 80%; /* Set the height of the iframe */
+  margin: 0; /* Reset margin */
+  padding: 0; /* Reset padding */
+  border: none; /* Remove border if needed */
+}

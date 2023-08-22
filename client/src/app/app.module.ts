@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { MaterialExampleModule } from '../material.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,7 +14,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatInputModule } from '@angular/material/input';
-import { MaterialExampleModule } from '../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -54,6 +54,7 @@ import { CarouselDirective } from './directives/carousel.directive';
 import { MatChipsModule } from '@angular/material/chips';
 import { ImageUploaderComponent } from './components/gallery/image-uploader/image-uploader.component';
 import { ElectronService } from './services/electron.service';
+import { FixturesComponent } from './components/fixtures/fixtures.component';
 
 @NgModule({
   declarations: [
@@ -78,8 +79,10 @@ import { ElectronService } from './services/electron.service';
     HighMileageComponent,
     CarouselDirective,
     ImageUploaderComponent,
+    FixturesComponent,
   ],
   imports: [
+    MaterialExampleModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -92,7 +95,6 @@ import { ElectronService } from './services/electron.service';
     BrowserAnimationsModule,
     MatNativeDateModule,
     MatInputModule,
-    MaterialExampleModule,
     FormsModule,
     ReactiveFormsModule,
     MatSnackBarModule,
