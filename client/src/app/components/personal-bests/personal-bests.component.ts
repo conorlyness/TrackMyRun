@@ -49,8 +49,8 @@ export class PersonalBestsComponent implements OnInit {
   openEditPbDialog(data: PersonalBest) {
     const dialogRef = this.dialog.open(EditRecordComponent, {
       data: {
-        Distance: data.distance,
-        Time: data.time,
+        distance: data.distance,
+        time: data.time,
       },
       disableClose: true,
     });
