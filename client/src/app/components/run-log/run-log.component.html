@@ -14,13 +14,15 @@
           </app-button>
           <mat-divider></mat-divider>
           <app-button
-            [matStyle]="'mat-fab'"
+            [matStyle]="'mat-fab-badge'"
             [toolTip]="'Filters'"
             (clickEvnt)="openFilters()"
             [hoverColour]="'rgb(18, 128, 44)'"
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
             [content]="'filter_alt'"
+            [badge]="'1'"
+            [badgeHidden]="badgeHidden"
           >
           </app-button>
           <mat-divider></mat-divider>

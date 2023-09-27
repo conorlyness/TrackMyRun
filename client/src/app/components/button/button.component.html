@@ -64,3 +64,27 @@
     </mat-icon>
   </button>
 </ng-container>
+
+<ng-container *ngIf="matStyle === 'mat-fab-badge'">
+  <button
+    #btn
+    mat-fab
+    class="fabBtn"
+    [ngClass]="{ borderBtn: border, warning: warning }"
+    [disabled]="disabled"
+    (click)="onClick()"
+    (mouseover)="onMouseOver()"
+    (mouseleave)="onMouseLeave()"
+    matTooltip="{{ toolTip }}"
+    [matBadge]="badge"
+    [matBadgeHidden]="badgeHidden"
+  >
+    <span *ngIf="customContent" class="{{ customClass }}">
+      {{ content }}
+    </span>
+
+    <mat-icon *ngIf="!customContent">
+      {{ icon }}
+    </mat-icon>
+  </button>
+</ng-container>

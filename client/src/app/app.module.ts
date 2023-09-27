@@ -55,6 +55,7 @@ import { MatChipsModule } from '@angular/material/chips';
 import { ImageUploaderComponent } from './components/gallery/image-uploader/image-uploader.component';
 import { ElectronService } from './services/electron.service';
 import { FixturesComponent } from './components/fixtures/fixtures.component';
+import { MatBadgeModule } from '@angular/material/badge';
 
 @NgModule({
   declarations: [
@@ -115,6 +116,7 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
     MatDividerModule,
     MatMenuModule,
     MatChipsModule,
+    MatBadgeModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),

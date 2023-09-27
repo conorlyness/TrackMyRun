@@ -24,6 +24,8 @@ export class ButtonComponent implements OnInit {
   @Input() customClass!: string;
   @Input() toolTip!: string;
   @Input() warning!: boolean;
+  @Input() badge!: string;
+  @Input() badgeHidden!: boolean;
   @Output() clickEvnt = new EventEmitter();
   @ViewChild('btn', { read: ElementRef }) btn!: ElementRef<HTMLButtonElement>;
 

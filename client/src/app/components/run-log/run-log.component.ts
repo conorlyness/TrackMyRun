@@ -59,6 +59,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   runningStreak!: number;
   allShoes: Shoe[] = [];
   highMileageShoes: Shoe[] = [];
+  badgeHidden: boolean = true;
   subscriptions = new Subscription();
 
   //pagination variables
@@ -251,18 +252,22 @@ export class RunLogComponent implements OnInit, OnDestroy {
       } else {
         console.log(this.dialogAnswer);
         if (this.dialogAnswer.last7) {
+          this.badgeHidden = false;
           this.last7Filter = true;
           this.SearchFromSetDaysAgo(7);
           this.toast.info('Showing runs from last 7 days');
         } else if (this.dialogAnswer.last14) {
+          this.badgeHidden = false;
           this.last14Filter = true;
           this.SearchFromSetDaysAgo(14);
           this.toast.info('Showing runs from last 14 days');
         } else if (this.dialogAnswer.last30) {
+          this.badgeHidden = false;
           this.last30Filter = true;
           this.SearchFromSetDaysAgo(30);
           this.toast.info('Showing runs from last 30 days');
         } else if (this.dialogAnswer.resetToDefault) {
+          this.badgeHidden = true;
           this.last7Filter = false;
           this.last14Filter = false;
           this.last30Filter = false;
@@ -273,6 +278,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
           }
           this.clearSearch();
         } else if (min != undefined && max != undefined) {
+          this.badgeHidden = false;
           const range: Range = {
             start: min,
             end: max,
