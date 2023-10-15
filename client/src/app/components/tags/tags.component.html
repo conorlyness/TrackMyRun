@@ -1,0 +1,35 @@
+<div class="tagsContent">
+  <mat-form-field class="runTags" appearance="fill">
+    <mat-label class="addTagsText">Tags</mat-label>
+    <mat-chip-list #chipList>
+      <mat-chip
+        *ngFor="let tag of tags"
+        (removed)="remove(tag)"
+        class="customChipText"
+      >
+        {{ tag }}
+        <button matChipRemove>
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        matTooltip="Start typing to create a tag, press enter or use a comma to confirm your tag"
+        [maxlength]="20"
+        #tagInput
+        [formControl]="tagCtrl"
+        [matAutocomplete]="auto"
+        [matChipInputFor]="chipList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
+    >
+      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+        {{ tag }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
+</div>

@@ -41,7 +41,7 @@ import { HighMileageComponent } from '../shoes/high-mileage/high-mileage.compone
 })
 export class RunLogComponent implements OnInit, OnDestroy {
   private clearRangeSubject: Subject<boolean> = new Subject();
-  displayedColumns: string[] = ['RunDate', 'Distance'];
+  displayedColumns: string[] = ['RunDate', 'Distance', 'Tags'];
   columnsToDisplayWithExpand = [...this.displayedColumns, 'expand'];
   expandedRow!: Run | null;
   runInfo: Run[] = [];
@@ -193,6 +193,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
         rpe: data.rpe,
         id: data.id,
         shoe: data.shoe,
+        tags: data.tags,
       },
       width: '500px',
       // height: '650px',
@@ -221,6 +222,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       rpe: row.rpe,
       id: row.id,
       shoe: row.shoe,
+      tags: row.tags,
     };
     this.openEditDialog(runObj);
   }
@@ -354,7 +356,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   openLogRun() {
     const dialogRef = this.dialog.open(LogRunComponent, {
       width: '650px',
-      height: '650px',
+      height: '700px',
       disableClose: true,
     });
 

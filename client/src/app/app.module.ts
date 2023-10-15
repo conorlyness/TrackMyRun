@@ -56,6 +56,8 @@ import { ImageUploaderComponent } from './components/gallery/image-uploader/imag
 import { ElectronService } from './services/electron.service';
 import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatBadgeModule } from '@angular/material/badge';
+import { TagsComponent } from './components/tags/tags.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -81,9 +83,9 @@ import { MatBadgeModule } from '@angular/material/badge';
     CarouselDirective,
     ImageUploaderComponent,
     FixturesComponent,
+    TagsComponent,
   ],
   imports: [
-    MaterialExampleModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
@@ -117,9 +119,11 @@ import { MatBadgeModule } from '@angular/material/badge';
     MatMenuModule,
     MatChipsModule,
     MatBadgeModule,
+    MatAutocompleteModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right',
     }),
+    MaterialExampleModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, ElectronService],
   bootstrap: [AppComponent],

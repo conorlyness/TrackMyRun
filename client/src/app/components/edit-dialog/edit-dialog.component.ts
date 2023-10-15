@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/internal/Subscription';
 import * as moment from 'moment';
 import { EditDialogData } from 'src/app/types';
 import { ShoesService } from 'src/app/services/shoes.service';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edit-dialog',
@@ -22,6 +23,7 @@ export class EditDialogComponent implements OnInit {
   distanceBeforeEdit!: number;
   shoeBrand!: string;
   shoeName!: string;
+  tagsToEdit!: string[];
 
   constructor(
     public dialogRef: MatDialogRef<EditDialogComponent>,
@@ -38,6 +40,9 @@ export class EditDialogComponent implements OnInit {
       const splitIndex = this.data.shoe.indexOf(' ');
       this.shoeBrand = this.data.shoe.slice(0, splitIndex);
       this.shoeName = this.data.shoe.slice(splitIndex + 1);
+    }
+    if (this.data.tags) {
+      this.tagsToEdit = this.data.tags;
     }
   }
 
@@ -60,21 +65,24 @@ export class EditDialogComponent implements OnInit {
       this.toast.error('Distance must be a number');
     } else {
       if (this.data.distance != this.distanceBeforeEdit) {
-        this.shoeService
-          .decreaseShoeMileage(
-            this.distanceBeforeEdit,
-            this.shoeBrand,
-            this.shoeName
-          )
-          .subscribe(() => {
-            this.shoeService
-              .increaseShoeMileage(
-                this.data.distance,
-                this.shoeBrand,
-                this.shoeName
-              )
-              .subscribe();
-          });
+        this.subscriptions.add(
+          this.shoeService
+            .decreaseShoeMileage(
+              this.distanceBeforeEdit,
+              this.shoeBrand,
+              this.shoeName
+            )
+            .pipe(
+              switchMap(() => {
+                return this.shoeService.increaseShoeMileage(
+                  this.data.distance,
+                  this.shoeBrand,
+                  this.shoeName
+                );
+              })
+            )
+            .subscribe()
+        );
       }
       this.subscriptions.add(
         this.runningService
@@ -84,7 +92,8 @@ export class EditDialogComponent implements OnInit {
             data.notes,
             data.rpe,
             data.id,
-            data.shoe
+            data.shoe,
+            data.tags
           )
           .subscribe({
             error: (error) => console.log('caught an error: ', error),
@@ -117,18 +126,19 @@ export class EditDialogComponent implements OnInit {
               data.rpe,
               data.shoe
             )
+            .pipe(
+              switchMap(() => {
+                return this.shoeService.decreaseShoeMileage(
+                  data.distance,
+                  this.shoeBrand,
+                  this.shoeName
+                );
+              })
+            )
             .subscribe({
               next: () => {
-                this.shoeService
-                  .decreaseShoeMileage(
-                    data.distance,
-                    this.shoeBrand,
-                    this.shoeName
-                  )
-                  .subscribe(() => {
-                    deleteDialogref.close('deleted run');
-                    this.dialogRef.close('deleted');
-                  });
+                deleteDialogref.close('deleted run');
+                this.dialogRef.close('deleted');
               },
               error: (error) => console.log('caught an error: ', error),
             })

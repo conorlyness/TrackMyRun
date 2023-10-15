@@ -4,6 +4,7 @@ export type Run = {
   rundate: string;
   rpe: number;
   shoe: String;
+  tags: string[];
 };
 
 export type DistanceByDay = {
@@ -48,6 +49,7 @@ export type EditDialogData = {
   rpe: number;
   id: number;
   shoe: string;
+  tags: string[];
 };
 
 export type PersonalBest = {

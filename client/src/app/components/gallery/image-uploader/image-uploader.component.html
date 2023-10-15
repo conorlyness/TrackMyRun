@@ -29,6 +29,8 @@
               </button>
             </mat-chip>
             <input
+              [maxLength]="20"
+              autocomplete="off"
               placeholder="New Tag..."
               [matChipInputFor]="chipList"
               [matChipInputSeparatorKeyCodes]="separatorKeysCodes"

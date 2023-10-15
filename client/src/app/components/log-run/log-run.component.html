@@ -49,9 +49,9 @@
             min="1"
             [(ngModel)]="distance"
             class="distanceInput"
-            title="please enter positive numbers only"
+            matTooltip="Positive numbers only"
             autocomplete="off"
-            required="required"
+            required
           />
         </mat-form-field>
         <mat-form-field appearance="fill" class="notes">
@@ -63,6 +63,9 @@
             autocomplete="off"
           />
         </mat-form-field>
+        <div class="runTags">
+          <app-tags (chosenTags)="setTags($event)"></app-tags>
+        </div>
         <div class="navBtns">
           <app-button
             class="nextBtn"
@@ -117,6 +120,12 @@
           <p class="notesText">Run Notes: {{ notes || "N/A" }}</p>
           <p class="rpeText">Percieved effort of {{ rpe }}</p>
           <p class="shoesText">Shoes were {{ shoe }}</p>
+          <p class="tagsText">Tags:</p>
+          <div class="tagsPreviewContainer">
+            <ng-container *ngFor="let tag of tags">
+              <mat-chip class="previewTags">{{ tag }}</mat-chip>
+            </ng-container>
+          </div>
         </div>
         <div class="navBtns">
           <app-button
