@@ -152,3 +152,17 @@ $accentGreen: rgb(18, 128, 44);
   font-size: medium;
   font-weight: 400;
 }
+
+.previewTags {
+  width: fit-content;
+  height: 20px;
+}
+
+.tagsPreviewContainer {
+  max-width: 300px;
+}
+
+.mat-chip.mat-standard-chip {
+  height: 40px;
+  margin: 2px;
+}

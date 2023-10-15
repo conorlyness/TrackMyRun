@@ -43,6 +43,7 @@ export class LogRunComponent implements OnInit {
   shoe?: string;
   shoeBrand?: string;
   shoeName?: string;
+  tags!: string[];
   @Output() closeDialog = new EventEmitter();
   stepperOrientation!: Observable<StepperOrientation>;
   @ViewChild('stepper') stepper!: MatStepper;
@@ -75,7 +76,8 @@ export class LogRunComponent implements OnInit {
           this.distance,
           this.notes.replace(/'/g, ''),
           this.rpe,
-          this.shoe
+          this.shoe,
+          this.tags
         )
         .subscribe(() => {
           this.toast.success('Run Successfully Logged');
@@ -113,5 +115,9 @@ export class LogRunComponent implements OnInit {
 
   previous() {
     this.stepper.previous();
+  }
+
+  setTags(tags: string[]) {
+    this.tags = tags;
   }
 }

@@ -22,6 +22,12 @@
       <mat-label class="notesLabel">Notes</mat-label>
       <input matInput type="text" [(ngModel)]="data.notes" autocomplete="off" />
     </mat-form-field>
+    <div class="runTags">
+      <app-tags
+        (chosenTags)="this.data.tags = $event"
+        [tagsToEdit]="this.tagsToEdit"
+      ></app-tags>
+    </div>
     <app-effort-slider
       [value]="data.rpe"
       (effortValue)="data.rpe = $event"

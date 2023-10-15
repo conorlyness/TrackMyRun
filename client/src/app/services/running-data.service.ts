@@ -25,6 +25,15 @@ export class RunningDataService {
   getAllRuns(): Observable<Run[]> {
     const url = environment.getAllRunsUrl;
     return this.http.get<Run[]>(url, {}).pipe(
+      map((runs: any) => {
+        //we need to transform the string of tags so its an array
+        runs.forEach((run: any) => {
+          if (run.tags) {
+            run.tags = run.tags.split(',').map((tag: any) => tag.trim());
+          }
+        });
+        return runs;
+      }),
       retry(1),
       catchError((error) => this.handleError(error))
     );
@@ -74,7 +83,8 @@ export class RunningDataService {
     distance: number,
     notes: string,
     rpe: number,
-    shoe: string
+    shoe: string,
+    tags: string[]
   ): Observable<HttpStatusCode> {
     const body = {
       date: runDate,
@@ -82,6 +92,7 @@ export class RunningDataService {
       notes: notes,
       rpe: rpe,
       shoes: shoe,
+      tags: tags,
     };
     const url = environment.logNewRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
@@ -96,7 +107,8 @@ export class RunningDataService {
     notes: string,
     rpe: number,
     id: number,
-    shoe: string
+    shoe: string,
+    tags: string[]
   ): Observable<HttpStatusCode> {
     const body = {
       date: runDate,
@@ -105,6 +117,7 @@ export class RunningDataService {
       rpe: rpe,
       id: id,
       shoe: shoe,
+      tags: tags,
     };
     const url = environment.editRunUrl;
     return this.http.post<HttpStatusCode>(url, body).pipe(
