@@ -80,13 +80,14 @@ class Database {
   logRun = async (run) => {
     try {
       let query = coreQueries.logRun.replace(
-        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.shoes})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.shoes})|({run.tags})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
           if (match === '{run.notes}') return run.notes;
           if (match === '{run.rpe}') return run.rpe;
           if (match === '{run.shoes}') return run.shoes;
+          if (match === '{run.tags}') return run.tags;
         }
       );
       const result = await this.client.query(query);
@@ -99,7 +100,7 @@ class Database {
   editRun = async (run) => {
     try {
       let query = coreQueries.editRun.replace(
-        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.id})|({run.shoe})/g,
+        /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.id})|({run.shoe})|({run.tags})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
           if (match === '{run.distance}') return run.distance;
@@ -107,6 +108,7 @@ class Database {
           if (match === '{run.rpe}') return run.rpe;
           if (match === '{run.id}') return run.id;
           if (match === '{run.shoe}') return run.shoe;
+          if (match === '{run.tags}') return run.tags;
         }
       );
       const result = await this.client.query(query);
