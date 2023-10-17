@@ -77,7 +77,7 @@ export class LogRunComponent implements OnInit {
           this.notes.replace(/'/g, ''),
           this.rpe,
           this.shoe,
-          this.tags
+          this.tags ? this.tags : []
         )
         .subscribe(() => {
           this.toast.success('Run Successfully Logged');
