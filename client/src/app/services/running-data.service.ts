@@ -47,6 +47,15 @@ export class RunningDataService {
           (run) => run.distance >= range.start && run.distance <= range.end
         )
       ),
+      map((runs: any) => {
+        //we need to transform the string of tags so its an array
+        runs.forEach((run: any) => {
+          if (run.tags) {
+            run.tags = run.tags.split(',').map((tag: any) => tag.trim());
+          }
+        });
+        return runs;
+      }),
       retry(1),
       catchError((error) => this.handleError(error))
     );
@@ -73,6 +82,15 @@ export class RunningDataService {
     const body = { start: start, end: end };
     const url = environment.getSpecificRunsUrl;
     return this.http.post<Run[]>(url, body).pipe(
+      map((runs: any) => {
+        //we need to transform the string of tags so its an array
+        runs.forEach((run: any) => {
+          if (run.tags) {
+            run.tags = run.tags.split(',').map((tag: any) => tag.trim());
+          }
+        });
+        return runs;
+      }),
       retry(1),
       catchError((error) => this.handleError(error))
     );
