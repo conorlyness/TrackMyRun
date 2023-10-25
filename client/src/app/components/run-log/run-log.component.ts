@@ -387,39 +387,44 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   calculateRunningStreak() {
     const runs = this.sortedData;
+    const uniqueRuns: any[] = [];
     let runStreak = 0;
-    let todaysDate = new Date();
-    //check if there is a run logged from today
-    if (
-      runs.length != 0 &&
-      moment(runs[0]?.rundate).toString().substring(0, 10) ===
-        todaysDate.toString().substring(0, 10)
-    ) {
-      runStreak++;
+    let todaysDate = moment();
+
+    // Check if there is a run logged from today
+    if (runs.length != 0) {
+      let firstRunDate = moment(runs[0]?.rundate);
+      if (firstRunDate.isSame(todaysDate, 'day')) {
+        runStreak++;
+      }
     }
 
-    let yesterdaysDate = new Date(
-      todaysDate.getFullYear(),
-      todaysDate.getMonth(),
-      todaysDate.getDate() - 1
-    );
-
+    /*
+    we need to create a new array of dates that occur only once,
+    this is so that two runs on the same date do not affect the streak
+    as two runs on the same date would still only result in 1 being added 
+    to the streak so we exculde them
+    */
     for (let i = 0; i < runs.length; i++) {
-      let runDate = moment(runs[i].rundate);
-      if (
-        runDate.toString().substring(0, 10) ===
-        yesterdaysDate.toString().substring(0, 10)
-      ) {
+      let runDate = moment(runs[i].rundate).startOf('day').format('YYYY-MM-DD');
+
+      if (!uniqueRuns.includes(runDate)) {
+        uniqueRuns.push(runDate);
+      }
+    }
+
+    let yesterdaysDate = moment().subtract(1, 'days').startOf('day');
+
+    for (let i = 0; i < uniqueRuns.length; i++) {
+      let runDate = moment(uniqueRuns[i]).startOf('day');
+      if (runDate.isSame(yesterdaysDate)) {
         runStreak++;
         // continue checking previous days
         for (let j = i + 1; j >= 0; j++) {
-          let prevRunDate = moment(runs[j].rundate);
+          let prevRunDate = moment(uniqueRuns[j]);
 
           // check if the previous run was on the day before the current run
-          if (
-            prevRunDate.toString().substring(0, 10) ===
-            moment(runDate).subtract(1, 'days').toString().substring(0, 10)
-          ) {
+          if (prevRunDate.isSame(moment(runDate).subtract(1, 'days'))) {
             runStreak++;
             runDate.subtract(1, 'days');
           } else {
