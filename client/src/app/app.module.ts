@@ -58,6 +58,7 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { TagsComponent } from './components/tags/tags.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RunScheduleComponent } from './components/run-schedule/run-schedule.component';
 
 @NgModule({
   declarations: [
@@ -84,6 +85,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ImageUploaderComponent,
     FixturesComponent,
     TagsComponent,
+    RunScheduleComponent,
   ],
   imports: [
     BrowserModule,
