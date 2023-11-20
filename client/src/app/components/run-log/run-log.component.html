@@ -20,7 +20,7 @@
             [hoverColour]="'rgb(18, 128, 44)'"
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
-            [content]="'filter_alt'"
+            [content]="'tune'"
             [badge]="'1'"
             [badgeHidden]="badgeHidden"
           >
@@ -98,7 +98,7 @@
         <ng-container matColumnDef="Tags">
           <th mat-header-cell *matHeaderCellDef class="tagsColumn">Tags</th>
           <td mat-cell *matCellDef="let run" class="tagsData">
-            <mat-chip-list class="runTagsList">
+            <mat-chip-set class="runTagsList">
               <ng-container *ngIf="run?.tags?.length <= 2">
                 <!-- Render the first two tags normally -->
                 <ng-container *ngFor="let tag of run?.tags">
@@ -115,7 +115,7 @@
                   >+{{ run?.tags.length - 2 }} more</mat-chip
                 >
               </ng-container>
-            </mat-chip-list>
+            </mat-chip-set>
           </td>
         </ng-container>
 
@@ -123,7 +123,10 @@
           <th mat-header-cell *matHeaderCellDef class="notesColumn">Notes</th>
           <td mat-cell *matCellDef="let run">
             <button
-              class="expandRowBtn"
+              [ngClass]="{
+                expandRowBtnDark: darkTheme,
+                expandRowBtnLight: !darkTheme
+              }"
               mat-mini-fab
               (click)="expandRow($event, run)"
             >
@@ -181,12 +184,12 @@
               </div>
               <div class="tagsFromRun">
                 <h3 class="expandedRowTitle">Tags for this run</h3>
-                <mat-chip-list>
+                <mat-chip-listbox>
                   <!-- Render the first two tags normally -->
                   <ng-container *ngFor="let tag of run?.tags">
                     <mat-chip>{{ tag }}</mat-chip>
                   </ng-container>
-                </mat-chip-list>
+                </mat-chip-listbox>
               </div>
             </div>
           </td>
@@ -229,7 +232,7 @@
           [autoHide]="true"
         ></pagination-controls>
 
-        <mat-form-field class="pageSizeMatSelect" appearance="legacy">
+        <mat-form-field class="pageSizeMatSelect" appearance="outline">
           <mat-select [(ngModel)]="pageSize">
             <ng-container *ngFor="let size of pageSizes">
               <mat-option

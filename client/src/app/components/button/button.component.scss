@@ -1,39 +1,66 @@
-.borderBtn {
+.borderBtnDark {
   border: 2px solid white;
   font-size: 18px;
-  background-color: #101820ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.borderBtnLight {
+  border: 2px solid white;
+  font-size: 18px;
+  background-color: #101820ff !important;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.btn {
+.btnDark {
   font-size: 12px;
-  background-color: #101820ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnLight {
+  font-size: 12px;
+  background-color: #101820ff !important;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
 }
 
-.fabBtn {
+.fabBtnLight {
   font-size: 22px;
-  background-color: #101820ff;
+  background-color: #101820ff !important;
   color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-mat-icon {
+.fabBtnDark {
+  font-size: 22px;
   display: flex;
+  justify-content: center;
   align-items: center;
+}
+
+.iconBtn {
+  color: white !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .warning {
   span {
     color: rgb(228, 155, 20);
   }
+}
+
+::ng-deep .mdc-button__label {
+  color: white !important;
+  display: flex;
 }

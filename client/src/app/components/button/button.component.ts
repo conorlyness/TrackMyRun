@@ -7,6 +7,7 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
+import { ThemeService } from 'src/app/services/theme.service';
 
 @Component({
   selector: 'app-button',
@@ -15,7 +16,7 @@ import {
 })
 export class ButtonComponent implements OnInit {
   @Input() icon!: string;
-  @Input() border!: boolean;
+  @Input() border: boolean = false;
   @Input() matStyle!: string;
   @Input() hoverColour!: string;
   @Input() disabled!: boolean;
@@ -28,10 +29,16 @@ export class ButtonComponent implements OnInit {
   @Input() badgeHidden!: boolean;
   @Output() clickEvnt = new EventEmitter();
   @ViewChild('btn', { read: ElementRef }) btn!: ElementRef<HTMLButtonElement>;
+  darkTheme?: boolean;
 
-  constructor() {}
+  constructor(private themeService: ThemeService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.darkTheme = this.themeService.getTheme();
+    this.themeService.theme$?.subscribe((theme) => {
+      this.darkTheme = theme;
+    });
+  }
 
   onClick() {
     this.clickEvnt.emit();

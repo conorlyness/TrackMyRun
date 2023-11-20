@@ -53,6 +53,8 @@ export class ShoesComponent implements OnInit {
   addNewShoe() {
     const dialogRef = this.dialog.open(AddNewShoeComponent, {
       disableClose: true,
+      height: '300px',
+      width: '450px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {

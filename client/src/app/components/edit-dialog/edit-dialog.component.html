@@ -39,7 +39,9 @@
         [hoverColour]="'rgb(18, 128, 44)'"
         [border]="true"
         (clickEvnt)="verifyEdit(data)"
-        [icon]="'check'"
+        [content]="'check'"
+        [customContent]="true"
+        [customClass]="'material-symbols-outlined'"
       ></app-button>
 
       <app-button
@@ -47,7 +49,9 @@
         [hoverColour]="'rgb(144, 30, 30)'"
         [border]="false"
         (clickEvnt)="onNoClick()"
-        [icon]="'close'"
+        [customContent]="true"
+        [customClass]="'material-symbols-outlined'"
+        [content]="'close'"
       ></app-button>
 
       <app-button
@@ -55,7 +59,9 @@
         [hoverColour]="'rgb(144, 30, 30)'"
         [border]="false"
         (clickEvnt)="openDeleteDialog(data)"
-        [icon]="'delete_outline'"
+        [content]="'delete'"
+        [customContent]="true"
+        [customClass]="'material-symbols-outlined'"
       ></app-button>
     </div>
   </div>

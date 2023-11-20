@@ -1,5 +1,5 @@
 <div class="titleInfo">
-  <h1 class="title">Perceived Exertion</h1>
+  <h1 mat-dialog-title class="title">Perceived Exertion</h1>
   <mat-icon
     matTooltip="Rate of Perceived Exertion (RPE) refers to a 1-10 scale to self-report the intensity of an effort.
     RPE 1-2: Recovery
@@ -17,18 +17,17 @@
 
 <div class="sliderContent">
   <mat-slider
-    [thumbLabel]="true"
     [ngClass]="{ rpeSliderDark: darkTheme, rpeSliderLight: !darkTheme }"
     [max]="max"
     [min]="min"
-    [step]="step"
+    [step]="1"
     [displayWith]="effortLabel"
-    tickInterval="1"
-    (change)="emitEffort($event)"
-    [value]="value"
+    showTickMarks
+    discrete
   >
+    <input matSliderThumb [(ngModel)]="value" (change)="emitEffort($event)" />
   </mat-slider>
-  <div class="sliderLabels">
+  <div class="sliderLabels" mat-dialog-content>
     <p>Recovery</p>
     <p>Moderate</p>
     <p>Max Effort</p>

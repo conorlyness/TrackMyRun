@@ -23,7 +23,7 @@
   <div class="highMileShoes">
     <p class="warningText">The following shoes have surpassed 300 miles</p>
     <ng-container *ngFor="let shoe of highMileageShoes">
-      <mat-card class="card">
+      <mat-card appearance="outlined" class="card">
         <div class="shoeDetails">
           <p>{{ shoe.brand }} {{ shoe.name }}</p>
           <div class="shoeMileage">

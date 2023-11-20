@@ -43,7 +43,7 @@
     <ng-container *ngIf="search.length > 0">
       <div class="searchResults">
         <ng-container *ngFor="let img of allImages">
-          <mat-card (click)="viewSpecificImage(img)" class="cardContainer">
+          <mat-card appearance="outlined" (click)="viewSpecificImage(img)" class="cardContainer">
             <h3
               class="imgCardDescription"
               [matTooltipPosition]="'above'"
@@ -54,11 +54,11 @@
             <img class="cardImg" [src]="img.url" [alt]="img.description" />
             <div class="imgTagContainerCard">
               <ng-container *ngFor="let tag of img.tags">
-                <mat-chip-list>
-                  <mat-chip class="matChip">
+                <mat-chip-listbox>
+                  <mat-chip-option class="matChip">
                     {{ tag }}
-                  </mat-chip>
-                </mat-chip-list>
+                  </mat-chip-option>
+                </mat-chip-listbox>
               </ng-container>
             </div>
           </mat-card>
@@ -96,11 +96,11 @@
           </div>
           <div class="imgTagContainer">
             <ng-container *ngFor="let tag of img.tags">
-              <mat-chip-list>
-                <mat-chip class="matChip">
+              <mat-chip-listbox>
+                <mat-chip-option class="matChip">
                   {{ tag }}
-                </mat-chip>
-              </mat-chip-list>
+                </mat-chip-option>
+              </mat-chip-listbox>
             </ng-container>
           </div>
         </div>

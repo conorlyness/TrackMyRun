@@ -238,6 +238,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
         cancel: false,
       },
       disableClose: true,
+      width: '500px',
+      height: '550px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -327,6 +329,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
   openExportDialog() {
     const dialogRef = this.dialog.open(ExportDialogComponent, {
       panelClass: 'confirm-dialog',
+      height: '300px',
+      width: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -355,7 +359,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   openLogRun() {
     const dialogRef = this.dialog.open(LogRunComponent, {
-      width: '650px',
+      width: '550px',
       height: '700px',
       disableClose: true,
     });

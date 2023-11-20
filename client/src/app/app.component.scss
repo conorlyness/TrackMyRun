@@ -72,6 +72,7 @@ mat-toolbar {
   color: $accentGreen !important;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of slide-toggle that may no longer apply for the MDC version.*/
 mat-slide-toggle {
   position: relative;
   /* Adjust these values accordingly */
