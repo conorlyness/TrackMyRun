@@ -387,6 +387,109 @@ class Database {
       console.log(err);
     }
   };
+
+  //run schedule functions
+  getAllSchedule = async (dates) => {
+    try {
+      let query = coreQueries.getAllSchedule.replace(
+        /({schedule.start})|({schedule.end})/g,
+        function (match) {
+          if (match === '{schedule.start}') return dates.start;
+          if (match === '{schedule.end}') return dates.end;
+        }
+      );
+      const result = await this.client.query(query);
+      return result.rows;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  scheduleRun = async (run) => {
+    try {
+      let query = coreQueries.scheduleRun.replace(
+        /({run.date})|({run.distance})|({run.notes})|({run.completed})|({run.race})|({run.incomplete})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+          if (match === '{run.notes}') return run.notes;
+          if (match === '{run.completed}') return run.completed;
+          if (match === '{run.race}') return run.race;
+          if (match === '{run.incomplete}') return run.incomplete;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  editSchedule = async (run) => {
+    try {
+      let query = coreQueries.editSchedule.replace(
+        /({run.date})|({run.distance})|({run.notes})|({run.race})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+          if (match === '{run.notes}') return run.notes;
+          if (match === '{run.race}') return run.race;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  completeRun = async (run) => {
+    try {
+      let query = coreQueries.markScheduleAsComplete.replace(function (match) {
+        /({run.date})/g,
+          function (match) {
+            if (match === '{run.date}') return run.date;
+          };
+      });
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  markRunIncomplete = async (run) => {
+    try {
+      let query = coreQueries.markScheduleAsIncomplete.replace(function (
+        match
+      ) {
+        /({run.date})/g,
+          function (match) {
+            if (match === '{run.date}') return run.date;
+          };
+      });
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  deleteSchedule = async (run) => {
+    try {
+      let query = coreQueries.deleteSchedule.replace(
+        /({run.date})|({run.distance})/g,
+        function (match) {
+          if (match === '{run.date}') return run.date;
+          if (match === '{run.distance}') return run.distance;
+        }
+      );
+      const result = await this.client.query(query);
+      return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
 }
 
 module.exports = new Database();

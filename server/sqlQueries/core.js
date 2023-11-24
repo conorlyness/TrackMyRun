@@ -15,6 +15,12 @@ let coreQueries = {
   deleteShoe: `DELETE FROM public.shoes WHERE "brand" = '{shoe.brand}' AND "name" = '{shoe.name}';`,
   addImage: `Insert into public.images ("url", "description", "tags") values ('{img.url}', '{img.description}', '{img.tags}');`,
   getAllImages: `SELECT * FROM public.images;`,
+  getAllSchedule: `SELECT * FROM public.runschedule where "date" >= '{schedule.start}' and "date" <= '{schedule.end}';`,
+  scheduleRun: `Insert into public.runschedule ("date", "distance", "notes", "completed", "race", "incomplete") values ('{run.date}', '{run.distance}', '{run.notes}', '{run.completed}', '{run.race}', '{run.incomplete}');`,
+  editSchedule: `UPDATE public.runschedule SET "distance" = '{run.distance}', "notes" = '{run.notes}', "race" = '{run.race}' WHERE "date" = '{run.date}';`,
+  markScheduleAsComplete: `UPDATE public.runschedule SET "completed" = true WHERE "date" = '{run.date}';`,
+  markScheduleAsIncomplete: `UPDATE public.runschedule SET "incomplete" = true WHERE "date" = '{run.date}';`,
+  deleteSchedule: `DELETE FROM public.runschedule WHERE "date" = '{run.date}' AND "distance" = '{run.distance}';`,
 };
 
 module.exports = coreQueries;
