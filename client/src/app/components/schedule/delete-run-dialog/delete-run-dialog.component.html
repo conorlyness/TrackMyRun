@@ -1,0 +1,27 @@
+<div class="deleteContent">
+  <h1 mat-dialog-title class="title">Delete Run</h1>
+  <hr class="horizontalSpacer" />
+  <p mat-dialog-content class="deleteText">
+    Are you sure you want to delete this run from your schedule?
+  </p>
+  <div class="buttons">
+    <app-button
+      [hoverColour]="'rgb(18, 128, 44)'"
+      [border]="true"
+      [content]="'check'"
+      [customContent]="true"
+      [customClass]="'material-symbols-outlined'"
+      [matStyle]="'mat-button'"
+      (clickEvnt)="deleteRun(data.run)"
+    ></app-button>
+    <app-button
+      [hoverColour]="'rgb(144, 30, 30)'"
+      [border]="false"
+      [content]="'close'"
+      [customContent]="true"
+      [customClass]="'material-symbols-outlined'"
+      [matStyle]="'mat-button'"
+      (clickEvnt)="cancelDelete()"
+    ></app-button>
+  </div>
+</div>

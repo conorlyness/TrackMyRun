@@ -1,0 +1,28 @@
+.preview-run-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+}
+
+.navBtns {
+  display: flex;
+  justify-content: center;
+  padding-top: 10px;
+  margin-top: 5rem;
+
+  app-button {
+    margin: 5px;
+  }
+}
+
+.infoContainer {
+  text-align: center;
+}

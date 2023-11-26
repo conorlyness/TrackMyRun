@@ -58,7 +58,13 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { TagsComponent } from './components/tags/tags.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { RunScheduleComponent } from './components/run-schedule/run-schedule.component';
+import { RunScheduleComponent } from './components/schedule/run-schedule/run-schedule.component';
+import { MonthPipe } from './pipes/month.pipe';
+import { AddRunDialogComponent } from './components/schedule/add-run-dialog/add-run-dialog.component';
+import { EditRunDialogComponent } from './components/schedule/edit-run-dialog/edit-run-dialog.component';
+import { PreviewRunDialogComponent } from './components/schedule/preview-run-dialog/preview-run-dialog.component';
+import { DeleteRunDialogComponent } from './components/schedule/delete-run-dialog/delete-run-dialog.component';
+import { CompleteRunDialogComponent } from './components/schedule/complete-run-dialog/complete-run-dialog.component';
 
 @NgModule({
   declarations: [
@@ -86,6 +92,12 @@ import { RunScheduleComponent } from './components/run-schedule/run-schedule.com
     FixturesComponent,
     TagsComponent,
     RunScheduleComponent,
+    MonthPipe,
+    AddRunDialogComponent,
+    EditRunDialogComponent,
+    PreviewRunDialogComponent,
+    DeleteRunDialogComponent,
+    CompleteRunDialogComponent,
   ],
   imports: [
     BrowserModule,

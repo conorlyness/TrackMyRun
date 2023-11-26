@@ -79,3 +79,17 @@ export type Image = {
   description: string;
   tags: string[];
 };
+
+export type ScheduledRun = {
+  date: string;
+  distance: number;
+  notes: string;
+  completed: boolean;
+  race: boolean;
+  incomplete: boolean;
+};
+
+export type CalendarDay = {
+  date: Date;
+  scheduledRun?: ScheduledRun;
+};

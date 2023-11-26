@@ -1,0 +1,31 @@
+<div class="complete-run-content">
+  <h1 mat-dialog-title class="title">Complete Run</h1>
+  <app-button
+    class="closeBtn"
+    [icon]="'close'"
+    (clickEvnt)="closeForm()"
+    [matStyle]="'mat-mini-fab'"
+    [border]="true"
+    [hoverColour]="'rgb(144, 30, 30)'"
+  ></app-button>
+</div>
+
+<div class="buttons">
+  <app-button
+    class="completeBtn"
+    [customContent]="true"
+    [content]="'Complete' | uppercase"
+    [matStyle]="'mat-button'"
+    [border]="true"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    (click)="markComplete()"
+  ></app-button>
+  <app-button
+    [customContent]="true"
+    [content]="'Incomplete' | uppercase"
+    [matStyle]="'mat-button'"
+    [border]="false"
+    [hoverColour]="'rgb(144, 30, 30)'"
+    (click)="markIncomplete()"
+  ></app-button>
+</div>

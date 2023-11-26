@@ -1,0 +1,209 @@
+<div class="calendar-schedule-content">
+  <div class="navAndContent">
+    <div class="sideNav">
+      <div class="navContnet">
+        <div class="controlBtns">
+          <app-button
+            [matStyle]="'mat-fab'"
+            [toolTip]="'Log Run'"
+            [border]="true"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="scheduleRun()"
+            [content]="'calendar_add_on'"
+            [customClass]="'material-symbols-outlined'"
+            [customContent]="true"
+          >
+          </app-button>
+          <mat-divider></mat-divider>
+          <app-button
+            [matStyle]="'mat-fab'"
+            [toolTip]="'Change Calendar view'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="changeCalendarView()"
+            [content]="'calendar_view_month'"
+            [customClass]="'material-symbols-outlined'"
+            [customContent]="true"
+          >
+          </app-button>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="totalMiles">
+          <!-- <p>Total Miles</p> -->
+          <!-- <mat-divider></mat-divider> -->
+          <!-- <p class="mileage">Dummy data</p> -->
+        </div>
+      </div>
+    </div>
+    <div class="calendar-content">
+      <div class="monthYearSelector">
+        <ng-container *ngIf="monthView"
+          ><app-button
+            class="backBtn"
+            [matStyle]="'mat-button'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_left_alt'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="previousMonth()"
+          ></app-button>
+          <p class="monthYearTitle">{{ monthOnUI | month }} | {{ yearOnUI }}</p>
+          <app-button
+            class="nextBtn"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_right_alt'"
+            matStepperNext
+            [matStyle]="'mat-button'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            (clickEvnt)="nextMonth()"
+          ></app-button
+        ></ng-container>
+        <ng-container *ngIf="!monthView">
+          <p class="currentWeekTitle">
+            Current week: {{ monthOnUI | month }} |
+            {{ currentWeekDays[0].date | date : "d" }} -
+            {{ currentWeekDays[6].date | date : "d" }}
+          </p>
+        </ng-container>
+      </div>
+      <hr class="horizontalSpacer" />
+      <div class="calendar">
+        <ng-container *ngIf="monthView; else weekView">
+          <ng-container *ngFor="let week of weeksInMonth">
+            <ng-container *ngFor="let day of week">
+              <div
+                (click)="scheduleRun(day)"
+                [ngClass]="{
+                  dayGrid: true,
+                  previousMonthDay: isPreviousMonth(day.date)
+                }"
+              >
+                <div
+                  [ngClass]="{
+                    currentDateGrid:
+                      (day.date | date : 'fullDate') ===
+                      (currentDate | date : 'fullDate')
+                  }"
+                >
+                  <div class="dayName">
+                    <span>{{ day.date | date : "E" }}</span>
+                  </div>
+                  <div class="dayDate">
+                    <span
+                      [ngClass]="{
+                        previousMonthDayNumber: isPreviousMonth(day.date)
+                      }"
+                      >{{ day.date | date : "d" }}</span
+                    >
+                  </div>
+                </div>
+
+                <ng-container *ngIf="day.scheduledRun">
+                  <div class="scheduledRunContainer">
+                    <div class="distancePlanned">
+                      <hr class="horizontalSpacer" />
+                      <p>{{ day.scheduledRun.distance }} Mi</p>
+                    </div>
+                    <span
+                      matTooltip="The completion status of this run is unknown. Please mark as completed / incompleted"
+                      *ngIf="
+                        currentDate >= day.date &&
+                        !day.scheduledRun.completed &&
+                        !day.scheduledRun.incomplete
+                      "
+                      class="material-symbols-outlined unkownCompleteStatusIcon"
+                    >
+                      help
+                    </span>
+                    <span
+                      *ngIf="day.scheduledRun.completed"
+                      class="material-symbols-outlined completedRunIcon"
+                    >
+                      done_all
+                    </span>
+                    <span
+                      *ngIf="day.scheduledRun.incomplete"
+                      class="material-symbols-outlined completedRunIcon"
+                    >
+                      cancel
+                    </span>
+
+                    <span
+                      class="material-symbols-outlined scheduledRunIcon"
+                      matTooltip="Run scheduled for this date"
+                    >
+                      run_circle
+                    </span>
+                  </div>
+                </ng-container>
+              </div>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+
+        <ng-template #weekView>
+          <ng-container *ngFor="let day of currentWeekDays">
+            <div (click)="scheduleRun(day)" class="dayGridContainer">
+              <div class="dayGrid">
+                <div class="dayName">
+                  <span class="weekViewDate">{{ day.date | date : "E" }}</span>
+                </div>
+                <div class="dayDate">
+                  <span class="weekViewDate">{{ day.date | date : "d" }}</span>
+                </div>
+
+                <ng-container *ngIf="day.scheduledRun">
+                  <div class="scheduledRunContainerWk">
+                    <div class="distancePlanned">
+                      <hr class="horizontalSpacer" />
+                      <p>{{ day.scheduledRun.distance }} Mi</p>
+                    </div>
+                    <p *ngIf="day.scheduledRun.race" class="isRaceDisplay">
+                      Race Day
+                    </p>
+
+                    <div class="gridWkViewIcons">
+                      <span
+                        matTooltip="The completion status of this run is unknown. Please mark as completed / incompleted"
+                        *ngIf="
+                          currentDate >= day.date &&
+                          !day.scheduledRun.completed &&
+                          !day.scheduledRun.incomplete
+                        "
+                        class="material-symbols-outlined unkownCompleteStatusIcon"
+                      >
+                        help
+                      </span>
+                      <span
+                        *ngIf="day.scheduledRun.completed"
+                        class="material-symbols-outlined completedRunIcon"
+                      >
+                        done_all
+                      </span>
+                      <span
+                        *ngIf="day.scheduledRun.incomplete"
+                        class="material-symbols-outlined completedRunIcon"
+                      >
+                        cancel
+                      </span>
+                      <span
+                        class="material-symbols-outlined scheduledRunIcon"
+                        matTooltip="Run scheduled for this date"
+                      >
+                        run_circle
+                      </span>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </ng-container>
+        </ng-template>
+      </div>
+      <div *ngIf="!monthView" class="extendedInfoContainerWkView">
+        Content here, possibly weekly mileage total compared to scheduled
+        mileage showing in half donut chart, like a meter reading 24/39 etc
+      </div>
+    </div>
+  </div>
+</div>

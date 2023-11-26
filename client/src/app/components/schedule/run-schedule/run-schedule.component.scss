@@ -1,0 +1,167 @@
+$accentGreen: rgb(18, 128, 44);
+$darkBlue: #101820ff;
+
+.calendar-schedule-content {
+  min-height: calc(100vh - 64px);
+}
+
+.navAndContent {
+  display: flex;
+}
+
+.monthYearTitle {
+  font-weight: 400;
+  font-size: large;
+}
+
+.currentWeekTitle {
+  font-weight: 400;
+  font-size: large;
+}
+
+.horizontalSpacer {
+  //   width: 318px;
+  opacity: 0.3;
+}
+
+.sideNav {
+  width: 100px;
+  min-height: calc(100vh - 64px);
+  background-color: none;
+  border-right: 1px solid $darkBlue;
+  z-index: 1;
+}
+
+.controlBtns {
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+
+  app-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+.calendar-content {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.monthYearSelector {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+  width: -webkit-fill-available;
+}
+
+.currentDateGrid {
+  color: $accentGreen;
+}
+
+.dayGrid {
+  // border: 1px solid #ddd;
+  box-shadow: rgba(32, 61, 39, 0.651) 0px 2px 5px -1px,
+    rgba(255, 255, 255, 0.582) 0px 1px 3px -1px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+  min-height: 10rem;
+  &:hover {
+    background-color: #202020b2;
+  }
+}
+
+.distancePlanned {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.dayName {
+  font-weight: bold;
+}
+
+.dayDate {
+  margin-top: 5px;
+}
+
+// This is styles for days in the calendar that are a part of a previous month
+.previousMonthDay {
+  background-color: rgba(73, 73, 73, 0.479);
+}
+
+.previousMonthDayNumber {
+  color: rgba(90, 90, 90, 0.863);
+}
+
+.scheduledRunIcon {
+  // float: right;
+  margin-top: 4rem;
+  scale: 1.5;
+  color: #ffd700;
+}
+
+.unkownCompleteStatusIcon {
+  margin-top: 4rem;
+  margin-right: 0.5rem;
+  scale: 1.5;
+  color: #008cff;
+}
+
+.horizontalSpacer {
+  opacity: 0.3;
+}
+
+//week view styles
+
+.isRaceDisplay {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: xx-large;
+  font-style: italic;
+}
+
+.dayGridContainer {
+  display: flex;
+}
+
+.weekViewDate {
+  font-size: x-large;
+}
+
+.scheduledRunIconWeekView {
+  float: right;
+  margin-top: 4rem;
+  scale: 2;
+  color: #ffd700;
+}
+
+.extendedInfoContainerWkView {
+  min-height: 15rem;
+  border: 1px solid;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.scheduledRunContainerWk {
+  display: flex;
+  flex-direction: column;
+  height: -webkit-fill-available;
+}
+
+.distancePlanned {
+  flex: 1; /* This will make it take up all available space */
+}
+
+.gridWkViewIcons {
+  display: flex;
+}
