@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 
 @mixin dialogHeadings {
   padding-top: 5px;
@@ -10,11 +10,6 @@ $accentGreen: rgb(18, 128, 44);
   max-width: 450px;
   word-wrap: break-word;
   line-height: 1.6;
-}
-
-@mixin greenBoxShadow {
-  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
-    $accentGreen 0px -3px 0px inset;
 }
 
 @mixin inputStyles {
@@ -44,11 +39,6 @@ $accentGreen: rgb(18, 128, 44);
 .datePicker {
   width: 350px;
   font-size: 20px;
-}
-
-/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
-::ng-deep .mat-form-field-underline {
-  display: none;
 }
 
 .chooseDateText {
@@ -142,4 +132,22 @@ $accentGreen: rgb(18, 128, 44);
   justify-content: center;
   font-size: medium;
   font-weight: 400;
+}
+
+::ng-deep.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  background-color: $accentGreen !important;
+}
+
+::ng-deep.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  border-color: black !important;
+}
+
+.mat-mdc-checkbox ::ng-deep.mat-checkbox-checkmark-path {
+  stroke: white !important;
 }

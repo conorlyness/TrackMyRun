@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 
 .title {
   padding-bottom: 10px;
@@ -30,18 +30,9 @@ $accentGreen: rgb(18, 128, 44);
   padding-top: 30px;
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 ::ng-deep.mat-mdc-checkbox
   .mdc-checkbox
   .mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-.mat-mdc-checkbox
-  .mdc-checkbox
-  .mdc-checkbox__native-control:enabled:indeterminate
-  ~ .mdc-checkbox__background,
-.mat-mdc-checkbox
-  .mdc-checkbox
-  .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
   ~ .mdc-checkbox__background {
   background-color: $accentGreen !important;
 }
@@ -49,16 +40,10 @@ $accentGreen: rgb(18, 128, 44);
 ::ng-deep.mat-mdc-checkbox
   .mdc-checkbox
   .mdc-checkbox__native-control:enabled:checked
-  ~ .mdc-checkbox__background,
-.mat-mdc-checkbox
-  .mdc-checkbox
-  .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
   ~ .mdc-checkbox__background {
   border-color: black !important;
-  // background-color: black !important;
 }
 
-/* TODO(mdc-migration): The following rule targets internal classes of checkbox that may no longer apply for the MDC version. */
 .mat-mdc-checkbox ::ng-deep.mat-checkbox-checkmark-path {
   stroke: white !important;
 }

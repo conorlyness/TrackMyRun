@@ -11,3 +11,15 @@
   font-size: 28px;
   padding-top: 5px;
 }
+
+.inputs {
+  display: grid;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 25px;
+}

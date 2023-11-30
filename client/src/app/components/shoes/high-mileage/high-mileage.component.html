@@ -1,4 +1,15 @@
-<div>
+<div class="highMileage-content">
+  <div class="titleInfo">
+    <h1 mat-dialog-title class="title">High Mileage Shoes</h1>
+    <mat-icon
+      class="tooltips"
+      matTooltip="The general guideline is to replace your running shoes every 300 to 500 miles."
+      matTooltipClass="shoeInfo"
+      [matTooltipPosition]="'after'"
+      >info</mat-icon
+    >
+  </div>
+
   <app-button
     class="closeBtn"
     [icon]="'close'"
@@ -7,21 +18,11 @@
     [border]="true"
     [hoverColour]="'rgb(144, 30, 30)'"
   ></app-button>
-  <div class="titleInfo">
-    <h1 class="title">High Mileage</h1>
-    <mat-icon
-      matTooltip="The mileage at which you should replace your running shoes can vary depending on several factors,
-    including the type of shoe, your running style, body weight, terrain, and personal preference.
-    However, a general guideline is to replace your running shoes every 300 to 500 miles."
-      matTooltipClass="shoeInfo"
-      [matTooltipPosition]="'after'"
-      >info</mat-icon
-    >
-  </div>
-  <hr class="horizontalSpacer" />
+</div>
 
+<div mat-dialog-content>
+  <p class="warningText">The following shoes have surpassed 300 miles</p>
   <div class="highMileShoes">
-    <p class="warningText">The following shoes have surpassed 300 miles</p>
     <ng-container *ngFor="let shoe of highMileageShoes">
       <mat-card appearance="outlined" class="card">
         <div class="shoeDetails">

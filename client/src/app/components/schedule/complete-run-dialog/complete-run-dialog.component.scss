@@ -14,9 +14,16 @@
 
 .buttons {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
+  padding-top: 25px;
 }
 
 .completeBtn {
   margin-right: 1rem;
+}
+
+.completeContent {
+  display: block;
+  justify-content: center;
+  text-align: center;
 }

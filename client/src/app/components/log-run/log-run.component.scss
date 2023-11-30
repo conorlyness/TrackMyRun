@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 
 @mixin dialogHeadings {
   padding-top: 5px;
@@ -10,11 +10,6 @@ $accentGreen: rgb(18, 128, 44);
   max-width: 450px;
   word-wrap: break-word;
   line-height: 1.6;
-}
-
-@mixin greenBoxShadow {
-  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
-    $accentGreen 0px -3px 0px inset;
 }
 
 @mixin inputStyles {
