@@ -1,5 +1,5 @@
 <div class="preview-run-content">
-  <h1 mat-dialog-title class="title">Run Agenda</h1>
+  <h1 mat-dialog-title class="title">{{ previewTitle }}</h1>
   <app-button
     class="closeBtn"
     [icon]="'close'"
@@ -14,10 +14,13 @@
   <div class="infoContainer">
     <p>{{ data.date | date : "fullDate" }}</p>
     <p>{{ data.run.distance }} Miles</p>
-    <p *ngIf="data.run.notes">Notes for run: {{ data.run.notes }}</p>
+    <div *ngIf="data.run.notes" class="notesContainer">
+      <p class="notesText">Notes for run: {{ data.run.notes }}</p>
+    </div>
+
     <p *ngIf="data.run.race">Race day!</p>
   </div>
-  <div class="navBtns">
+  <div class="navBtns" *ngIf="!buttonsHidden">
     <app-button
       [matStyle]="'mat-button'"
       [customContent]="true"

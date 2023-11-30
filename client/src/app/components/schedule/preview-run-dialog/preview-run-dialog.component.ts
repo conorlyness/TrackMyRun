@@ -19,6 +19,8 @@ import { DeleteRunDialogComponent } from '../delete-run-dialog/delete-run-dialog
 export interface DialogData {
   date: any;
   run: ScheduledRun;
+  completed?: boolean;
+  incomplete?: boolean;
 }
 
 @Component({
@@ -29,6 +31,8 @@ export interface DialogData {
 export class PreviewRunDialogComponent {
   scheduleDate!: Date;
   scheduledRun!: ScheduledRun;
+  previewTitle: string = '';
+  buttonsHidden: boolean = false;
 
   constructor(
     public dialog: MatDialog,
@@ -45,6 +49,16 @@ export class PreviewRunDialogComponent {
     }
     if (this.data.run) {
       this.scheduledRun = this.data.run;
+      if (this.scheduledRun.completed) {
+        this.previewTitle = 'Completed Run Overview';
+        this.buttonsHidden = true;
+      } else if (this.scheduledRun.incomplete) {
+        this.previewTitle = 'Unable to complete the following';
+        this.buttonsHidden = true;
+      } else {
+        this.previewTitle = 'Run Agenda';
+        this.buttonsHidden = false;
+      }
     }
   }
 
@@ -58,15 +72,16 @@ export class PreviewRunDialogComponent {
         run: this.scheduledRun,
       },
       width: '400px',
-      height: '650px',
+      height: '450px',
       disableClose: true,
+      autoFocus: false,
     });
 
     editRunDialogRef?.afterClosed().subscribe(async (event) => {
       console.log('closed edit dialog::', event);
       if (event === 'edited') {
         this.toast.info(`Run Sucessfully edited`);
-        this.dialogRef.close('edited');
+        // this.dialogRef.close('edited');
       }
     });
   }
@@ -80,6 +95,7 @@ export class PreviewRunDialogComponent {
       width: '400px',
       height: '250px',
       disableClose: true,
+      autoFocus: false,
     });
 
     deleteRunDialogRef?.afterClosed().subscribe(async (event) => {
