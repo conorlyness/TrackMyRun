@@ -1,4 +1,3 @@
-$accentGreen: rgb(18, 128, 44);
 $darkBlue: #101820ff;
 
 .calendar-schedule-content {
@@ -44,6 +43,20 @@ $darkBlue: #101820ff;
   }
 }
 
+// .dayNamesRow {
+//   display: flex;
+//   font-weight: bold;
+// }
+
+// .dayNameHeader {
+//   flex: 1;
+//   text-align: center;
+//   box-sizing: border-box;
+//   display: flex;
+//   justify-content: flex-start;
+//   margin-left: 1rem;
+// }
+
 .calendar-content {
   width: 90%;
   margin: 0 auto;
@@ -51,9 +64,14 @@ $darkBlue: #101820ff;
 
 .monthYearSelector {
   display: flex;
-  justify-content: space-around;
-  margin-bottom: 1rem;
+  justify-content: space-between;
   margin-top: 1rem;
+  align-items: end;
+}
+
+.currentWeekInfo {
+  display: flex;
+  justify-content: center;
 }
 
 .calendar {
@@ -64,13 +82,11 @@ $darkBlue: #101820ff;
 }
 
 .currentDateGrid {
-  color: $accentGreen;
+  color: #ffd700;
 }
 
 .dayGrid {
-  // border: 1px solid #ddd;
-  box-shadow: rgba(32, 61, 39, 0.651) 0px 2px 5px -1px,
-    rgba(255, 255, 255, 0.582) 0px 1px 3px -1px;
+  box-shadow: rgba(40, 89, 194, 0.1) 0px 1px 3px, rgba(0, 0, 0, 0.8) 0px 1px 2px;
   padding: 10px;
   cursor: pointer;
   display: flex;
@@ -78,7 +94,7 @@ $darkBlue: #101820ff;
   width: -webkit-fill-available;
   min-height: 10rem;
   &:hover {
-    background-color: #202020b2;
+    background-color: #2020207e;
   }
 }
 
@@ -108,20 +124,68 @@ $darkBlue: #101820ff;
   // float: right;
   margin-top: 4rem;
   scale: 1.5;
-  color: #ffd700;
+  color: #5978ef;
 }
 
 .unkownCompleteStatusIcon {
+  scale: 1.25;
+  color: #ffd700;
+}
+
+.completedRunIcon {
   margin-top: 4rem;
-  margin-right: 0.5rem;
-  scale: 1.5;
-  color: #008cff;
+  margin-right: 0.7rem;
+  scale: 1.1;
+  color: rgb(18, 128, 44);
+}
+
+.incompleteRunIcon {
+  margin-top: 4rem;
+  margin-right: 0.7rem;
+  scale: 1.1;
+  color: #b90101;
 }
 
 .horizontalSpacer {
   opacity: 0.3;
 }
 
+.distanceContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.raceDayIcon {
+}
+
+.sidebarStats {
+  display: grid;
+  margin: 1rem;
+}
+
+.totalMiles {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.daysScheduledMonth {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.nextRace {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.daysTillRace {
+  color: #ffd700;
+  margin: 0px;
+}
 //week view styles
 
 .isRaceDisplay {
@@ -132,24 +196,19 @@ $darkBlue: #101820ff;
 
 .dayGridContainer {
   display: flex;
+  min-height: 30rem;
 }
 
 .weekViewDate {
   font-size: x-large;
 }
 
-.scheduledRunIconWeekView {
-  float: right;
-  margin-top: 4rem;
-  scale: 2;
-  color: #ffd700;
-}
-
 .extendedInfoContainerWkView {
   min-height: 15rem;
-  border: 1px solid;
   width: 100%;
-  margin-top: 2rem;
+  margin-top: 4rem;
+  // display: flex;
+  // justify-content: space-around;
 }
 
 .scheduledRunContainerWk {
@@ -164,4 +223,58 @@ $darkBlue: #101820ff;
 
 .gridWkViewIcons {
   display: flex;
+}
+
+::ng-deep ngx-gague .reading-block {
+  overflow: visible !important;
+}
+
+::ng-deep .reading-block,
+::ng-deep .reading-label {
+  overflow: visible !important;
+}
+
+.weekLongestRun {
+  margin-top: 2rem;
+  display: grid;
+  justify-content: center;
+}
+
+.gridTitle {
+  font-weight: lighter;
+  font-size: 22px;
+  text-align: center;
+  top: 0;
+  position: absolute;
+  padding-top: 10px;
+}
+
+.tileData {
+  display: flex;
+  align-items: baseline;
+  margin: auto;
+}
+
+.distanceTag {
+  font-size: 70px;
+  font-weight: bolder;
+  text-shadow: 0 0 3px white;
+  margin-right: 0.3rem;
+}
+
+mat-grid-tile {
+  box-shadow: rgba(40, 89, 194, 0.1) 0px 1px 3px, rgba(0, 0, 0, 0.8) 0px 1px 2px;
+}
+
+mat-grid-list {
+  padding: 10px;
+}
+
+.tileContent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }

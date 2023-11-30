@@ -27,10 +27,25 @@
           </app-button>
           <mat-divider></mat-divider>
         </div>
-        <div class="totalMiles">
-          <!-- <p>Total Miles</p> -->
-          <!-- <mat-divider></mat-divider> -->
-          <!-- <p class="mileage">Dummy data</p> -->
+        <div class="sidebarStats">
+          <div class="nextRace" *ngIf="nextRaceDate">
+            <p>Next Race</p>
+            {{ nextRaceDate | date : "mediumDate" }}
+            <mat-divider></mat-divider>
+            <p class="daysTillRace">{{ daysTillRace }}</p>
+            days out
+            <mat-divider></mat-divider>
+          </div>
+          <div class="totalMiles" *ngIf="monthView">
+            <p>Scheduled Monthly Mileage</p>
+            {{ monthsTotalMiles }}
+            <mat-divider></mat-divider>
+          </div>
+          <div class="daysScheduledMonth" *ngIf="monthView">
+            <p>Runs scheduled</p>
+            {{ daysScheduledThisMonth }}
+            <mat-divider></mat-divider>
+          </div>
         </div>
       </div>
     </div>
@@ -58,21 +73,27 @@
             (clickEvnt)="nextMonth()"
           ></app-button
         ></ng-container>
-        <ng-container *ngIf="!monthView">
-          <p class="currentWeekTitle">
-            Current week: {{ monthOnUI | month }} |
-            {{ currentWeekDays[0].date | date : "d" }} -
-            {{ currentWeekDays[6].date | date : "d" }}
-          </p>
-        </ng-container>
       </div>
+      <ng-container *ngIf="!monthView">
+        <div class="currentWeekInfo">
+          <p class="currentWeekTitle">
+            Current week: starting {{ currentMonthFixed | month }}
+            {{ (currentWeekDays[0]?.date | date : "d" | ordinal) || "" }}
+          </p>
+        </div>
+      </ng-container>
+      <!-- <div class="dayNamesRow">
+        <div *ngFor="let dayName of dayNames" class="dayNameHeader">
+          {{ dayName }}
+        </div>
+      </div> -->
       <hr class="horizontalSpacer" />
       <div class="calendar">
         <ng-container *ngIf="monthView; else weekView">
           <ng-container *ngFor="let week of weeksInMonth">
             <ng-container *ngFor="let day of week">
               <div
-                (click)="scheduleRun(day)"
+                (click)="isPreviousMonth(day.date) ? null : scheduleRun(day)"
                 [ngClass]="{
                   dayGrid: true,
                   previousMonthDay: isPreviousMonth(day.date)
@@ -98,34 +119,47 @@
                   </div>
                 </div>
 
-                <ng-container *ngIf="day.scheduledRun">
+                <ng-container
+                  *ngIf="day.scheduledRun && !isPreviousMonth(day.date)"
+                >
                   <div class="scheduledRunContainer">
                     <div class="distancePlanned">
                       <hr class="horizontalSpacer" />
-                      <p>{{ day.scheduledRun.distance }} Mi</p>
+                      <div class="distanceContainer">
+                        <p>{{ day.scheduledRun.distance }} Mi</p>
+                        <span
+                          *ngIf="day.scheduledRun.race"
+                          class="material-symbols-outlined raceDayIcon"
+                        >
+                          sports_score
+                        </span>
+                        <span
+                          matTooltip="Action required"
+                          *ngIf="
+                            currentDate >= day.date &&
+                            !day.scheduledRun.completed &&
+                            !day.scheduledRun.incomplete
+                          "
+                          class="material-symbols-outlined unkownCompleteStatusIcon"
+                        >
+                          notifications_unread
+                        </span>
+                      </div>
                     </div>
+
                     <span
-                      matTooltip="The completion status of this run is unknown. Please mark as completed / incompleted"
-                      *ngIf="
-                        currentDate >= day.date &&
-                        !day.scheduledRun.completed &&
-                        !day.scheduledRun.incomplete
-                      "
-                      class="material-symbols-outlined unkownCompleteStatusIcon"
-                    >
-                      help
-                    </span>
-                    <span
+                      matTooltip="This run has been marked as complete"
                       *ngIf="day.scheduledRun.completed"
                       class="material-symbols-outlined completedRunIcon"
                     >
                       done_all
                     </span>
                     <span
+                      matTooltip="This run has been marked as incomplete"
                       *ngIf="day.scheduledRun.incomplete"
-                      class="material-symbols-outlined completedRunIcon"
+                      class="material-symbols-outlined incompleteRunIcon"
                     >
-                      cancel
+                      close
                     </span>
 
                     <span
@@ -145,18 +179,43 @@
           <ng-container *ngFor="let day of currentWeekDays">
             <div (click)="scheduleRun(day)" class="dayGridContainer">
               <div class="dayGrid">
-                <div class="dayName">
-                  <span class="weekViewDate">{{ day.date | date : "E" }}</span>
-                </div>
-                <div class="dayDate">
-                  <span class="weekViewDate">{{ day.date | date : "d" }}</span>
+                <div
+                  [ngClass]="{
+                    currentDateGrid:
+                      (day.date | date : 'fullDate') ===
+                      (currentDate | date : 'fullDate')
+                  }"
+                >
+                  <div class="dayName">
+                    <span class="weekViewDate">{{
+                      day.date | date : "E"
+                    }}</span>
+                  </div>
+                  <div class="dayDate">
+                    <span class="weekViewDate">{{
+                      day.date | date : "d"
+                    }}</span>
+                  </div>
                 </div>
 
                 <ng-container *ngIf="day.scheduledRun">
                   <div class="scheduledRunContainerWk">
                     <div class="distancePlanned">
                       <hr class="horizontalSpacer" />
-                      <p>{{ day.scheduledRun.distance }} Mi</p>
+                      <div class="distanceContainer">
+                        <p>{{ day.scheduledRun.distance }} Mi</p>
+                        <span
+                          matTooltip="Action required"
+                          *ngIf="
+                            currentDate >= day.date &&
+                            !day.scheduledRun.completed &&
+                            !day.scheduledRun.incomplete
+                          "
+                          class="material-symbols-outlined unkownCompleteStatusIcon"
+                        >
+                          notifications_unread
+                        </span>
+                      </div>
                     </div>
                     <p *ngIf="day.scheduledRun.race" class="isRaceDisplay">
                       Race Day
@@ -164,25 +223,16 @@
 
                     <div class="gridWkViewIcons">
                       <span
-                        matTooltip="The completion status of this run is unknown. Please mark as completed / incompleted"
-                        *ngIf="
-                          currentDate >= day.date &&
-                          !day.scheduledRun.completed &&
-                          !day.scheduledRun.incomplete
-                        "
-                        class="material-symbols-outlined unkownCompleteStatusIcon"
-                      >
-                        help
-                      </span>
-                      <span
+                        matTooltip="This run has been marked as complete"
                         *ngIf="day.scheduledRun.completed"
                         class="material-symbols-outlined completedRunIcon"
                       >
                         done_all
                       </span>
                       <span
+                        matTooltip="This run has been marked as incomplete"
                         *ngIf="day.scheduledRun.incomplete"
-                        class="material-symbols-outlined completedRunIcon"
+                        class="material-symbols-outlined incompleteRunIcon"
                       >
                         cancel
                       </span>
@@ -201,8 +251,34 @@
         </ng-template>
       </div>
       <div *ngIf="!monthView" class="extendedInfoContainerWkView">
-        Content here, possibly weekly mileage total compared to scheduled
-        mileage showing in half donut chart, like a meter reading 24/39 etc
+        <mat-grid-list cols="2" [gutterSize]="'20px'" rowHeight="30rem" rowW>
+          <mat-grid-tile class="weeklyMileageTile" [colspan]="1" [rowspan]="1">
+            <div class="tileContent">
+              <p class="gridTitle">Weekly Mileage Completion</p>
+              <div class="tileData">
+                <ngx-gauge
+                  [type]="gaugeType"
+                  [value]="gaugeValue"
+                  [label]="gaugeLabel"
+                  [append]="gaugeAppendText"
+                  [thick]="5"
+                  [size]="300"
+                  [cap]="'round'"
+                >
+                </ngx-gauge>
+              </div>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile class="LongRunTile" [colspan]="1" [rowspan]="1">
+            <div class="tileContent">
+              <p class="gridTitle">Weeks Long Run</p>
+              <div class="tileData">
+                <p class="distanceTag">{{ weeksLongRunDistance }}</p>
+                <p class="milesTag">Mi</p>
+              </div>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
       </div>
     </div>
   </div>
