@@ -53,14 +53,21 @@ export class LogRunComponent implements OnInit {
     public dialog: MatDialog,
     private toast: ToastrService,
     private breakpointObserver: BreakpointObserver,
-    private shoeService: ShoesService
+    private shoeService: ShoesService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.data) {
+      //we have opened log run from the schedule so we have a date and distance
+      this.date = new FormControl(this.data.date);
+      this.distance = this.data.distance;
+    }
+  }
 
   confirmSelection() {
     if (!this.distance) {

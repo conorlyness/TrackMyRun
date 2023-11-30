@@ -35,11 +35,44 @@
           >
           </app-button>
           <mat-divider></mat-divider>
-        </div>
-        <div class="totalMiles">
-          <p>Total Miles</p>
+          <app-button
+            [matStyle]="'mat-fab'"
+            (clickEvnt)="openExportDialog()"
+            [toolTip]="'Download current search'"
+            [hoverColour]="'rgb(18, 128, 44)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'download'"
+            class="downloadCsvButton"
+          ></app-button>
           <mat-divider></mat-divider>
-          <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
+          <app-button
+            *ngIf="highMileageShoes.length > 0"
+            [matStyle]="'mat-fab'"
+            (clickEvnt)="openShoeInfoDialog()"
+            [toolTip]="'View high mileage shoe(s)'"
+            [hoverColour]="'rgba(242, 187, 67, 0.501)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'warning'"
+            class="highMileageButton"
+            [warning]="true"
+          ></app-button>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class="sidebarStats">
+          <div class="totalMiles">
+            <p>Total Miles</p>
+            {{ totalMiles | number : "1.2-2" }}
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="runStreak">
+            <p>Run Streak</p>
+            <p class="currentRunStreak">{{ runningStreak }}</p>
+            <mat-divider></mat-divider>
+          </div>
         </div>
       </div>
     </div>
@@ -217,6 +250,19 @@
           class="notesRow"
         ></tr>
       </table>
+      <ng-container *ngIf="!sortedData && !loading">
+        <div class="noResultsError">
+          <p>We encountered an issue fetching the data</p>
+          <app-button
+            class="retryBtn"
+            [matStyle]="'mat-button'"
+            [customContent]="true"
+            [content]="'Retry' | uppercase"
+            [hoverColour]="'rgb(17, 103, 201)'"
+            (clickEvnt)="reload()"
+          ></app-button>
+        </div>
+      </ng-container>
     </div>
   </div>
 
@@ -247,37 +293,4 @@
       </div>
     </ng-container>
   </ng-container>
-
-  <div class="groupedButtons">
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      (clickEvnt)="openExportDialog()"
-      [toolTip]="'Download current search'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [customClass]="'material-symbols-outlined'"
-      [content]="'download'"
-      class="downloadCsvButton"
-    ></app-button>
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      [toolTip]="'Current daily run streak'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [content]="runningStreak"
-      class="runningStreak"
-    ></app-button>
-    <app-button
-      *ngIf="highMileageShoes.length > 0"
-      [matStyle]="'mat-mini-fab'"
-      (clickEvnt)="openShoeInfoDialog()"
-      [toolTip]="'View high mileage shoe(s)'"
-      [hoverColour]="'rgba(242, 187, 67, 0.501)'"
-      [customContent]="true"
-      [customClass]="'material-symbols-outlined'"
-      [content]="'warning'"
-      class="highMileageButton"
-      [warning]="true"
-    ></app-button>
-  </div>
 </div>

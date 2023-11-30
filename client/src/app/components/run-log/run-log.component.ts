@@ -61,6 +61,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   highMileageShoes: Shoe[] = [];
   badgeHidden: boolean = true;
   subscriptions = new Subscription();
+  loading: boolean = false;
 
   //pagination variables
   //p for page number in pagination
@@ -90,6 +91,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   }
 
   showAllRunsOnStart() {
+    this.loading = true;
     this.subscriptions.add(
       this.runningService.getAllRuns().subscribe({
         next: (runs: Array<Run>) => {
@@ -98,9 +100,13 @@ export class RunLogComponent implements OnInit, OnDestroy {
             this.totalMiles += Number(run.distance);
           });
           this.sortedData = this.runInfo.slice();
+          this.loading = false;
           this.calculateRunningStreak();
         },
-        error: (error) => console.log('caught an error: ', error),
+        error: (error) => {
+          console.log('caught an error: ', error);
+          this.loading = false;
+        },
       })
     );
   }
@@ -362,6 +368,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
       width: '550px',
       height: '700px',
       disableClose: true,
+      autoFocus: false,
     });
 
     dialogRef.componentInstance.closeDialog.subscribe((event) => {
@@ -446,8 +453,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(HighMileageComponent, {
       data: {
         shoes: this.highMileageShoes,
-        disableClose: true,
       },
+      disableClose: true,
+      autoFocus: false,
+      height: '30rem',
+      width: '30rem',
     });
 
     dialogRef.afterClosed().subscribe();
@@ -463,6 +473,10 @@ export class RunLogComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  reload() {
+    window.location.reload();
   }
 
   ngOnDestroy(): void {

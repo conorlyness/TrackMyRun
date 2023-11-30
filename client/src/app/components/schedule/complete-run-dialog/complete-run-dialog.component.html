@@ -10,19 +10,35 @@
   ></app-button>
 </div>
 
+<div mat-dialog-content class="completeContent">
+  <p>Date: {{ runDate | date : "fullDate" }}</p>
+  <p>Distance: {{ runData.distance }} miles</p>
+</div>
+
 <div class="buttons">
   <app-button
     class="completeBtn"
     [customContent]="true"
-    [content]="'Complete' | uppercase"
+    [content]="'Log Run' | uppercase"
     [matStyle]="'mat-button'"
     [border]="true"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    (click)="openLogRun()"
+  ></app-button>
+  <app-button
+    class="completeBtn"
+    [customContent]="true"
+    [customClass]="'material-symbols-outlined'"
+    [content]="'check'"
+    [matStyle]="'mat-button'"
+    [border]="false"
     [hoverColour]="'rgb(18, 128, 44)'"
     (click)="markComplete()"
   ></app-button>
   <app-button
     [customContent]="true"
-    [content]="'Incomplete' | uppercase"
+    [customClass]="'material-symbols-outlined'"
+    [content]="'close'"
     [matStyle]="'mat-button'"
     [border]="false"
     [hoverColour]="'rgb(144, 30, 30)'"
