@@ -21,6 +21,7 @@ let coreQueries = {
   markScheduleAsComplete: `UPDATE public.runschedule SET "completed" = true WHERE "date" = '{run.date}';`,
   markScheduleAsIncomplete: `UPDATE public.runschedule SET "incomplete" = true WHERE "date" = '{run.date}';`,
   deleteSchedule: `DELETE FROM public.runschedule WHERE "date" = '{run.date}' AND "distance" = '{run.distance}';`,
+  getAllRaces: `SELECT * FROM public.runschedule WHERE "race" = true ORDER BY "date" ASC;`,
 };
 
 module.exports = coreQueries;

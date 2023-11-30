@@ -33,6 +33,7 @@ export const environment = {
   deleteScheduleUrl: 'http://localhost:3001/deleteSchedule',
   completeRunUrl: 'http://localhost:3001/markAsComplete',
   incompleteRunUrl: 'http://localhost:3001/markAsIncomplete',
+  raceDaysUrl: 'http://localhost:3001/raceDays',
 };
 
 /*

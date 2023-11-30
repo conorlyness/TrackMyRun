@@ -93,6 +93,14 @@ export class ScheduleService {
     );
   }
 
+  getRaceDays(): Observable<ScheduledRun[]> {
+    const url = environment.raceDaysUrl;
+    return this.http.get<any>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
   private handleError(error: HttpErrorResponse) {
     return throwError(() => new Error(`error caught: ${error.error.message}`));
   }

@@ -335,6 +335,15 @@ app.post('/markAsIncomplete', async (req, res) => {
   res.status(404);
 });
 
+app.get('/raceDays', async (req, res) => {
+  console.log('calling /raceDays');
+  const raceDays = await db.getRaceDays();
+  if (raceDays) {
+    return res.status(201).json(raceDays);
+  }
+  res.status(404);
+});
+
 app.listen(3001, () => {
   try {
     db.connect();

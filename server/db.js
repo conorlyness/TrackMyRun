@@ -445,12 +445,12 @@ class Database {
 
   completeRun = async (run) => {
     try {
-      let query = coreQueries.markScheduleAsComplete.replace(function (match) {
+      let query = coreQueries.markScheduleAsComplete.replace(
         /({run.date})/g,
-          function (match) {
-            if (match === '{run.date}') return run.date;
-          };
-      });
+        function (match) {
+          if (match === '{run.date}') return run.date;
+        }
+      );
       const result = await this.client.query(query);
       return result;
     } catch (err) {
@@ -460,14 +460,12 @@ class Database {
 
   markRunIncomplete = async (run) => {
     try {
-      let query = coreQueries.markScheduleAsIncomplete.replace(function (
-        match
-      ) {
+      let query = coreQueries.markScheduleAsIncomplete.replace(
         /({run.date})/g,
-          function (match) {
-            if (match === '{run.date}') return run.date;
-          };
-      });
+        function (match) {
+          if (match === '{run.date}') return run.date;
+        }
+      );
       const result = await this.client.query(query);
       return result;
     } catch (err) {
@@ -486,6 +484,16 @@ class Database {
       );
       const result = await this.client.query(query);
       return result;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  getRaceDays = async () => {
+    try {
+      let query = coreQueries.getAllRaces;
+      const result = await this.client.query(query);
+      return result.rows;
     } catch (err) {
       console.log(err);
     }
