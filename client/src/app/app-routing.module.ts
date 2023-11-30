@@ -7,11 +7,11 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { RunScheduleComponent } from './components/schedule/run-schedule/run-schedule.component';
 
 const routes: Routes = [
-  { path: '', component: RunLogComponent },
+  { path: '', component: RunScheduleComponent },
+  { path: 'log', component: RunLogComponent },
   { path: 'analytics', component: AnalyticsComponent },
   { path: 'gallery', component: GalleryComponent },
   { path: 'fixtures', component: FixturesComponent },
-  { path: 'schedule', component: RunScheduleComponent },
   { path: '**', redirectTo: '/', pathMatch: 'full' },
 ];
 
