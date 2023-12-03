@@ -1,4 +1,4 @@
-.borderBtnDark {
+.borderBtn {
   border: 2px solid white;
   font-size: 18px;
   display: flex;
@@ -6,42 +6,14 @@
   align-items: center;
 }
 
-.borderBtnLight {
-  border: 2px solid white;
-  font-size: 18px;
-  background-color: #101820ff !important;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.btnDark {
+.btn {
   font-size: 12px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.btnLight {
-  font-size: 12px;
-  background-color: #101820ff !important;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.fabBtnLight {
-  font-size: 22px;
-  background-color: #101820ff !important;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.fabBtnDark {
+.fabBtn {
   font-size: 22px;
   display: flex;
   justify-content: center;
@@ -49,7 +21,7 @@
 }
 
 .iconBtn {
-  color: white !important;
+  // color: white !important;
   display: flex !important;
   align-items: center !important;
 }
@@ -61,6 +33,6 @@
 }
 
 ::ng-deep .mdc-button__label {
-  color: white !important;
+  // color: white !important;
   display: flex;
 }

@@ -3,10 +3,8 @@
     #btn
     mat-raised-button
     [ngClass]="{
-      btnDark: darkTheme && !border,
-      btnLight: !darkTheme && !border,
-      borderBtnDark: border && darkTheme,
-      borderBtnLight: border && !darkTheme,
+      btn: true && !border,
+      borderBtn: border && true,
       warning: warning
     }"
     [disabled]="disabled"
@@ -36,10 +34,8 @@
     #btn
     mat-fab
     [ngClass]="{
-      fabBtnDark: darkTheme && !border,
-      fabBtnLight: !darkTheme && !border,
-      borderBtnDark: border && darkTheme,
-      borderBtnLight: border && !darkTheme,
+      fabBtn: true && !border,
+      borderBtn: border && true,
       warning: warning
     }"
     [disabled]="disabled"
@@ -66,10 +62,8 @@
     #btn
     mat-mini-fab
     [ngClass]="{
-      btnDark: darkTheme && !border,
-      btnLight: !darkTheme && !border,
-      borderBtnDark: border && darkTheme,
-      borderBtnLight: border && !darkTheme,
+      btn: true && !border,
+      borderBtn: border && true,
       warning: warning
     }"
     [disabled]="disabled"
@@ -96,10 +90,8 @@
     #btn
     mat-fab
     [ngClass]="{
-      fabBtnDark: darkTheme && !border,
-      fabBtnLight: !darkTheme && !border,
-      borderBtnDark: border && darkTheme,
-      borderBtnLight: border && !darkTheme,
+      fabBtnDark: true && !border,
+      borderBtn: border && true,
       warning: warning
     }"
     [disabled]="disabled"

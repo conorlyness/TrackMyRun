@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   toggleControl: FormControl<boolean> = new FormControl();
   process!: string;
   darkModeClass = 'darkMode';
+  lightModeClass = 'lightMode';
   @HostBinding('class') className = '';
   constructor(
     private overlay: OverlayContainer,
@@ -45,12 +46,16 @@ export class AppComponent implements OnInit {
         this.themeServive.setTheme(true);
         localStorage.setItem('sliderVal', 'true');
         this.electronService.send('setThemeSettings', 'true');
+        this.overlay
+          .getContainerElement()
+          .classList.remove(this.lightModeClass);
         this.overlay.getContainerElement().classList.add(this.darkModeClass);
       } else {
         this.themeServive.setTheme(false);
         localStorage.setItem('sliderVal', 'false');
         this.electronService.send('setThemeSettings', 'false');
         this.overlay.getContainerElement().classList.remove(this.darkModeClass);
+        this.overlay.getContainerElement().classList.add(this.lightModeClass);
       }
     });
   }
@@ -60,12 +65,14 @@ export class AppComponent implements OnInit {
       this.themeServive.setTheme(true);
       this.toggleControl.setValue(true);
       this.className = this.darkModeClass;
+      this.overlay.getContainerElement().classList.remove(this.lightModeClass);
       this.overlay.getContainerElement().classList.add(this.darkModeClass);
     } else {
       this.themeServive.setTheme(false);
       this.toggleControl.setValue(false);
       this.className = '';
       this.overlay.getContainerElement().classList.remove(this.darkModeClass);
+      this.overlay.getContainerElement().classList.add(this.lightModeClass);
     }
   }
 

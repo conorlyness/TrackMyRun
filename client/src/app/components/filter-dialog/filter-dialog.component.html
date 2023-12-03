@@ -33,18 +33,16 @@
 </ng-container>
 
 <div class="buttons" mat-dialog-actions>
-  <ng-container *ngIf="!noFilters">
-    <app-button
-      [content]="'check'"
-      [customClass]="'material-symbols-outlined'"
-      [customContent]="true"
-      [border]="true"
-      [matStyle]="'mat-button'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [disabled]="noFilters"
-      (clickEvnt)="closeDialog(data)"
-    ></app-button>
-  </ng-container>
+  <app-button
+    [content]="'check'"
+    [customClass]="'material-symbols-outlined'"
+    [customContent]="true"
+    [border]="true"
+    [matStyle]="'mat-button'"
+    [hoverColour]="'rgb(18, 128, 44)'"
+    [disabled]="noFilters"
+    (clickEvnt)="closeDialog(data)"
+  ></app-button>
 
   <app-button
     [customClass]="'material-symbols-outlined'"
@@ -55,15 +53,14 @@
     (clickEvnt)="onNoClick()"
   ></app-button>
 
-  <ng-container *ngIf="!noFilters">
-    <app-button
-      [matStyle]="'mat-button'"
-      (clickEvnt)="closeDialog(data, true)"
-      [hoverColour]="'rgb(17, 103, 201)'"
-      [customContent]="true"
-      [content]="'filter_alt_off'"
-      [customClass]="'material-symbols-outlined'"
-      [toolTip]="'Reset to defaults'"
-    ></app-button>
-  </ng-container>
+  <app-button
+    [matStyle]="'mat-button'"
+    (clickEvnt)="closeDialog(data, true)"
+    [hoverColour]="'rgb(17, 103, 201)'"
+    [customContent]="true"
+    [content]="'filter_alt_off'"
+    [customClass]="'material-symbols-outlined'"
+    [toolTip]="'Reset to defaults'"
+    [disabled]="noFilters"
+  ></app-button>
 </div>
