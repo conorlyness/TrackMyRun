@@ -441,8 +441,13 @@ export class RunScheduleComponent implements OnInit {
 
   calculateWeeklyMileageGoal() {
     // Calculate the percentage complete
-    this.mileageCompletePercentage =
-      (this.weeksLoggedMileage / this.weeksScheduledMileage) * 100;
+    if (this.weeksScheduledMileage <= 0) {
+      this.mileageCompletePercentage = 100;
+    } else {
+      this.mileageCompletePercentage =
+        (+this.weeksLoggedMileage / this.weeksScheduledMileage) * 100;
+    }
+
     this.gaugeValue = +this.mileageCompletePercentage.toFixed(1);
     this.gaugeLabel = `${this.weeksLoggedMileage}/${this.weeksScheduledMileage} Miles`;
   }

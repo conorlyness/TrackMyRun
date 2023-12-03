@@ -19,7 +19,7 @@ $darkBlue: #101820ff;
 
 .navAndTable {
   display: flex;
-  height: 800px;
+  // height: 800px;
 }
 
 .sideNav {
@@ -28,6 +28,12 @@ $darkBlue: #101820ff;
   background-color: none;
   border-right: 1px solid $darkBlue;
   z-index: 1;
+}
+
+.sidenavBorder {
+  border-right: 1px solid $darkBlue;
+  z-index: 1;
+  width: 100px;
 }
 
 .resultsTable {
@@ -109,6 +115,7 @@ table th {
 .paginationControlsContainer {
   display: flex;
   justify-content: center;
+  margin: auto;
   margin-top: 1rem;
 }
 
@@ -259,6 +266,10 @@ tr.notesRow {
 .retryBtn {
   display: flex;
   justify-content: center;
+}
+
+.borderAndPagination {
+  display: flex;
 }
 
 ::ng-deep .mat-mdc-tooltip {

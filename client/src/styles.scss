@@ -20,10 +20,6 @@ body {
   margin: 0;
 }
 
-* {
-  transition: background-color 400ms ease-in;
-}
-
 /* ===== Scrollbar CSS ===== */
 /* Firefox */
 * {
@@ -34,12 +30,13 @@ body {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 6px;
+  background-color: $darkBlue;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: $darkBlue;
   border-radius: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.233);
+  border: 1px solid rgba(255, 255, 255, 0.401);
 }
 
 .mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {

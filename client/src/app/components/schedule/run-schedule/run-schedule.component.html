@@ -7,7 +7,7 @@
             [matStyle]="'mat-fab'"
             [toolTip]="'Log Run'"
             [border]="true"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="scheduleRun()"
             [content]="'calendar_add_on'"
             [customClass]="'material-symbols-outlined'"
@@ -18,7 +18,7 @@
           <app-button
             [matStyle]="'mat-fab'"
             [toolTip]="'Change Calendar view'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="changeCalendarView()"
             [content]="'calendar_view_month'"
             [customClass]="'material-symbols-outlined'"
@@ -58,7 +58,7 @@
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
             [content]="'arrow_left_alt'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="previousMonth()"
           ></app-button>
           <p class="monthYearTitle">{{ monthOnUI | month }} | {{ yearOnUI }}</p>
@@ -69,7 +69,7 @@
             [content]="'arrow_right_alt'"
             matStepperNext
             [matStyle]="'mat-button'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="nextMonth()"
           ></app-button
         ></ng-container>
@@ -82,11 +82,6 @@
           </p>
         </div>
       </ng-container>
-      <!-- <div class="dayNamesRow">
-        <div *ngFor="let dayName of dayNames" class="dayNameHeader">
-          {{ dayName }}
-        </div>
-      </div> -->
       <hr class="horizontalSpacer" />
       <div class="calendar">
         <ng-container *ngIf="monthView; else weekView">

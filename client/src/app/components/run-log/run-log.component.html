@@ -8,7 +8,7 @@
             [toolTip]="'Log Run'"
             (clickEvnt)="openLogRun()"
             [border]="true"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [icon]="'add'"
           >
           </app-button>
@@ -17,7 +17,7 @@
             [matStyle]="'mat-fab-badge'"
             [toolTip]="'Filters'"
             (clickEvnt)="openFilters()"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
             [content]="'tune'"
@@ -30,7 +30,7 @@
             [matStyle]="'mat-fab'"
             [toolTip]="'Date range'"
             (clickEvnt)="toggleRange()"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [icon]="'date_range'"
           >
           </app-button>
@@ -39,7 +39,7 @@
             [matStyle]="'mat-fab'"
             (clickEvnt)="openExportDialog()"
             [toolTip]="'Download current search'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
             [content]="'download'"
@@ -268,28 +268,31 @@
 
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">
-      <div class="paginationControlsContainer">
-        <pagination-controls
-          [ngClass]="{
-            paginationControlsDark: darkTheme,
-            paginationControlsLight: !darkTheme
-          }"
-          (pageChange)="p = $event"
-          [autoHide]="true"
-        ></pagination-controls>
+      <div class="borderAndPagination">
+        <div class="sidenavBorder"></div>
+        <div class="paginationControlsContainer">
+          <pagination-controls
+            [ngClass]="{
+              paginationControlsDark: darkTheme,
+              paginationControlsLight: !darkTheme
+            }"
+            (pageChange)="p = $event"
+            [autoHide]="true"
+          ></pagination-controls>
 
-        <mat-form-field class="pageSizeMatSelect" appearance="outline">
-          <mat-select [(ngModel)]="pageSize">
-            <ng-container *ngFor="let size of pageSizes">
-              <mat-option
-                class="pageSizeOption"
-                (click)="handlePageSizeChange(size)"
-                value="{{ size }}"
-                >{{ size }}</mat-option
-              >
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="pageSizeMatSelect" appearance="outline">
+            <mat-select [(ngModel)]="pageSize">
+              <ng-container *ngFor="let size of pageSizes">
+                <mat-option
+                  class="pageSizeOption"
+                  (click)="handlePageSizeChange(size)"
+                  value="{{ size }}"
+                  >{{ size }}</mat-option
+                >
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </ng-container>
   </ng-container>

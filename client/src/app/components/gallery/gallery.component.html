@@ -34,7 +34,7 @@
         [matStyle]="'mat-fab'"
         [toolTip]="'Upload Image'"
         [border]="true"
-        [hoverColour]="'rgb(18, 128, 44)'"
+        [hoverColour]="'rgb(18, 128, 109)'"
       ></app-button>
     </div>
   </div>
@@ -43,7 +43,11 @@
     <ng-container *ngIf="search.length > 0">
       <div class="searchResults">
         <ng-container *ngFor="let img of allImages">
-          <mat-card appearance="outlined" (click)="viewSpecificImage(img)" class="cardContainer">
+          <mat-card
+            appearance="outlined"
+            (click)="viewSpecificImage(img)"
+            class="cardContainer"
+          >
             <h3
               class="imgCardDescription"
               [matTooltipPosition]="'above'"
