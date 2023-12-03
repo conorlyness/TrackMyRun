@@ -5,10 +5,24 @@
 @include mat-core();
 $darkBlue: #101820ff;
 $accentGreen: rgb(18, 128, 109);
-$dark-primary: mat-palette($mat-green);
+
+// dark theme
+$dark-primary: mat-palette($mat-teal);
 $dark-accent: mat-palette($mat-blue-grey, 800);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// light theme
+$light-primary: mat-palette($mat-teal);
+$light-accent: mat-palette($mat-blue-grey, 800);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+@include angular-material-theme($light-theme);
+
+.lightMode {
+  @include angular-material-theme($light-theme);
+}
 
 .darkMode {
   @include angular-material-theme($dark-theme);
