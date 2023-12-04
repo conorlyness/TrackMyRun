@@ -28,6 +28,7 @@ export class AddRunDialogComponent implements OnInit {
   distance!: number;
   notes: string = '';
   isRace: boolean = false;
+  disableSchedule: boolean = false;
   stepperOrientation!: Observable<StepperOrientation>;
   @ViewChild('stepper') stepper!: MatStepper;
 
@@ -44,10 +45,8 @@ export class AddRunDialogComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log('passed in dialog data::', this.data);
     if (this.data.date) {
       this.scheduleDate = this.data.date;
-      console.log('dialog open with this date::', this.scheduleDate);
     }
   }
 
@@ -64,7 +63,6 @@ export class AddRunDialogComponent implements OnInit {
   }
 
   confirmSelection() {
-    console.log('confirm selection clicked**');
     let scheduledRun: ScheduledRun = {
       date: moment(this.scheduleDate).format('YYYY-MM-DD'),
       distance: this.distance,
@@ -73,13 +71,17 @@ export class AddRunDialogComponent implements OnInit {
       race: this.isRace,
       incomplete: false,
     };
-    console.log('going to schedule this run::', scheduledRun);
+    this.disableSchedule = true;
     this.scheduleService.scheduleRun(scheduledRun).subscribe(
       () => {
         this.toast.success('Run Successfully Scheduled');
+        this.disableSchedule = false;
         this.dialogRef.close(scheduledRun);
       },
-      (err) => console.log('schedule run err:', err)
+      (err) => {
+        console.log('schedule run err:', err);
+        this.disableSchedule = false;
+      }
     );
   }
 }

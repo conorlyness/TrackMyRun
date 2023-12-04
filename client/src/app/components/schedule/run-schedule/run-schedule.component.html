@@ -77,7 +77,7 @@
       <ng-container *ngIf="!monthView">
         <div class="currentWeekInfo">
           <p class="currentWeekTitle">
-            Current week: starting {{ currentMonthFixed | month }}
+            Current week: starting {{ getStartOfWeekMonth() | month }}
             {{ (currentWeekDays[0]?.date | date : "d" | ordinal) || "" }}
           </p>
         </div>
@@ -246,7 +246,7 @@
         </ng-template>
       </div>
       <div *ngIf="!monthView" class="extendedInfoContainerWkView">
-        <mat-grid-list cols="2" [gutterSize]="'20px'" rowHeight="30rem" rowW>
+        <mat-grid-list cols="2" [gutterSize]="'20px'" rowHeight="30rem">
           <mat-grid-tile class="weeklyMileageTile" [colspan]="1" [rowspan]="1">
             <div class="tileContent">
               <p class="gridTitle">Weekly Mileage Completion</p>
@@ -266,7 +266,9 @@
           </mat-grid-tile>
           <mat-grid-tile class="LongRunTile" [colspan]="1" [rowspan]="1">
             <div class="tileContent">
-              <p class="gridTitle">Weeks Long Run</p>
+              <p class="gridTitle">
+                Weeks Long Run on {{ weeksLongRunDistanceDay | date : "EEEE" }}
+              </p>
               <div class="tileData">
                 <p class="distanceTag">{{ weeksLongRunDistance }}</p>
                 <p class="milesTag">Mi</p>

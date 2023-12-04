@@ -43,7 +43,6 @@ export class PreviewRunDialogComponent {
   ) {}
 
   ngOnInit() {
-    console.log('passed in dialog data to PREVIEW::', this.data);
     if (this.data.date) {
       this.scheduleDate = this.data.date;
     }
@@ -78,7 +77,6 @@ export class PreviewRunDialogComponent {
     });
 
     editRunDialogRef?.afterClosed().subscribe(async (event) => {
-      console.log('closed edit dialog::', event);
       if (event === 'edited') {
         this.toast.info(`Run Sucessfully edited`);
         // this.dialogRef.close('edited');
@@ -99,7 +97,6 @@ export class PreviewRunDialogComponent {
     });
 
     deleteRunDialogRef?.afterClosed().subscribe(async (event) => {
-      console.log('closed delete dialog::', event);
       if (event === 'delete') {
         this.toast.info('Run Sucessfully deleted from schedule');
         this.dialogRef.close('deleted');

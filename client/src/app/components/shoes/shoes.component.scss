@@ -39,6 +39,10 @@ table {
   width: 100%;
 }
 
+.shoeTableContainer {
+  max-height: 20rem;
+}
+
 ::ng-deep tr {
   font-size: 5px;
   font-weight: 300;

@@ -74,7 +74,6 @@ export class ShoesComponent implements OnInit {
   }
 
   retireShoe(shoe: Shoe) {
-    console.log('going to retire shoe: ', shoe);
     this.shoeService
       .updateShoeStatus(shoe.brand, shoe.name, true)
       .subscribe(() => {

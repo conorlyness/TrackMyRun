@@ -33,16 +33,13 @@ export class EditRunDialogComponent {
     private toast: ToastrService
   ) {}
 
-  ngOnInit() {
-    console.log('OPENED EDIT');
-  }
+  ngOnInit() {}
 
   closeForm() {
     this.dialogRef.close();
   }
 
   verifyEdit(data: ScheduledRun) {
-    console.log('VERIFY EDIT::', data);
     if (!data.distance) {
       this.toast.error('A distance is required');
     } else if (isNaN(data.distance)) {

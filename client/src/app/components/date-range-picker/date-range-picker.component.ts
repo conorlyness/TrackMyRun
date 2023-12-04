@@ -33,9 +33,7 @@ export class DateRangePickerComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       this.clearRange?.subscribe((event) => {
-        console.log('event from parent: ', event);
         if (event === true) {
-          console.log('Need to clear the range');
           this.range.setValue({
             start: null,
             end: null,

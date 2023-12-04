@@ -108,7 +108,9 @@
             (clickEvnt)="previous()"
           ></app-button>
           <app-button
-            [disabled]="distance != undefined && distance <= 0"
+            [disabled]="
+              (distance != undefined && distance <= 0) || disableSchedule
+            "
             [customContent]="true"
             [content]="'Schedule' | uppercase"
             [matStyle]="'mat-button'"

@@ -52,6 +52,7 @@ export class RunScheduleComponent implements OnInit {
   weeksScheduledMileage: number = 0;
   mileageCompletePercentage: number = 0;
   weeksLongRunDistance: number = 0;
+  weeksLongRunDistanceDay: string = '';
   monthsTotalMiles: number = 0;
   nextRaceDate?: any;
   daysTillRace?: number;
@@ -88,7 +89,6 @@ export class RunScheduleComponent implements OnInit {
       this.electronService
         .onOnce('getScheduleSettings')
         .then((scheduleViewSetting: string) => {
-          console.log('THE SCHEDULE VIEW SETTING::', scheduleViewSetting[1]);
           let viewPref = scheduleViewSetting[1];
           if (viewPref === 'true') this.monthView = true;
           if (viewPref === 'false') this.monthView = false;
@@ -100,7 +100,6 @@ export class RunScheduleComponent implements OnInit {
       this.electronService.send('getScheduleSettings');
     } else {
       let localStorageView = localStorage.getItem('scheduleMonthView');
-      console.log('local storage month view is::', localStorageView);
       if (localStorageView === 'false') this.monthView = false;
       if (localStorageView === 'true') this.monthView = true;
       if (!localStorageView) this.monthView = true;
@@ -126,14 +125,11 @@ export class RunScheduleComponent implements OnInit {
     if (scheduleStart > this.startOfWeek) scheduleStart = this.startOfWeek;
     if (scheduleEnd < endOfCurrentWeek) scheduleEnd = endOfCurrentWeek;
 
-    console.log('the start::', scheduleStart);
-    console.log('the end::', scheduleEnd);
     return new Promise((resolve, reject) => {
       this.scheduleService
         .getAllScheduledRuns(scheduleStart, scheduleEnd)
         .subscribe(
           (schedule) => {
-            console.log('the scheduled runs in the DB::', schedule);
             this.scheduledRuns = schedule;
 
             resolve(this.scheduledRuns);
@@ -165,7 +161,6 @@ export class RunScheduleComponent implements OnInit {
             day.date <= this.endOfCurrentMonth
           ) {
             this.daysScheduledThisMonth++;
-            console.log('run distance::', run.distance);
             this.monthsTotalMiles += +run?.distance;
           }
 
@@ -188,27 +183,21 @@ export class RunScheduleComponent implements OnInit {
         if (this.currentWeekDays[dayIndex]?.scheduledRun?.distance) {
           let distance = this.currentWeekDays[dayIndex]?.scheduledRun
             ?.distance as number;
+          let day = this.currentWeekDays[dayIndex]?.scheduledRun?.date;
 
           if (distance > this.weeksLongRunDistance) {
             this.weeksLongRunDistance = distance;
+            this.weeksLongRunDistanceDay = day as string;
           }
         }
       }
     });
-
-    console.log(
-      'The maximum long run distance for the week:',
-      this.weeksLongRunDistance
-    );
   }
 
   generateSchedule(firstDayOfMonth?: Date, lastDayOfMonth?: Date) {
-    console.log('passed in first day of month::', firstDayOfMonth);
-    console.log('passed in last day of month::', lastDayOfMonth);
     this.weeksInMonth = [];
 
     if (!firstDayOfMonth) {
-      console.log('in current month, setting first');
       firstDayOfMonth = new Date(
         this.selectedMonthYear.getFullYear(),
         this.selectedMonthYear.getMonth(),
@@ -217,7 +206,6 @@ export class RunScheduleComponent implements OnInit {
     }
 
     if (!lastDayOfMonth) {
-      console.log('in current month, setting last');
       lastDayOfMonth = new Date(
         this.selectedMonthYear.getFullYear(),
         this.selectedMonthYear.getMonth() + 1,
@@ -257,12 +245,17 @@ export class RunScheduleComponent implements OnInit {
 
   getStartOfWeek(date: Date): Date {
     const dayIndex = date.getDay();
-    const difference = dayIndex - 1; // Assuming Monday is the start of the week
+    const difference = (dayIndex + 6) % 7; // Ensure the result is a positive number
 
     const startOfWeek = new Date(date);
     startOfWeek.setDate(date.getDate() - difference);
 
     return startOfWeek;
+  }
+
+  //the purpose of this is so that if the monday of the current week is in the previous month
+  getStartOfWeekMonth(): number {
+    return this.currentWeekDays[0]?.date.getMonth() + 1;
   }
 
   async nextMonth() {
@@ -400,7 +393,6 @@ export class RunScheduleComponent implements OnInit {
     }
 
     scheduleRunDialogRef?.afterClosed().subscribe(async () => {
-      console.log('closed schedule dialog');
       await this.getScheduledRuns(
         this.startOfCurrentMonth,
         this.endOfCurrentMonth
@@ -470,7 +462,6 @@ export class RunScheduleComponent implements OnInit {
           }
         }
       }
-      console.log('ALL RACE DAYS::', races);
     });
   }
 }

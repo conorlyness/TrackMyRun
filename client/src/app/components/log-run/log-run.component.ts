@@ -47,6 +47,7 @@ export class LogRunComponent implements OnInit {
   @Output() closeDialog = new EventEmitter();
   stepperOrientation!: Observable<StepperOrientation>;
   @ViewChild('stepper') stepper!: MatStepper;
+  disableSubmit: boolean = false;
 
   constructor(
     private runningService: RunningDataService,
@@ -77,6 +78,7 @@ export class LogRunComponent implements OnInit {
     } else if (!this.shoe) {
       this.toast.error('A shoe must be selected');
     } else {
+      this.disableSubmit = true;
       this.runningService
         .addNewRun(
           moment(this.date.value).format('YYYY-MM-DD'),
@@ -86,19 +88,30 @@ export class LogRunComponent implements OnInit {
           this.shoe,
           this.tags ? this.tags : []
         )
-        .subscribe(() => {
-          this.toast.success('Run Successfully Logged');
-          if (this.distance && this.shoeBrand && this.shoeName) {
-            this.shoeService
-              .increaseShoeMileage(this.distance, this.shoeBrand, this.shoeName)
-              .subscribe(() => {
-                this.distance = undefined;
-                this.notes = '';
-                this.shoe = '';
-                this.closeLogForm('logged');
-              });
+        .subscribe(
+          () => {
+            this.toast.success('Run Successfully Logged');
+            if (this.distance && this.shoeBrand && this.shoeName) {
+              this.shoeService
+                .increaseShoeMileage(
+                  this.distance,
+                  this.shoeBrand,
+                  this.shoeName
+                )
+                .subscribe(() => {
+                  this.distance = undefined;
+                  this.notes = '';
+                  this.shoe = '';
+                  this.disableSubmit = false;
+                  this.closeLogForm('logged');
+                });
+            }
+          },
+          (err) => {
+            console.log('Log run error:: ', err);
+            this.disableSubmit = false;
           }
-        });
+        );
     }
   }
 

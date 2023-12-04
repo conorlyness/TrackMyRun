@@ -116,7 +116,6 @@ export class RunLogComponent implements OnInit, OnDestroy {
     const endDate = moment(range.end).format('YYYY-MM-DD').toLocaleString();
 
     if (endDate < startDate || startDate > this.todaysDate.toLocaleString()) {
-      console.log('start: ', startDate, ' end: ', endDate);
       this.toast.error('The selected range was invalid. Please try again');
     } else {
       this.last7Filter = false;
