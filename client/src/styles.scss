@@ -7,13 +7,13 @@ $darkBlue: #101820ff;
 $accentGreen: rgb(18, 128, 109);
 
 // dark theme
-$dark-primary: mat-palette($mat-teal);
+$dark-primary: mat-palette($mat-teal, A400);
 $dark-accent: mat-palette($mat-blue-grey, 800);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 // light theme
-$light-primary: mat-palette($mat-teal);
+$light-primary: mat-palette($mat-teal, 900);
 $light-accent: mat-palette($mat-blue-grey, 800);
 $light-warn: mat-palette($mat-red);
 $light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
