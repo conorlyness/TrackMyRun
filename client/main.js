@@ -3,8 +3,9 @@ const path = require("path");
 const fs = require("fs");
 const url = require("url");
 let darkThemeSetting = "true";
+let scheduleMonthViewSetting = "";
 const directoryPath = __dirname;
-const fileName = "/themeSettings.json";
+const fileName = "/configSettings.json";
 const filePath = path.join(directoryPath, fileName);
 const log = require("electron-log");
 //Set the log level (suggested: error, warn, info, verbose, debug, silly)
@@ -18,19 +19,23 @@ log.transports.file.maxDays = 7; // Max number of days to keep log files
 let splashWindow;
 let mainWindow;
 
-function readThemeSettings() {
-  log.info("Getting theme settings");
+function readConfigSettings() {
+  log.info("Getting config settings");
   return new Promise((resolve, reject) => {
-    fs.readFile(filePath, "utf8", (err, themeSettings) => {
+    fs.readFile(filePath, "utf8", (err, configSettings) => {
       if (err) {
         log.error("Error reading file from disk:", err);
         reject(err);
       } else {
         try {
-          const settings = JSON.parse(themeSettings);
+          const settings = JSON.parse(configSettings);
           darkThemeSetting = settings.darkTheme || "true";
+          scheduleMonthViewSetting = settings.scheduleMonthView || "true";
           if (darkThemeSetting === "") {
             darkThemeSetting = "true";
+          }
+          if (scheduleMonthViewSetting === "") {
+            scheduleMonthViewSetting = "true";
           }
           resolve();
         } catch (err) {
@@ -43,7 +48,7 @@ function readThemeSettings() {
 }
 
 async function createWindow() {
-  await readThemeSettings();
+  await readConfigSettings();
 
   mainWindow = new BrowserWindow({
     show: false,
@@ -200,6 +205,36 @@ ipcMain.on("setThemeSettings", (event, value) => {
         (err) => {
           if (err) log.error("Error writing file:", err);
           event.returnValue = darkThemeSetting.darkTheme;
+        }
+      );
+    } catch (err) {
+      log.error("Error parsing JSON string:", err);
+    }
+  });
+});
+
+ipcMain.on("getScheduleSettings", (event) => {
+  event.sender.send("getScheduleSettings", scheduleMonthViewSetting);
+});
+
+ipcMain.on("setScheduleMonthView", (event, value) => {
+  scheduleVal = value;
+  log.info("going to set month view to: ", scheduleVal);
+  fs.readFile(filePath, (err, settings) => {
+    if (err) {
+      log.error("Error reading file:", err);
+      return;
+    }
+    try {
+      const setting = JSON.parse(settings);
+      monthViewSetting = setting;
+      monthViewSetting.scheduleMonthView = scheduleVal;
+      fs.writeFile(
+        filePath,
+        JSON.stringify(monthViewSetting, null, 2),
+        (err) => {
+          if (err) log.error("Error writing file:", err);
+          event.returnValue = monthViewSetting.scheduleMonthView;
         }
       );
     } catch (err) {

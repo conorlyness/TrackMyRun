@@ -1,0 +1,25 @@
+.edit-run-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
+}
+
+.inputs {
+  display: grid;
+  margin: 0 auto;
+  justify-content: center;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 25px;
+}

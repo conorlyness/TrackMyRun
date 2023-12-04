@@ -61,6 +61,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   highMileageShoes: Shoe[] = [];
   badgeHidden: boolean = true;
   subscriptions = new Subscription();
+  loading: boolean = false;
 
   //pagination variables
   //p for page number in pagination
@@ -90,6 +91,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   }
 
   showAllRunsOnStart() {
+    this.loading = true;
     this.subscriptions.add(
       this.runningService.getAllRuns().subscribe({
         next: (runs: Array<Run>) => {
@@ -98,9 +100,13 @@ export class RunLogComponent implements OnInit, OnDestroy {
             this.totalMiles += Number(run.distance);
           });
           this.sortedData = this.runInfo.slice();
+          this.loading = false;
           this.calculateRunningStreak();
         },
-        error: (error) => console.log('caught an error: ', error),
+        error: (error) => {
+          console.log('caught an error: ', error);
+          this.loading = false;
+        },
       })
     );
   }
@@ -110,7 +116,6 @@ export class RunLogComponent implements OnInit, OnDestroy {
     const endDate = moment(range.end).format('YYYY-MM-DD').toLocaleString();
 
     if (endDate < startDate || startDate > this.todaysDate.toLocaleString()) {
-      console.log('start: ', startDate, ' end: ', endDate);
       this.toast.error('The selected range was invalid. Please try again');
     } else {
       this.last7Filter = false;
@@ -238,6 +243,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
         cancel: false,
       },
       disableClose: true,
+      width: '500px',
+      height: '550px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -327,6 +334,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
   openExportDialog() {
     const dialogRef = this.dialog.open(ExportDialogComponent, {
       panelClass: 'confirm-dialog',
+      height: '300px',
+      width: '400px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -355,9 +364,10 @@ export class RunLogComponent implements OnInit, OnDestroy {
 
   openLogRun() {
     const dialogRef = this.dialog.open(LogRunComponent, {
-      width: '650px',
+      width: '550px',
       height: '700px',
       disableClose: true,
+      autoFocus: false,
     });
 
     dialogRef.componentInstance.closeDialog.subscribe((event) => {
@@ -442,8 +452,11 @@ export class RunLogComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(HighMileageComponent, {
       data: {
         shoes: this.highMileageShoes,
-        disableClose: true,
       },
+      disableClose: true,
+      autoFocus: false,
+      height: '30rem',
+      width: '30rem',
     });
 
     dialogRef.afterClosed().subscribe();
@@ -459,6 +472,10 @@ export class RunLogComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  reload() {
+    window.location.reload();
   }
 
   ngOnDestroy(): void {

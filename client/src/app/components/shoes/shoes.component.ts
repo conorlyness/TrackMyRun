@@ -53,6 +53,8 @@ export class ShoesComponent implements OnInit {
   addNewShoe() {
     const dialogRef = this.dialog.open(AddNewShoeComponent, {
       disableClose: true,
+      height: '300px',
+      width: '450px',
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -72,7 +74,6 @@ export class ShoesComponent implements OnInit {
   }
 
   retireShoe(shoe: Shoe) {
-    console.log('going to retire shoe: ', shoe);
     this.shoeService
       .updateShoeStatus(shoe.brand, shoe.name, true)
       .subscribe(() => {

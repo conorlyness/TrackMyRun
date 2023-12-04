@@ -1,11 +1,11 @@
 <ng-container *ngIf="!analyticMode">
   <div class="shoeContent">
     <div class="titleInfo">
-      <h1 class="title">Select Shoes</h1>
+      <h1 mat-dialog-title class="title">Select Shoes</h1>
       <mat-icon
+        class="tooltips"
         matTooltip="Select the shoes that you ran in for this run. 
     If you do not have any shoes added or do not see your shoes, then click on the add button."
-        matTooltipClass="shoeInfo"
         [matTooltipPosition]="'after'"
         >info</mat-icon
       >
@@ -34,7 +34,7 @@
         [customClass]="'material-symbols-outlined'"
         [content]="'steps'"
         [matStyle]="'mat-button'"
-        [hoverColour]="'rgb(18, 128, 44)'"
+        [hoverColour]="'rgb(18, 128, 109)'"
         [toolTip]="'Add new shoe'"
         (clickEvnt)="addNewShoe()"
         >+</app-button
@@ -45,70 +45,74 @@
 
 <ng-container *ngIf="analyticMode">
   <ng-container>
-    <table mat-table [dataSource]="shoes" class="shoeTable">
-      <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef class="shoeHeader">Shoe</th>
-        <td mat-cell *matCellDef="let shoe">
-          {{ shoe.brand }}
-          {{ shoe.name }}
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="Distance">
-        <th mat-header-cell *matHeaderCellDef class="distanceHeader">
-          Distance
-        </th>
-        <td mat-cell *matCellDef="let shoe">
-          {{ shoe.distance | number : "1.2-2" }} Miles
-        </td>
-      </ng-container>
-      <ng-container matColumnDef="options">
-        <th mat-header-cell *matHeaderCellDef class="actionsHeader">Actions</th>
-        <td mat-cell *matCellDef="let shoe">
-          <button
-            class="contextMenu"
-            mat-icon-button
-            [matMenuTriggerFor]="menu"
-            aria-label="Example icon-button with a menu"
-          >
-            <mat-icon>more_vert</mat-icon>
-          </button>
-          <mat-menu #menu="matMenu">
-            <button mat-menu-item (click)="deleteShoe(shoe)">
-              <p>Delete</p>
-            </button>
-            <ng-container *ngIf="!shoe.active">
-              <button mat-menu-item (click)="reactivateShoe(shoe)">
-                <p>Reactivate</p>
-              </button>
-            </ng-container>
-
-            <ng-container *ngIf="shoe.active">
-              <button mat-menu-item (click)="retireShoe(shoe)">
-                <p>Retire</p>
-              </button>
-            </ng-container>
-          </mat-menu>
-        </td>
-      </ng-container>
-
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr
-        [ngClass]="{ activeShoe: row.active, retiredShoe: !row.active }"
-        mat-row
-        *matRowDef="let row; columns: displayedColumns"
-      ></tr>
-    </table>
     <div class="analyticsAddBtn">
       <app-button
         [customContent]="true"
         customClass="material-symbols-outlined"
         content="steps"
         matStyle="mat-button"
-        hoverColour="rgb(18, 128, 44)"
+        hoverColour="rgb(18, 128, 109)"
         toolTip="Add new shoe"
         (clickEvnt)="addNewShoe()"
         >+</app-button
       >
+    </div>
+    <div class="shoeTableContainer">
+      <table mat-table [dataSource]="shoes" class="shoeTable">
+        <ng-container matColumnDef="Name">
+          <th mat-header-cell *matHeaderCellDef class="shoeHeader">Shoe</th>
+          <td mat-cell *matCellDef="let shoe">
+            {{ shoe.brand }}
+            {{ shoe.name }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="Distance">
+          <th mat-header-cell *matHeaderCellDef class="distanceHeader">
+            Distance
+          </th>
+          <td mat-cell *matCellDef="let shoe">
+            {{ shoe.distance | number : "1.2-2" }} Miles
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="options">
+          <th mat-header-cell *matHeaderCellDef class="actionsHeader">
+            Actions
+          </th>
+          <td mat-cell *matCellDef="let shoe">
+            <button
+              class="contextMenu"
+              mat-icon-button
+              [matMenuTriggerFor]="menu"
+              aria-label="Example icon-button with a menu"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item (click)="deleteShoe(shoe)">
+                <p>Delete</p>
+              </button>
+              <ng-container *ngIf="!shoe.active">
+                <button mat-menu-item (click)="reactivateShoe(shoe)">
+                  <p>Reactivate</p>
+                </button>
+              </ng-container>
+
+              <ng-container *ngIf="shoe.active">
+                <button mat-menu-item (click)="retireShoe(shoe)">
+                  <p>Retire</p>
+                </button>
+              </ng-container>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr
+          [ngClass]="{ activeShoe: row.active, retiredShoe: !row.active }"
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+      </table>
     </div>
   </ng-container>
 </ng-container>

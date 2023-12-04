@@ -280,6 +280,70 @@ app.post('/deleteShoe', async (req, res) => {
   res.status(404);
 });
 
+//all run schedule routes
+app.post('/runSchedule', async (req, res) => {
+  console.log('calling /runSchedule');
+  const result = await db.getAllSchedule(req.body);
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
+app.post('/addSchedule', async (req, res) => {
+  console.log('calling /addSchedule');
+  const schedule = await db.scheduleRun(req.body);
+  if (schedule) {
+    return res.status(200).json(schedule);
+  }
+  res.status(404);
+});
+
+app.post('/editSchedule', async (req, res) => {
+  console.log('calling /editSchedule');
+  const result = await db.editSchedule(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/deleteSchedule', async (req, res) => {
+  console.log('calling /deleteSchedule');
+  const result = await db.deleteSchedule(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/markAsComplete', async (req, res) => {
+  console.log('calling /markAsComplete');
+  const result = await db.completeRun(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.post('/markAsIncomplete', async (req, res) => {
+  console.log('calling /markAsIncomplete');
+  const result = await db.markRunIncomplete(req.body);
+  if (result) {
+    return res.status(200).json(res.statusCode);
+  }
+  res.status(404);
+});
+
+app.get('/raceDays', async (req, res) => {
+  console.log('calling /raceDays');
+  const raceDays = await db.getRaceDays();
+  if (raceDays) {
+    return res.status(201).json(raceDays);
+  }
+  res.status(404);
+});
+
 app.listen(3001, () => {
   try {
     db.connect();

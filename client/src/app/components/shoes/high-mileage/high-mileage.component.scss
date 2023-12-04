@@ -1,6 +1,21 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
+
+.highMileage-content {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}
+
 .titleInfo {
   display: flex;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 100;
+  font-size: 28px;
+  padding-top: 5px;
 }
 
 app-button {
@@ -15,6 +30,8 @@ app-button {
 
 .highMileShoes {
   margin-top: 10px;
+  display: flex;
+  justify-content: center;
 }
 
 .shoeMileage {
@@ -35,9 +52,15 @@ app-button {
 .warningText {
   font-size: 14px;
   font-weight: 300;
+  text-align: center;
 }
 
 .shoeDetails {
   font-size: 14px;
   font-weight: 300;
+}
+
+.card {
+  width: fit-content;
+  padding: 1rem;
 }

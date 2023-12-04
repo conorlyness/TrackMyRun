@@ -1,21 +1,29 @@
 <ng-container *ngIf="matStyle === 'mat-button'">
   <button
     #btn
-    mat-button
-    class="btn"
-    [ngClass]="{ borderBtn: border, warning: warning }"
+    mat-raised-button
+    [ngClass]="{
+      btn: true && !border,
+      borderBtn: border && true,
+      warning: warning
+    }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
     matTooltip="{{ toolTip }}"
+    [autofocus]="false"
   >
-    <ng-content></ng-content>
-    <span *ngIf="customContent" class="{{ customClass }}">
-      {{ content }}
-    </span>
+    <ng-content
+      [ngClass]="{ darkContent: darkTheme, lightContent: !darkTheme }"
+    ></ng-content>
+    <div class="iconBtn">
+      <span *ngIf="customContent" class="{{ customClass }}">
+        {{ content }}
+      </span>
+    </div>
 
-    <mat-icon *ngIf="!customContent">
+    <mat-icon *ngIf="!customContent" class="iconBtn">
       {{ icon }}
     </mat-icon>
   </button>
@@ -25,19 +33,25 @@
   <button
     #btn
     mat-fab
-    class="fabBtn"
-    [ngClass]="{ borderBtn: border, warning: warning }"
+    [ngClass]="{
+      fabBtn: true && !border,
+      borderBtn: border && true,
+      warning: warning
+    }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
     matTooltip="{{ toolTip }}"
+    [autofocus]="false"
   >
-    <span *ngIf="customContent" class="{{ customClass }}">
-      {{ content }}
-    </span>
+    <div class="iconBtn">
+      <span *ngIf="customContent" class="{{ customClass }}">
+        {{ content }}
+      </span>
+    </div>
 
-    <mat-icon *ngIf="!customContent">
+    <mat-icon *ngIf="!customContent" class="iconBtn">
       {{ icon }}
     </mat-icon>
   </button>
@@ -47,19 +61,25 @@
   <button
     #btn
     mat-mini-fab
-    class="btn"
-    [ngClass]="{ borderBtn: border, warning: warning }"
+    [ngClass]="{
+      btn: true && !border,
+      borderBtn: border && true,
+      warning: warning
+    }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
     (mouseleave)="onMouseLeave()"
     matTooltip="{{ toolTip }}"
+    [autofocus]="false"
   >
-    <span *ngIf="customContent" class="{{ customClass }}">
-      {{ content }}
-    </span>
+    <div class="iconBtn">
+      <span *ngIf="customContent" class="{{ customClass }}">
+        {{ content }}
+      </span>
+    </div>
 
-    <mat-icon *ngIf="!customContent">
+    <mat-icon *ngIf="!customContent" class="iconBtn">
       {{ icon }}
     </mat-icon>
   </button>
@@ -69,8 +89,11 @@
   <button
     #btn
     mat-fab
-    class="fabBtn"
-    [ngClass]="{ borderBtn: border, warning: warning }"
+    [ngClass]="{
+      fabBtnDark: true && !border,
+      borderBtn: border && true,
+      warning: warning
+    }"
     [disabled]="disabled"
     (click)="onClick()"
     (mouseover)="onMouseOver()"
@@ -78,12 +101,15 @@
     matTooltip="{{ toolTip }}"
     [matBadge]="badge"
     [matBadgeHidden]="badgeHidden"
+    [autofocus]="false"
   >
-    <span *ngIf="customContent" class="{{ customClass }}">
-      {{ content }}
-    </span>
+    <div class="iconBtn">
+      <span *ngIf="customContent" class="{{ customClass }}">
+        {{ content }}
+      </span>
+    </div>
 
-    <mat-icon *ngIf="!customContent">
+    <mat-icon *ngIf="!customContent" class="iconBtn">
       {{ icon }}
     </mat-icon>
   </button>

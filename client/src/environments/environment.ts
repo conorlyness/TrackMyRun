@@ -27,6 +27,13 @@ export const environment = {
   retireShoeUrl: 'http://localhost:3001/retire',
   reactivateShoeUrl: 'http://localhost:3001/reactivate',
   deleteShoeUrl: 'http://localhost:3001/deleteShoe',
+  runScheduleUrl: 'http://localhost:3001/runSchedule',
+  addScheduleUrl: 'http://localhost:3001/addSchedule',
+  editScheduleUrl: 'http://localhost:3001/editSchedule',
+  deleteScheduleUrl: 'http://localhost:3001/deleteSchedule',
+  completeRunUrl: 'http://localhost:3001/markAsComplete',
+  incompleteRunUrl: 'http://localhost:3001/markAsIncomplete',
+  raceDaysUrl: 'http://localhost:3001/raceDays',
 };
 
 /*

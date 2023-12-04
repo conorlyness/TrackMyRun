@@ -1,0 +1,281 @@
+$darkBlue: #101820ff;
+
+.calendar-schedule-content {
+  min-height: calc(100vh - 64px);
+}
+
+.navAndContent {
+  display: flex;
+}
+
+.monthYearTitle {
+  font-weight: 400;
+  font-size: large;
+}
+
+.currentWeekTitle {
+  font-weight: 400;
+  font-size: large;
+}
+
+.horizontalSpacer {
+  //   width: 318px;
+  opacity: 0.3;
+}
+
+.sideNav {
+  width: 100px;
+  min-height: calc(100vh - 64px);
+  background-color: none;
+  border-right: 1px solid $darkBlue;
+  z-index: 1;
+}
+
+.controlBtns {
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  margin-top: 20px;
+
+  app-button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+// .dayNamesRow {
+//   display: flex;
+//   font-weight: bold;
+// }
+
+// .dayNameHeader {
+//   flex: 1;
+//   text-align: center;
+//   box-sizing: border-box;
+//   display: flex;
+//   justify-content: flex-start;
+//   margin-left: 1rem;
+// }
+
+.calendar-content {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.monthYearSelector {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 1rem;
+  align-items: end;
+}
+
+.currentWeekInfo {
+  display: flex;
+  justify-content: center;
+}
+
+.calendar {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 15px;
+  width: -webkit-fill-available;
+  margin-bottom: 2rem;
+}
+
+.currentDateGrid {
+  color: #ffd700;
+}
+
+.dayGrid {
+  box-shadow: rgba(40, 89, 194, 0.1) 0px 1px 3px, rgba(0, 0, 0, 0.8) 0px 1px 2px;
+  padding: 10px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  width: -webkit-fill-available;
+  min-height: 10rem;
+  &:hover {
+    background-color: #2020207e;
+  }
+}
+
+.distancePlanned {
+  font-style: italic;
+  font-weight: 400;
+}
+
+.dayName {
+  font-weight: bold;
+}
+
+.dayDate {
+  margin-top: 5px;
+}
+
+// This is styles for days in the calendar that are a part of a previous month
+.previousMonthDay {
+  background-color: rgba(73, 73, 73, 0.479);
+}
+
+.previousMonthDayNumber {
+  color: rgba(90, 90, 90, 0.863);
+}
+
+.scheduledRunIcon {
+  // float: right;
+  margin-top: 4rem;
+  scale: 1.5;
+  color: #5978ef;
+}
+
+.unkownCompleteStatusIcon {
+  scale: 1.25;
+  color: #ffd700;
+}
+
+.completedRunIcon {
+  margin-top: 4rem;
+  margin-right: 0.7rem;
+  scale: 1.1;
+  color: rgb(18, 128, 44);
+}
+
+.incompleteRunIcon {
+  margin-top: 4rem;
+  margin-right: 0.7rem;
+  scale: 1.1;
+  color: #b90101;
+}
+
+.horizontalSpacer {
+  opacity: 0.3;
+}
+
+.distanceContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.raceDayIcon {
+}
+
+.sidebarStats {
+  display: grid;
+  margin: 1rem;
+}
+
+.totalMiles {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.daysScheduledMonth {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.nextRace {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+.daysTillRace {
+  color: #ffd700;
+  margin: 0px;
+}
+//week view styles
+
+.isRaceDisplay {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: xx-large;
+  font-style: italic;
+}
+
+.dayGridContainer {
+  display: flex;
+  min-height: 30rem;
+}
+
+.weekViewDate {
+  font-size: x-large;
+}
+
+.extendedInfoContainerWkView {
+  min-height: 15rem;
+  width: 100%;
+  margin-top: 4rem;
+  // display: flex;
+  // justify-content: space-around;
+}
+
+.scheduledRunContainerWk {
+  display: flex;
+  flex-direction: column;
+  height: -webkit-fill-available;
+}
+
+.distancePlanned {
+  flex: 1; /* This will make it take up all available space */
+}
+
+.gridWkViewIcons {
+  display: flex;
+}
+
+::ng-deep ngx-gague .reading-block {
+  overflow: visible !important;
+}
+
+::ng-deep .reading-block,
+::ng-deep .reading-label {
+  overflow: visible !important;
+}
+
+.weekLongestRun {
+  margin-top: 2rem;
+  display: grid;
+  justify-content: center;
+}
+
+.gridTitle {
+  font-weight: lighter;
+  font-size: 22px;
+  text-align: center;
+  top: 0;
+  position: absolute;
+  padding-top: 10px;
+}
+
+.tileData {
+  display: flex;
+  align-items: baseline;
+  margin: auto;
+}
+
+.distanceTag {
+  font-size: 70px;
+  font-weight: bolder;
+  text-shadow: 0 0 3px white;
+  margin-right: 0.3rem;
+}
+
+mat-grid-tile {
+  box-shadow: rgba(40, 89, 194, 0.1) 0px 1px 3px, rgba(0, 0, 0, 0.8) 0px 1px 2px;
+}
+
+mat-grid-list {
+  padding: 10px;
+}
+
+.tileContent {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}

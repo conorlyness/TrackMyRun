@@ -1,8 +1,6 @@
 .borderBtn {
   border: 2px solid white;
   font-size: 18px;
-  background-color: #101820ff;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -10,30 +8,31 @@
 
 .btn {
   font-size: 12px;
-  background-color: #101820ff;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 40px;
 }
 
 .fabBtn {
   font-size: 22px;
-  background-color: #101820ff;
-  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-mat-icon {
-  display: flex;
-  align-items: center;
+.iconBtn {
+  // color: white !important;
+  display: flex !important;
+  align-items: center !important;
 }
 
 .warning {
   span {
     color: rgb(228, 155, 20);
   }
+}
+
+::ng-deep .mdc-button__label {
+  // color: white !important;
+  display: flex;
 }

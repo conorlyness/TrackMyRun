@@ -8,7 +8,7 @@
             [toolTip]="'Log Run'"
             (clickEvnt)="openLogRun()"
             [border]="true"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [icon]="'add'"
           >
           </app-button>
@@ -17,10 +17,10 @@
             [matStyle]="'mat-fab-badge'"
             [toolTip]="'Filters'"
             (clickEvnt)="openFilters()"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [customContent]="true"
             [customClass]="'material-symbols-outlined'"
-            [content]="'filter_alt'"
+            [content]="'tune'"
             [badge]="'1'"
             [badgeHidden]="badgeHidden"
           >
@@ -30,16 +30,49 @@
             [matStyle]="'mat-fab'"
             [toolTip]="'Date range'"
             (clickEvnt)="toggleRange()"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             [icon]="'date_range'"
           >
           </app-button>
           <mat-divider></mat-divider>
-        </div>
-        <div class="totalMiles">
-          <p>Total Miles</p>
+          <app-button
+            [matStyle]="'mat-fab'"
+            (clickEvnt)="openExportDialog()"
+            [toolTip]="'Download current search'"
+            [hoverColour]="'rgb(18, 128, 109)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'download'"
+            class="downloadCsvButton"
+          ></app-button>
           <mat-divider></mat-divider>
-          <p class="mileage">{{ totalMiles | number : "1.2-2" }}</p>
+          <app-button
+            *ngIf="highMileageShoes.length > 0"
+            [matStyle]="'mat-fab'"
+            (clickEvnt)="openShoeInfoDialog()"
+            [toolTip]="'View high mileage shoe(s)'"
+            [hoverColour]="'rgba(242, 187, 67, 0.501)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'warning'"
+            class="highMileageButton"
+            [warning]="true"
+          ></app-button>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div class="sidebarStats">
+          <div class="totalMiles">
+            <p>Total Miles</p>
+            {{ totalMiles | number : "1.2-2" }}
+            <mat-divider></mat-divider>
+          </div>
+
+          <div class="runStreak">
+            <p>Run Streak</p>
+            <p class="currentRunStreak">{{ runningStreak }}</p>
+            <mat-divider></mat-divider>
+          </div>
         </div>
       </div>
     </div>
@@ -98,7 +131,7 @@
         <ng-container matColumnDef="Tags">
           <th mat-header-cell *matHeaderCellDef class="tagsColumn">Tags</th>
           <td mat-cell *matCellDef="let run" class="tagsData">
-            <mat-chip-list class="runTagsList">
+            <mat-chip-set class="runTagsList">
               <ng-container *ngIf="run?.tags?.length <= 2">
                 <!-- Render the first two tags normally -->
                 <ng-container *ngFor="let tag of run?.tags">
@@ -115,7 +148,7 @@
                   >+{{ run?.tags.length - 2 }} more</mat-chip
                 >
               </ng-container>
-            </mat-chip-list>
+            </mat-chip-set>
           </td>
         </ng-container>
 
@@ -123,7 +156,10 @@
           <th mat-header-cell *matHeaderCellDef class="notesColumn">Notes</th>
           <td mat-cell *matCellDef="let run">
             <button
-              class="expandRowBtn"
+              [ngClass]="{
+                expandRowBtnDark: darkTheme,
+                expandRowBtnLight: !darkTheme
+              }"
               mat-mini-fab
               (click)="expandRow($event, run)"
             >
@@ -181,12 +217,12 @@
               </div>
               <div class="tagsFromRun">
                 <h3 class="expandedRowTitle">Tags for this run</h3>
-                <mat-chip-list>
+                <mat-chip-listbox>
                   <!-- Render the first two tags normally -->
                   <ng-container *ngFor="let tag of run?.tags">
                     <mat-chip>{{ tag }}</mat-chip>
                   </ng-container>
-                </mat-chip-list>
+                </mat-chip-listbox>
               </div>
             </div>
           </td>
@@ -214,67 +250,50 @@
           class="notesRow"
         ></tr>
       </table>
+      <ng-container *ngIf="!sortedData && !loading">
+        <div class="noResultsError">
+          <p>We encountered an issue fetching the data</p>
+          <app-button
+            class="retryBtn"
+            [matStyle]="'mat-button'"
+            [customContent]="true"
+            [content]="'Retry' | uppercase"
+            [hoverColour]="'rgb(17, 103, 201)'"
+            (clickEvnt)="reload()"
+          ></app-button>
+        </div>
+      </ng-container>
     </div>
   </div>
 
   <ng-container *ngIf="sortedData">
     <ng-container *ngIf="sortedData.length > 10">
-      <div class="paginationControlsContainer">
-        <pagination-controls
-          [ngClass]="{
-            paginationControlsDark: darkTheme,
-            paginationControlsLight: !darkTheme
-          }"
-          (pageChange)="p = $event"
-          [autoHide]="true"
-        ></pagination-controls>
+      <div class="borderAndPagination">
+        <div class="sidenavBorder"></div>
+        <div class="paginationControlsContainer">
+          <pagination-controls
+            [ngClass]="{
+              paginationControlsDark: darkTheme,
+              paginationControlsLight: !darkTheme
+            }"
+            (pageChange)="p = $event"
+            [autoHide]="true"
+          ></pagination-controls>
 
-        <mat-form-field class="pageSizeMatSelect" appearance="legacy">
-          <mat-select [(ngModel)]="pageSize">
-            <ng-container *ngFor="let size of pageSizes">
-              <mat-option
-                class="pageSizeOption"
-                (click)="handlePageSizeChange(size)"
-                value="{{ size }}"
-                >{{ size }}</mat-option
-              >
-            </ng-container>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="pageSizeMatSelect" appearance="outline">
+            <mat-select [(ngModel)]="pageSize">
+              <ng-container *ngFor="let size of pageSizes">
+                <mat-option
+                  class="pageSizeOption"
+                  (click)="handlePageSizeChange(size)"
+                  value="{{ size }}"
+                  >{{ size }}</mat-option
+                >
+              </ng-container>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </ng-container>
   </ng-container>
-
-  <div class="groupedButtons">
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      (clickEvnt)="openExportDialog()"
-      [toolTip]="'Download current search'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [customClass]="'material-symbols-outlined'"
-      [content]="'download'"
-      class="downloadCsvButton"
-    ></app-button>
-    <app-button
-      [matStyle]="'mat-mini-fab'"
-      [toolTip]="'Current daily run streak'"
-      [hoverColour]="'rgb(18, 128, 44)'"
-      [customContent]="true"
-      [content]="runningStreak"
-      class="runningStreak"
-    ></app-button>
-    <app-button
-      *ngIf="highMileageShoes.length > 0"
-      [matStyle]="'mat-mini-fab'"
-      (clickEvnt)="openShoeInfoDialog()"
-      [toolTip]="'View high mileage shoe(s)'"
-      [hoverColour]="'rgba(242, 187, 67, 0.501)'"
-      [customContent]="true"
-      [customClass]="'material-symbols-outlined'"
-      [content]="'warning'"
-      class="highMileageButton"
-      [warning]="true"
-    ></app-button>
-  </div>
 </div>

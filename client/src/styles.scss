@@ -4,11 +4,25 @@
 @import "../node_modules/@angular/material/theming";
 @include mat-core();
 $darkBlue: #101820ff;
-$accentGreen: rgb(18, 128, 44);
-$dark-primary: mat-palette($mat-green);
+$accentGreen: rgb(18, 128, 109);
+
+// dark theme
+$dark-primary: mat-palette($mat-teal, A400);
 $dark-accent: mat-palette($mat-blue-grey, 800);
 $dark-warn: mat-palette($mat-red);
 $dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+// light theme
+$light-primary: mat-palette($mat-teal, 900);
+$light-accent: mat-palette($mat-blue-grey, 800);
+$light-warn: mat-palette($mat-red);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+
+@include angular-material-theme($light-theme);
+
+.lightMode {
+  @include angular-material-theme($light-theme);
+}
 
 .darkMode {
   @include angular-material-theme($dark-theme);
@@ -18,10 +32,6 @@ html,
 body {
   height: 100%;
   margin: 0;
-}
-
-* {
-  transition: background-color 400ms ease-in;
 }
 
 /* ===== Scrollbar CSS ===== */
@@ -34,14 +44,19 @@ body {
 /* Chrome, Edge, and Safari */
 *::-webkit-scrollbar {
   width: 6px;
+  background-color: $darkBlue;
 }
 
 *::-webkit-scrollbar-thumb {
   background-color: $darkBlue;
   border-radius: 1px;
-  border: 1px solid rgba(255, 255, 255, 0.233);
+  border: 1px solid rgba(255, 255, 255, 0.401);
 }
 
-mat-chip {
-  border: 1px solid rgb(18, 128, 44) !important;
+.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
+  border: 1px solid $accentGreen !important;
+}
+
+.tooltips {
+  color: $accentGreen !important;
 }

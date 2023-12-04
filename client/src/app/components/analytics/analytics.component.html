@@ -1,5 +1,5 @@
 <div class="analyticsContent">
-  <mat-grid-list cols="5" [gutterSize]="'10px'">
+  <mat-grid-list cols="5" [gutterSize]="'20px'" rowHeight="30rem">
     <mat-grid-tile class="sixMonthTotalTile" [colspan]="2" [rowspan]="1">
       <p class="tileTitle">Total miles in last 6 months</p>
       <div class="sixMonthTotalsLine">
@@ -49,13 +49,19 @@
       </div>
     </mat-grid-tile>
 
-    <mat-grid-tile class="longestRunTile">
+    <!-- <mat-grid-tile class="longestRunTile">
       <div class="longestRun">
         <p class="tileTitle">Furthest Run</p>
         <div class="tileData">
           <p class="distanceTag">{{ longestDistance?.longest_run }}</p>
           <p class="milesTag">Mi</p>
         </div>
+      </div>
+    </mat-grid-tile> -->
+    <mat-grid-tile>
+      <p class="tileTitle">Total miles by day</p>
+      <div class="distanceByDayPie">
+        <canvas #distanceByDay></canvas>
       </div>
     </mat-grid-tile>
     <mat-grid-tile class="totalDistanceTile">
@@ -94,13 +100,6 @@
         <div class="shoeTable">
           <app-shoes [analyticMode]="true"></app-shoes>
         </div>
-      </div>
-    </mat-grid-tile>
-
-    <mat-grid-tile>
-      <p class="tileTitle">Total miles by day</p>
-      <div class="distanceByDayPie">
-        <canvas #distanceByDay></canvas>
       </div>
     </mat-grid-tile>
   </mat-grid-list>

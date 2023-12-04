@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 
 @mixin dialogHeadings {
   padding-top: 5px;
@@ -10,11 +10,6 @@ $accentGreen: rgb(18, 128, 44);
   max-width: 450px;
   word-wrap: break-word;
   line-height: 1.6;
-}
-
-@mixin greenBoxShadow {
-  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
-    $accentGreen 0px -3px 0px inset;
 }
 
 @mixin inputStyles {
@@ -40,6 +35,7 @@ $accentGreen: rgb(18, 128, 44);
   font-size: 20px;
 }
 
+/* TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version. */
 ::ng-deep .mat-form-field-underline {
   display: none;
 }
@@ -79,7 +75,7 @@ $accentGreen: rgb(18, 128, 44);
   @include inputStyles;
 }
 
-::ng-deep .mat-dialog-container {
+::ng-deep .mat-mdc-dialog-container {
   box-shadow: rgba(0, 0, 0, 0.56) 0px 22px 70px 4px;
   text-align: center;
   font-size: 30px;
@@ -128,12 +124,13 @@ $accentGreen: rgb(18, 128, 44);
 .log-content {
   display: flex;
   justify-content: space-between;
+  padding: 1rem;
 }
 
 .navBtns {
   display: flex;
   justify-content: center;
-  padding-top: 20px;
+  padding-top: 10px;
 
   app-button {
     margin: 5px;
@@ -141,7 +138,6 @@ $accentGreen: rgb(18, 128, 44);
 }
 
 .additionalContent {
-  padding-top: 30px;
   display: grid;
   justify-content: center;
 }
@@ -163,7 +159,13 @@ $accentGreen: rgb(18, 128, 44);
   text-align: center;
 }
 
-.mat-chip.mat-standard-chip {
+.mat-mdc-chip.mat-mdc-standard-chip {
   height: 40px;
   margin: 2px;
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected,
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+  color: rgb(255, 255, 255) !important;
+  background-color: rgb(18, 128, 109) !important;
 }

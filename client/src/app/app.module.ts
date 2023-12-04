@@ -58,6 +58,15 @@ import { FixturesComponent } from './components/fixtures/fixtures.component';
 import { MatBadgeModule } from '@angular/material/badge';
 import { TagsComponent } from './components/tags/tags.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RunScheduleComponent } from './components/schedule/run-schedule/run-schedule.component';
+import { MonthPipe } from './pipes/month.pipe';
+import { OrdinalPipe } from './pipes/ordinal.pipe';
+import { AddRunDialogComponent } from './components/schedule/add-run-dialog/add-run-dialog.component';
+import { EditRunDialogComponent } from './components/schedule/edit-run-dialog/edit-run-dialog.component';
+import { PreviewRunDialogComponent } from './components/schedule/preview-run-dialog/preview-run-dialog.component';
+import { DeleteRunDialogComponent } from './components/schedule/delete-run-dialog/delete-run-dialog.component';
+import { CompleteRunDialogComponent } from './components/schedule/complete-run-dialog/complete-run-dialog.component';
+import { NgxGaugeModule } from 'ngx-gauge';
 
 @NgModule({
   declarations: [
@@ -84,6 +93,14 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     ImageUploaderComponent,
     FixturesComponent,
     TagsComponent,
+    RunScheduleComponent,
+    MonthPipe,
+    OrdinalPipe,
+    AddRunDialogComponent,
+    EditRunDialogComponent,
+    PreviewRunDialogComponent,
+    DeleteRunDialogComponent,
+    CompleteRunDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,6 +141,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
       positionClass: 'toast-top-right',
     }),
     MaterialExampleModule,
+    NgxGaugeModule,
   ],
   providers: [{ provide: MAT_DATE_LOCALE, useValue: 'en-GB' }, ElectronService],
   bootstrap: [AppComponent],

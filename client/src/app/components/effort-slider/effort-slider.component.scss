@@ -19,26 +19,58 @@ $darkBlue: #101820ff;
   padding-bottom: 15px;
 }
 
-.rpeSliderLight::ng-deep .mat-slider-thumb {
+.rpeSliderLight::ng-deep .mdc-slider__thumb-knob {
   background-color: black !important;
+  border-color: black !important;
 }
 
-.rpeSliderLight ::ng-deep .mat-slider-thumb-label {
+.rpeSliderLight ::ng-deep .mdc-slider__value-indicator {
   background-color: black !important;
   color: white !important;
 }
 
-.rpeSliderDark::ng-deep .mat-slider-thumb {
+.rpeSliderDark::ng-deep .mdc-slider__tick-mark--inactive {
+  background-color: black !important;
+}
+
+.rpeSliderDark::ng-deep .mdc-slider__thumb-knob {
+  background-color: white !important;
+  border-color: white !important;
+}
+
+.rpeSliderDark::ng-deep .mdc-slider__tick-mark--inactive {
   background-color: white !important;
 }
 
-.rpeSliderDark ::ng-deep .mat-slider-thumb-label {
+.rpeSliderDark ::ng-deep .mdc-slider__value-indicator {
   background-color: $darkBlue !important;
   color: white !important;
 }
 
-::ng-deep .mat-slider-track-fill {
+.rpeSliderDark::ng-deep .mdc-slider__track {
+  background-color: white !important;
+  opacity: 0.5;
+}
+
+.rpeSliderDark::ng-deep .mdc-slider__track--inactive {
+  background-color: white !important;
+  opacity: 0.5;
+}
+
+.rpeSliderLight::ng-deep .mdc-slider__track--inactive {
+  background-color: black !important;
+  opacity: 0.5;
+}
+
+.rpeSliderLight::ng-deep .mdc-slider__track {
+  background-color: black !important;
+  opacity: 0.5;
+}
+
+::ng-deep .mat-primary .mdc-slider__track--active_fill {
+  border: 0px solid #ffffff !important; /* Removes border from active track */
   background: linear-gradient(to right, yellow 0%, red 100%);
+  opacity: 1;
 }
 
 .sliderLabels {
@@ -55,6 +87,6 @@ $darkBlue: #101820ff;
   display: flex;
 }
 
-::ng-deep .mat-tooltip {
+::ng-deep .mat-mdc-tooltip {
   white-space: pre-line !important;
 }

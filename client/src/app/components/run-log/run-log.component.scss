@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 $darkBlue: #101820ff;
 
 .controlBtns {
@@ -11,11 +11,6 @@ $darkBlue: #101820ff;
     margin-top: 10px;
     margin-bottom: 10px;
   }
-}
-
-@mixin greenBoxShadow {
-  box-shadow: $accentGreen 0px 2px 4px, $accentGreen 0px 7px 13px -3px,
-    $accentGreen 0px -3px 0px inset;
 }
 
 .log-content {
@@ -33,6 +28,12 @@ $darkBlue: #101820ff;
   background-color: none;
   border-right: 1px solid $darkBlue;
   z-index: 1;
+}
+
+.sidenavBorder {
+  border-right: 1px solid $darkBlue;
+  z-index: 1;
+  width: 100px;
 }
 
 .resultsTable {
@@ -55,7 +56,7 @@ tr.tableRowDark {
   height: 70px !important;
 
   &:hover {
-    background-color: $darkBlue;
+    background-color: #2020207e !important;
   }
 }
 
@@ -64,7 +65,7 @@ tr.tableRowLight {
   height: 70px !important;
 
   &:hover {
-    background-color: rgba(18, 128, 44, 0.76);
+    background-color: $accentGreen;
   }
 }
 
@@ -114,18 +115,39 @@ table th {
 .paginationControlsContainer {
   display: flex;
   justify-content: center;
+  margin: auto;
+  margin-top: 1rem;
 }
 
 .pageSizeMatSelect {
   margin-left: 10px;
-  width: 50px;
+  width: 5rem;
+}
+
+.pageSizeMatSelect ::ng-deep .mdc-text-field {
+}
+
+.sidebarStats {
+  display: grid;
+  margin: 1rem;
 }
 
 .totalMiles {
   text-align: center;
   margin-bottom: 20px;
   font-weight: 300;
-  margin-top: 30px;
+}
+
+.runStreak {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  margin-top: 25px;
+}
+
+.currentRunStreak {
+  font-weight: bold;
+  margin: 0px;
 }
 
 .dateRangeComp {
@@ -134,12 +156,6 @@ table th {
   width: fit-content;
   margin-top: 1px;
   margin-bottom: 1px;
-}
-
-.mileage {
-  padding-top: 10px;
-  font-size: 20px;
-  font-weight: 400;
 }
 
 .miLabel {
@@ -155,12 +171,16 @@ tr.notesRow {
   overflow: hidden;
 }
 
-.expandRowBtn {
+.expandRowBtnLight {
   background: black;
 
   &:hover {
     background-color: $accentGreen;
   }
+}
+
+.expandRowBtnDark:hover {
+  background-color: $accentGreen;
 }
 
 .noData {
@@ -236,6 +256,22 @@ tr.notesRow {
   margin-top: 10px;
 }
 
-::ng-deep .mat-tooltip {
+.noResultsError {
+  display: grid;
+  justify-content: center;
+  align-items: baseline;
+  margin: inherit;
+}
+
+.retryBtn {
+  display: flex;
+  justify-content: center;
+}
+
+.borderAndPagination {
+  display: flex;
+}
+
+::ng-deep .mat-mdc-tooltip {
   white-space: pre-line !important;
 }

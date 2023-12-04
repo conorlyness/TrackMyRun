@@ -1,5 +1,5 @@
 <div class="log-content">
-  <h1 class="title">Log run</h1>
+  <h1 mat-dialog-title class="title">Log run</h1>
   <app-button
     class="closeBtn"
     [icon]="'close'"
@@ -69,10 +69,12 @@
         <div class="navBtns">
           <app-button
             class="nextBtn"
-            [icon]="'navigate_next'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_right_alt'"
             matStepperNext
             [matStyle]="'mat-button'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="next()"
           ></app-button>
         </div>
@@ -88,19 +90,22 @@
       <div class="navBtns">
         <app-button
           class="backBtn"
-          [icon]="'navigate_before'"
-          matStepperNext
           [matStyle]="'mat-button'"
-          [hoverColour]="'rgb(18, 128, 44)'"
+          [customContent]="true"
+          [customClass]="'material-symbols-outlined'"
+          [content]="'arrow_left_alt'"
+          [hoverColour]="'rgb(18, 128, 109)'"
           (clickEvnt)="previous()"
         ></app-button>
         <ng-container *ngIf="distance && shoe">
           <app-button
             class="nextBtn"
-            [icon]="'navigate_next'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_right_alt'"
             matStepperNext
             [matStyle]="'mat-button'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="next()"
           ></app-button>
         </ng-container>
@@ -110,9 +115,11 @@
   <ng-container *ngIf="distance && shoe">
     <mat-step label="Review">
       <div>
-        <h1 class="areTheseCorrect">Are these details correct?</h1>
+        <h1 mat-dialog-title class="areTheseCorrect">
+          Are these details correct?
+        </h1>
         <hr class="horizontalSpacer" />
-        <div class="runReview">
+        <div mat-dialog-content class="runReview">
           <p class="dateText">
             Completed on {{ date.value | date : "fullDate" }}
           </p>
@@ -123,25 +130,29 @@
           <p class="tagsText">Tags:</p>
           <div class="tagsPreviewContainer">
             <ng-container *ngFor="let tag of tags">
-              <mat-chip class="previewTags">{{ tag }}</mat-chip>
+              <mat-chip-option class="previewTags">{{ tag }}</mat-chip-option>
             </ng-container>
           </div>
         </div>
         <div class="navBtns">
           <app-button
-            [icon]="'navigate_before'"
-            matStepperNext
+            class="backBtn"
             [matStyle]="'mat-button'"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_left_alt'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (clickEvnt)="previous()"
           ></app-button>
           <app-button
-            [disabled]="distance != undefined && distance <= 0"
+            [disabled]="
+              (distance != undefined && distance <= 0) || disableSubmit
+            "
             [customContent]="true"
             [content]="'Submit' | uppercase"
             [matStyle]="'mat-button'"
             [border]="true"
-            [hoverColour]="'rgb(18, 128, 44)'"
+            [hoverColour]="'rgb(18, 128, 109)'"
             (click)="confirmSelection()"
           ></app-button>
         </div>

@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 $darkBlue: #101820ff;
 
 .gallery-container {
@@ -150,6 +150,7 @@ $darkBlue: #101820ff;
   justify-content: space-between;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 ::ng-deep
   .mat-form-field-appearance-outline.mat-focused
   .mat-form-field-outline-start,
@@ -159,6 +160,7 @@ $darkBlue: #101820ff;
   border-color: grey;
 }
 
+/*TODO(mdc-migration): The following rule targets internal classes of form-field that may no longer apply for the MDC version.*/
 .mat-form-field-appearance-outline:not(.mat-form-field-disabled)
   .mat-form-field-flex:hover
   .mat-form-field-outline {

@@ -47,20 +47,28 @@ export class LogRunComponent implements OnInit {
   @Output() closeDialog = new EventEmitter();
   stepperOrientation!: Observable<StepperOrientation>;
   @ViewChild('stepper') stepper!: MatStepper;
+  disableSubmit: boolean = false;
 
   constructor(
     private runningService: RunningDataService,
     public dialog: MatDialog,
     private toast: ToastrService,
     private breakpointObserver: BreakpointObserver,
-    private shoeService: ShoesService
+    private shoeService: ShoesService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData
   ) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.data) {
+      //we have opened log run from the schedule so we have a date and distance
+      this.date = new FormControl(this.data.date);
+      this.distance = this.data.distance;
+    }
+  }
 
   confirmSelection() {
     if (!this.distance) {
@@ -70,6 +78,7 @@ export class LogRunComponent implements OnInit {
     } else if (!this.shoe) {
       this.toast.error('A shoe must be selected');
     } else {
+      this.disableSubmit = true;
       this.runningService
         .addNewRun(
           moment(this.date.value).format('YYYY-MM-DD'),
@@ -79,19 +88,30 @@ export class LogRunComponent implements OnInit {
           this.shoe,
           this.tags ? this.tags : []
         )
-        .subscribe(() => {
-          this.toast.success('Run Successfully Logged');
-          if (this.distance && this.shoeBrand && this.shoeName) {
-            this.shoeService
-              .increaseShoeMileage(this.distance, this.shoeBrand, this.shoeName)
-              .subscribe(() => {
-                this.distance = undefined;
-                this.notes = '';
-                this.shoe = '';
-                this.closeLogForm('logged');
-              });
+        .subscribe(
+          () => {
+            this.toast.success('Run Successfully Logged');
+            if (this.distance && this.shoeBrand && this.shoeName) {
+              this.shoeService
+                .increaseShoeMileage(
+                  this.distance,
+                  this.shoeBrand,
+                  this.shoeName
+                )
+                .subscribe(() => {
+                  this.distance = undefined;
+                  this.notes = '';
+                  this.shoe = '';
+                  this.disableSubmit = false;
+                  this.closeLogForm('logged');
+                });
+            }
+          },
+          (err) => {
+            console.log('Log run error:: ', err);
+            this.disableSubmit = false;
           }
-        });
+        );
     }
   }
 

@@ -1,0 +1,125 @@
+<div class="schedule-run-content">
+  <h1 mat-dialog-title class="title">Schedule Run</h1>
+  <app-button
+    class="closeBtn"
+    [icon]="'close'"
+    (clickEvnt)="closeForm()"
+    [matStyle]="'mat-mini-fab'"
+    [border]="true"
+    [hoverColour]="'rgb(144, 30, 30)'"
+  ></app-button>
+</div>
+
+<mat-stepper
+  class="stepper"
+  [orientation]="(stepperOrientation | async)!"
+  [linear]="true"
+  #stepper
+>
+  <mat-step
+    label="Run Info"
+    [hasError]="!distance"
+    [errorMessage]="'Distance is Required'"
+  >
+    <div class="centerDiv">
+      <div class="datePickerContainer">
+        <mat-form-field appearance="fill" class="datePicker">
+          <mat-label class="chooseDateText">Run Date</mat-label>
+          <input
+            class="pickerText"
+            matInput
+            [matDatepicker]="picker"
+            readonly
+            [(ngModel)]="scheduleDate"
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker [startAt]="scheduleDate"></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="distance">
+          <mat-label class="addMilesText"
+            >Distance
+            <p class="miLabel">Mi</p></mat-label
+          >
+          <input
+            matInput
+            type="number"
+            min="1"
+            [(ngModel)]="distance"
+            class="distanceInput"
+            matTooltip="Positive numbers only"
+            autocomplete="off"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field appearance="fill" class="notes">
+          <mat-label class="addNotesText">Notes...</mat-label>
+          <input
+            matInput
+            [(ngModel)]="notes"
+            class="notesInput"
+            autocomplete="off"
+          />
+        </mat-form-field>
+        <div class="raceDayContainer">
+          <mat-checkbox class="raceDayCheckBox" [(ngModel)]="isRace"
+            >Race Day</mat-checkbox
+          >
+        </div>
+
+        <div class="navBtns">
+          <app-button
+            class="nextBtn"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_right_alt'"
+            matStepperNext
+            [matStyle]="'mat-button'"
+            [hoverColour]="'rgb(18, 128, 109)'"
+            (clickEvnt)="next()"
+          ></app-button>
+        </div>
+      </div>
+    </div>
+  </mat-step>
+  <ng-container *ngIf="distance">
+    <mat-step label="Review">
+      <div>
+        <h1 mat-dialog-title class="areTheseCorrect">Confirm Scheduled Run</h1>
+        <hr class="horizontalSpacer" />
+        <div mat-dialog-content class="runReview">
+          <p class="dateText">
+            Scheduling for {{ scheduleDate | date : "mediumDate" }}
+          </p>
+          <p class="distanceText">Distance: {{ distance }} Miles</p>
+          <p class="notesText">Run Notes: {{ notes || "N/A" }}</p>
+          <p class="raceDayText" *ngIf="isRace">This will be race day</p>
+        </div>
+        <div class="navBtns">
+          <app-button
+            class="backBtn"
+            [matStyle]="'mat-button'"
+            [customContent]="true"
+            [customClass]="'material-symbols-outlined'"
+            [content]="'arrow_left_alt'"
+            [hoverColour]="'rgb(18, 128, 109)'"
+            (clickEvnt)="previous()"
+          ></app-button>
+          <app-button
+            [disabled]="
+              (distance != undefined && distance <= 0) || disableSchedule
+            "
+            [customContent]="true"
+            [content]="'Schedule' | uppercase"
+            [matStyle]="'mat-button'"
+            [border]="true"
+            [hoverColour]="'rgb(18, 128, 109)'"
+            (click)="confirmSelection()"
+          ></app-button>
+        </div>
+      </div>
+    </mat-step>
+  </ng-container>
+</mat-stepper>

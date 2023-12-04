@@ -1,4 +1,4 @@
-$accentGreen: rgb(18, 128, 44);
+$accentGreen: rgb(18, 128, 109);
 
 .title {
   padding-bottom: 10px;
@@ -18,7 +18,6 @@ $accentGreen: rgb(18, 128, 44);
   font-weight: 200;
   font-size: 16px;
   padding-top: 5px;
-  padding-bottom: 10px;
 }
 
 .checkbox-section {
@@ -28,13 +27,23 @@ $accentGreen: rgb(18, 128, 44);
 .buttons {
   display: flex;
   justify-content: space-evenly;
-  padding-top: 50px;
+  padding-top: 30px;
 }
 
-::ng-deep.mat-checkbox-checked.mat-accent .mat-checkbox-background {
+::ng-deep.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
   background-color: $accentGreen !important;
 }
 
-.mat-checkbox ::ng-deep.mat-checkbox-checkmark-path {
+::ng-deep.mat-mdc-checkbox
+  .mdc-checkbox
+  .mdc-checkbox__native-control:enabled:checked
+  ~ .mdc-checkbox__background {
+  border-color: black !important;
+}
+
+.mat-mdc-checkbox ::ng-deep.mat-checkbox-checkmark-path {
   stroke: white !important;
 }
