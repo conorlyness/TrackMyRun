@@ -108,7 +108,6 @@ export class AnalyticsComponent implements OnInit {
     this.analyticsService
       .getTotalForMonthInYear(month, year)
       .subscribe((val) => {
-        console.log(val);
         this.monthInYearTotal = val;
       });
   }
@@ -117,28 +116,24 @@ export class AnalyticsComponent implements OnInit {
     this.analyticsService
       .getDailyAvgForMonthInYear(month, year)
       .subscribe((val) => {
-        console.log(val);
         this.dailyAvgMonthInYear = val;
       });
   }
 
   totalDistanceRan() {
     this.analyticsService.getTotalDistance().subscribe((val) => {
-      console.log(val);
       this.totalDistance = val;
     });
   }
 
   longestRun() {
     this.analyticsService.getLongestRun().subscribe((val) => {
-      console.log(val);
       this.longestDistance = val;
     });
   }
 
   currentWeekTotal() {
     this.analyticsService.getCurrentWeekTotal().subscribe((val) => {
-      console.log(val);
       this.currentWeeksTotal = val;
     });
   }
@@ -165,7 +160,6 @@ export class AnalyticsComponent implements OnInit {
   }
 
   populateDistanceByDayPie() {
-    console.log(this.distanceByDayData);
     let ctx = this.pieChartContainer.nativeElement.getContext('2d');
     // Destroy the previous Chart object, if it exists
     if (this.pieRef) {

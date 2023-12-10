@@ -398,6 +398,7 @@ export class RunScheduleComponent implements OnInit {
         this.endOfCurrentMonth
       );
       this.generateSchedule(this.startOfCurrentMonth, this.endOfCurrentMonth);
+      this.calculateWeeklyMileageGoal();
       this.getRaces();
     });
   }
