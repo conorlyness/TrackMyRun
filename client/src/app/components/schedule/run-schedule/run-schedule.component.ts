@@ -111,9 +111,7 @@ export class RunScheduleComponent implements OnInit {
       this.endOfCurrentMonth
     );
     this.generateSchedule();
-    await this.getWeeksLoggedMileage();
-    await this.getWeeksScheduledMileage();
-    this.calculateWeeklyMileageGoal();
+    await this.calculateWeeklyMileageGoal();
   }
 
   async getScheduledRuns(start: Date, end: Date) {
@@ -432,7 +430,9 @@ export class RunScheduleComponent implements OnInit {
     });
   }
 
-  calculateWeeklyMileageGoal() {
+  async calculateWeeklyMileageGoal() {
+    await this.getWeeksLoggedMileage();
+    await this.getWeeksScheduledMileage();
     // Calculate the percentage complete
     if (this.weeksScheduledMileage <= 0) {
       this.mileageCompletePercentage = 100;
@@ -440,7 +440,6 @@ export class RunScheduleComponent implements OnInit {
       this.mileageCompletePercentage =
         (+this.weeksLoggedMileage / this.weeksScheduledMileage) * 100;
     }
-
     this.gaugeValue = +this.mileageCompletePercentage.toFixed(1);
     this.gaugeLabel = `${this.weeksLoggedMileage}/${this.weeksScheduledMileage} Miles`;
   }
