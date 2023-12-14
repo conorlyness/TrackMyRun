@@ -1,6 +1,7 @@
 name: Build TMR
 
 on:
+  workflow_dispatch:
   push:
     branches:
       ['develop', 'main']
@@ -20,8 +21,8 @@ jobs:
 
     - name: Install dependencies
       run: npm install
-      working-directory: /client
+      working-directory: client
 
     - name: Build
       run: npm run build
-      working-directory: /client
+      working-directory: client
