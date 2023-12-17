@@ -23,6 +23,7 @@ import { LogRunComponent } from '../log-run/log-run.component';
 import { ThemeService } from 'src/app/services/theme.service';
 import { ShoesService } from 'src/app/services/shoes.service';
 import { HighMileageComponent } from '../shoes/high-mileage/high-mileage.component';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'app-run-log',
@@ -55,6 +56,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
   distanceFilter: DistanceFilter = { min: undefined, max: undefined };
   clearRangeObs$ = this.clearRangeSubject.asObservable();
   rangePicker: boolean = false;
+  preDefinedRange: Range | undefined = undefined;
   darkTheme?: boolean;
   runningStreak!: number;
   allShoes: Shoe[] = [];
@@ -78,7 +80,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private toast: ToastrService,
     private themeService: ThemeService,
-    private shoeService: ShoesService
+    private shoeService: ShoesService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
@@ -88,6 +91,8 @@ export class RunLogComponent implements OnInit, OnDestroy {
     });
     this.showAllRunsOnStart();
     this.highMileageCheck();
+    let isRouteParams = this.route.snapshot.paramMap.get('date');
+    if (isRouteParams) this.displayCompletedRunFromSchedule(isRouteParams);
   }
 
   showAllRunsOnStart() {
@@ -111,7 +116,7 @@ export class RunLogComponent implements OnInit, OnDestroy {
     );
   }
 
-  search(range: Range) {
+  search(range: Range, isComingFromSchedule?: boolean) {
     const startDate = moment(range.start).format('YYYY-MM-DD').toLocaleString();
     const endDate = moment(range.end).format('YYYY-MM-DD').toLocaleString();
 
@@ -136,6 +141,9 @@ export class RunLogComponent implements OnInit, OnDestroy {
             });
 
             this.sortedData = this.runInfo.slice();
+            if (isComingFromSchedule) {
+              this.expandedRow = this.sortedData[0];
+            }
           },
           error: (error) => console.log('caught an error: ', error),
         })
@@ -472,6 +480,18 @@ export class RunLogComponent implements OnInit, OnDestroy {
         }
       });
     });
+  }
+
+  displayCompletedRunFromSchedule(date: string) {
+    this.rangePicker = true;
+    const startDate = moment(date).format('YYYY-MM-DD').toLocaleString();
+    const endDate = moment(date).format('YYYY-MM-DD').toLocaleString();
+    let range = {
+      start: startDate,
+      end: endDate,
+    };
+    this.preDefinedRange = range;
+    this.search(range, true);
   }
 
   reload() {

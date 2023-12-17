@@ -13,12 +13,22 @@
 <div mat-dialog-content class="runDetails">
   <div class="infoContainer">
     <p>{{ data.date | date : "fullDate" }}</p>
-    <p>{{ data.run.distance }} Miles</p>
+    <p *ngIf="!this.scheduledRun.completed">{{ data.run.distance }} Miles</p>
     <div *ngIf="data.run.notes" class="notesContainer">
-      <p class="notesText">Notes for run: {{ data.run.notes }}</p>
+      <p class="notesText">Notes: {{ data.run.notes }}</p>
     </div>
 
     <p *ngIf="data.run.race">Race day!</p>
+  </div>
+  <div class="openLogBtn" *ngIf="scheduledRun.completed">
+    <app-button
+      [customContent]="true"
+      [content]="'View in Log' | uppercase"
+      [matStyle]="'mat-button'"
+      [border]="true"
+      [hoverColour]="'rgb(18, 128, 109)'"
+      (click)="openRunLog()"
+    ></app-button>
   </div>
   <div class="navBtns" *ngIf="!buttonsHidden">
     <app-button

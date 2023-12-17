@@ -114,7 +114,7 @@ $accentGreen: rgb(18, 128, 109);
 
 .closeBtn {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 ::ng-deep.mat-step-icon-content {

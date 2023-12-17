@@ -20,6 +20,7 @@ export class DateRangePickerComponent implements OnInit, OnDestroy {
   @Output() searchRange = new EventEmitter<Range>();
   @Output() clearSearches = new EventEmitter<boolean>();
   @Input() clearRange?: Observable<boolean>;
+  @Input() preDefinedRange?: Range;
 
   subscriptions = new Subscription();
 
@@ -31,6 +32,13 @@ export class DateRangePickerComponent implements OnInit, OnDestroy {
   constructor() {}
 
   ngOnInit(): void {
+    if (this.preDefinedRange) {
+      this.range.patchValue({
+        start: this.preDefinedRange.start,
+        end: this.preDefinedRange.end,
+      });
+    }
+
     this.subscriptions.add(
       this.clearRange?.subscribe((event) => {
         if (event === true) {

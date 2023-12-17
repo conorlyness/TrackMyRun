@@ -84,6 +84,7 @@
             (clearSearches)="clearSearch()"
             (searchRange)="search($event)"
             [clearRange]="clearRangeObs$"
+            [preDefinedRange]="preDefinedRange"
           ></app-date-range-picker>
         </div>
       </ng-container>
@@ -248,6 +249,7 @@
           mat-row
           *matRowDef="let row; columns: ['expandedDetail']"
           class="notesRow"
+          [class.expanded-row]="expandedRow === row"
         ></tr>
       </table>
       <ng-container *ngIf="!sortedData && !loading">

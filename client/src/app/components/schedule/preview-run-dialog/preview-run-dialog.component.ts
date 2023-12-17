@@ -4,17 +4,12 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
 } from '@angular/material/dialog';
-import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
 import { ScheduleService } from 'src/app/services/schedule.service';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatStepper, StepperOrientation } from '@angular/material/stepper';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
 import { ScheduledRun } from 'src/app/types';
 import { EditRunDialogComponent } from '../edit-run-dialog/edit-run-dialog.component';
 import { DeleteRunDialogComponent } from '../delete-run-dialog/delete-run-dialog.component';
+import { Router } from '@angular/router';
 
 export interface DialogData {
   date: any;
@@ -39,7 +34,8 @@ export class PreviewRunDialogComponent {
     public dialogRef: MatDialogRef<PreviewRunDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
     private scheduleService: ScheduleService,
-    private toast: ToastrService
+    private toast: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -102,5 +98,10 @@ export class PreviewRunDialogComponent {
         this.dialogRef.close('deleted');
       }
     });
+  }
+
+  openRunLog() {
+    this.router.navigate(['log', { date: this.scheduleDate }]);
+    this.dialogRef.close();
   }
 }
