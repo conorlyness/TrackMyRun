@@ -140,6 +140,7 @@ export class RunScheduleComponent implements OnInit {
   linkSchedule() {
     this.daysScheduledThisMonth = 0;
     this.weeksLongRunDistance = 0;
+    this.monthsTotalMiles = 0;
     // Create a Map for faster lookups
     const runsMap = new Map<string, any>(); // Map<date, run>
 
