@@ -179,15 +179,9 @@ export class RunScheduleComponent implements OnInit {
         // Update the original day object within the array
         this.currentWeekDays[dayIndex].scheduledRun = run;
 
-        if (this.currentWeekDays[dayIndex]?.scheduledRun?.distance) {
-          let distance = this.currentWeekDays[dayIndex]?.scheduledRun
-            ?.distance as number;
-          let day = this.currentWeekDays[dayIndex]?.scheduledRun?.date;
-
-          if (distance > this.weeksLongRunDistance) {
-            this.weeksLongRunDistance = distance;
-            this.weeksLongRunDistanceDay = day as string;
-          }
+        if (+run.distance > this.weeksLongRunDistance) {
+          this.weeksLongRunDistance = run.distance;
+          this.weeksLongRunDistanceDay = run.date;
         }
       }
     });
