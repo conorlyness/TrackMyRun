@@ -62,6 +62,12 @@ mat-grid-list {
   text-shadow: 0 0 3px white; /* adds a green, blurred shadow */
 }
 
+.daysRan {
+  font-size: 50px;
+  font-weight: bolder;
+  text-shadow: 0 0 3px white; /* adds a green, blurred shadow */
+}
+
 .milesTag {
 }
 
@@ -92,6 +98,14 @@ mat-grid-list {
 }
 
 .currentWeeksTotal {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.currentMonthsTotal {
   height: 100%;
   width: 100%;
   display: flex;

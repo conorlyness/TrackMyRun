@@ -11,6 +11,7 @@ import * as moment from 'moment';
 import { AnalyticsService } from 'src/app/services/analytics.service';
 import { ThemeService } from 'src/app/services/theme.service';
 import {
+  CurrentMonthTotalRuns,
   DailyAvgMonthAndYear,
   DistanceByDay,
   LongestDistance,
@@ -33,6 +34,7 @@ export class AnalyticsComponent implements OnInit {
   currentWeeksTotal?: WeeklyTotal;
   monthInYearTotal?: MonthlyTotalMonthAndYear;
   dailyAvgMonthInYear?: DailyAvgMonthAndYear;
+  runsThisMonth?: CurrentMonthTotalRuns;
   currentYear: string = moment().format('YYYY');
   currentMonth: string = moment().month(moment().format('MMM')).format('M');
   distanceByDayData: DistanceByDay[] = [];
@@ -83,6 +85,7 @@ export class AnalyticsComponent implements OnInit {
     this.last6MonthsTotals();
     this.totalDistanceRan();
     this.longestRun();
+    this.currentMonthTotalRuns();
     this.currentWeekTotal();
     this.totalDistanceForMonthInYear(+this.currentMonth, +this.currentYear);
     this.dailyAvgForMonthInYear(+this.currentMonth, +this.currentYear);
@@ -116,6 +119,7 @@ export class AnalyticsComponent implements OnInit {
     this.analyticsService
       .getDailyAvgForMonthInYear(month, year)
       .subscribe((val) => {
+        console.log('Val from avg::', val);
         this.dailyAvgMonthInYear = val;
       });
   }
@@ -142,6 +146,13 @@ export class AnalyticsComponent implements OnInit {
     this.analyticsService.getLast6MonthsTotals().subscribe((val) => {
       this.sixMonthTotalsData = val;
       this.populateLast6MonthsLine();
+    });
+  }
+
+  currentMonthTotalRuns() {
+    this.analyticsService.getCurrentMonthDaysRan().subscribe((val) => {
+      console.log('TOTAL MONTH RUNS::', val);
+      this.runsThisMonth = val;
     });
   }
 

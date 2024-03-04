@@ -37,17 +37,21 @@ let analyticsQueries = {
 
   averageDistancePerDayMonthYear: `WITH monthly_data AS (
     SELECT
-    SUM(CAST("distance" AS decimal)) AS total_distance
+        EXTRACT(DAY FROM "rundate") AS day_of_month,
+        SUM(CAST("distance" AS decimal)) AS daily_distance
     FROM
-    public.runlog
+        public.runlog
     WHERE
-    EXTRACT(MONTH FROM "rundate") = {month} AND
-    EXTRACT(YEAR FROM "rundate") = {year}
-    )   
-    SELECT
-    total_distance / EXTRACT(DAY FROM (date_trunc('month', TO_TIMESTAMP(CONCAT({year}, '-', {month}, '-01'), 'YYYY-MM-DD')) + INTERVAL '1 month' - INTERVAL '1 day')) AS average_Daily_Distance_Month_Year
-    FROM
-    monthly_data;`,
+        EXTRACT(MONTH FROM "rundate") = {month} AND
+        EXTRACT(YEAR FROM "rundate") = {year}
+    GROUP BY
+        day_of_month
+)
+SELECT
+    COALESCE(SUM(daily_distance) / COUNT(DISTINCT day_of_month), 0) AS average_daily_distance
+FROM
+    monthly_data;
+`,
 
   totalDistanceMonthYear: `SELECT
     SUM(CAST("distance" AS decimal)) AS total_distance
@@ -72,7 +76,7 @@ let analyticsQueries = {
     FROM 
     weekly_data;`,
 
-  TotalDistanceLast6Months: `WITH months AS (
+  totalDistanceLast6Months: `WITH months AS (
     SELECT generate_series(date_trunc('month', CURRENT_DATE) - interval '5 months',
     date_trunc('month', CURRENT_DATE),
     '1 month') AS month
@@ -91,6 +95,15 @@ let analyticsQueries = {
     SELECT *
     FROM monthly_data;
     `,
+
+  numberOfRunsThisMonth: `SELECT
+    COUNT(DISTINCT EXTRACT(DAY FROM "rundate")) AS total_days_with_runs
+FROM
+    public.runlog
+WHERE
+    EXTRACT(MONTH FROM "rundate") = EXTRACT(MONTH FROM CURRENT_DATE)
+    AND EXTRACT(YEAR FROM "rundate") = EXTRACT(YEAR FROM CURRENT_DATE);
+`,
 };
 
 module.exports = analyticsQueries;

@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { catchError, retry, Observable, throwError, tap } from 'rxjs';
+import { catchError, retry, Observable, throwError, tap, map } from 'rxjs';
 import {
+  CurrentMonthTotalRuns,
   DailyAvgMonthAndYear,
   DistanceByDay,
   LongestDistance,
@@ -77,6 +78,17 @@ export class AnalyticsService {
   getLast6MonthsTotals(): Observable<Array<SixMonthTotals>> {
     const url = environment.totalLast6Months;
     return this.http.get<Array<SixMonthTotals>>(url, {}).pipe(
+      retry(1),
+      catchError((error) => this.handleError(error))
+    );
+  }
+
+  getCurrentMonthDaysRan(): Observable<CurrentMonthTotalRuns> {
+    const url = environment.totalDaysRanThisMonth;
+    return this.http.get<Array<CurrentMonthTotalRuns>>(url, {}).pipe(
+      map((val: any) => {
+        return val[0].total_days_with_runs;
+      }),
       retry(1),
       catchError((error) => this.handleError(error))
     );

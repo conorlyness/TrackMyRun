@@ -27,7 +27,7 @@
             <div class="tileData">
               <p class="distanceTag">
                 {{
-                  (dailyAvgMonthInYear?.average_daily_distance_month_year
+                  (dailyAvgMonthInYear?.average_daily_distance
                     | number : "1.2-2") || 0
                 }}
               </p>
@@ -81,6 +81,14 @@
             {{ currentWeeksTotal?.total_distance_week || 0 }}
           </p>
           <p class="milesTag">Mi</p>
+        </div>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile class="currentMonthsTotalRunsTile">
+      <div class="currentMonthsTotal">
+        <p class="tileTitle">Total Runs This Month</p>
+        <div class="tileData">
+          <p class="daysRan">{{ runsThisMonth }}</p>
         </div>
       </div>
     </mat-grid-tile>

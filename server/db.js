@@ -210,7 +210,18 @@ class Database {
   totalDistanceLast6Months = async () => {
     try {
       const result = await this.client.query(
-        analyticsQueries.TotalDistanceLast6Months
+        analyticsQueries.totalDistanceLast6Months
+      );
+      return result.rows;
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  totalDaysRanThisMonth = async () => {
+    try {
+      const result = await this.client.query(
+        analyticsQueries.numberOfRunsThisMonth
       );
       return result.rows;
     } catch (err) {

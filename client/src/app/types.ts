@@ -17,6 +17,10 @@ export type SixMonthTotals = {
   totaldistance: number;
 };
 
+export type CurrentMonthTotalRuns = {
+  total_days_with_runs: number;
+};
+
 export type OverallTotal = {
   total_distance: number;
 };
@@ -35,7 +39,7 @@ export type MonthAndYear = {
 };
 
 export type DailyAvgMonthAndYear = {
-  average_daily_distance_month_year: number;
+  average_daily_distance: number;
 };
 
 export type MonthlyTotalMonthAndYear = {

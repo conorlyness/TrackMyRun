@@ -67,6 +67,7 @@ import { PreviewRunDialogComponent } from './components/schedule/preview-run-dia
 import { DeleteRunDialogComponent } from './components/schedule/delete-run-dialog/delete-run-dialog.component';
 import { CompleteRunDialogComponent } from './components/schedule/complete-run-dialog/complete-run-dialog.component';
 import { NgxGaugeModule } from 'ngx-gauge';
+import { StravaComponent } from './components/strava/strava.component';
 
 @NgModule({
   declarations: [
@@ -101,6 +102,7 @@ import { NgxGaugeModule } from 'ngx-gauge';
     PreviewRunDialogComponent,
     DeleteRunDialogComponent,
     CompleteRunDialogComponent,
+    StravaComponent,
   ],
   imports: [
     BrowserModule,

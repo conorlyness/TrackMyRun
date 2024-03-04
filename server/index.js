@@ -217,6 +217,15 @@ app.get('/last6MonthsTotal', async (req, res) => {
   res.status(404);
 });
 
+app.get('/daysRanCurrentMonth', async (req, res) => {
+  console.log('calling /daysRanCurrentMonth');
+  const result = await db.totalDaysRanThisMonth();
+  if (result) {
+    return res.status(200).json(result);
+  }
+  res.status(404);
+});
+
 app.get('/allShoes', async (req, res) => {
   console.log('calling /allShoes');
   const result = await db.getAllShoes();
