@@ -1,14 +1,78 @@
 var config = require('./config');
+const path = require('path');
 const { Client } = require('pg');
+const sqlite3 = require('sqlite3');
 const analyticsQueries = require('./sqlQueries/analytics');
-const coreQueries = require('./sqlQueries/core');
-
+const { coreQueries, coreQueriesSqlite } = require('./sqlQueries/core');
+let tmrDB;
+const couldDB = process.env.COULD_DB === 'true';
 class Database {
   constructor() {
-    this.client = null;
+    if (couldDB) {
+      console.log('Running in Cloud DB mode.');
+      this.client = null;
+    } else {
+      console.log('Running in Sqlite mode.');
+      // Initialize the SQLite database connection
+      this.tmrDB = new sqlite3.Database('tmr.db');
+    }
   }
 
+  createDatabase = async () => {
+    return new Promise((resolve, reject) => {
+      tmrDB = new sqlite3.Database(path.join(__dirname, 'tmr.db'), (err) => {
+        if (err) {
+          console.log('Getting error ' + err);
+          reject(err);
+        }
+        this.createTables(tmrDB);
+        resolve();
+      });
+    });
+  };
+
+  createTables = (tmrDB) => {
+    tmrDB.exec(
+      `CREATE TABLE runlog (
+  rundate DATE,
+  distance TEXT, 
+  notes TEXT, 
+  rpe INT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  shoe TEXT 
+);
+
+CREATE TABLE personalbests (
+  distance TEXT, 
+  time TEXT 
+);
+
+CREATE TABLE shoes (
+  brand TEXT, 
+  name TEXT, 
+  distance REAL,
+  active BOOLEAN
+);
+
+CREATE TABLE Images (
+  Url TEXT, 
+  description TEXT,
+  tags TEXT 
+);
+
+CREATE TABLE RunSchedule (
+  Date DATE,
+  Distance TEXT,
+  Notes TEXT, 
+  Completed BOOLEAN,
+  Race BOOLEAN,
+  Incomplete BOOLEAN
+);`
+    );
+  };
+
   connect = async () => {
+    console.log('inside the connect func');
     try {
       this.client = new Client({
         user: config.user,
@@ -20,6 +84,7 @@ class Database {
       });
       await this.client.connect();
       console.log('Connected to database successfully.');
+      process.send('Connection to DB successful');
       //we keep pinging the db to ensure the connection is kept alive
       setInterval(() => {
         this.keepConnectionAlive();
@@ -32,6 +97,7 @@ class Database {
           console.log('disconnected from db');
           if (err) {
             console.log('error disconnecting from db: ', err);
+            process.send('Disconnected from DB');
           }
         });
       }, 50 * 60 * 1000);
@@ -55,6 +121,11 @@ class Database {
   viewAllRuns = async () => {
     try {
       const result = await this.client.query(coreQueries.viewAllRuns);
+
+      //need to add logic so we execute the query based on if its cloud db or sqlite
+      const result2 = this.tmrDB.all(coreQueriesSqlite.viewAllRuns);
+      console.log('result2::', result2);
+
       return result.rows;
     } catch (err) {
       console.log(err);

@@ -1,4 +1,6 @@
 const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
+const { fork } = require("child_process");
+const dotenv = require("dotenv");
 const path = require("path");
 const fs = require("fs");
 const url = require("url");
@@ -47,8 +49,45 @@ function readConfigSettings() {
   });
 }
 
+function startNodeServer(cloudDB) {
+  log.info("Starting express server");
+  return new Promise((resolve, reject) => {
+    const serverPath = path.join(__dirname, "../server", "index.js");
+    log.info("server path::", serverPath);
+    // Load environment variables from .env file in the server folder
+    dotenv.config({ path: path.join(__dirname, "../server", ".env") });
+    const env = Object.assign({}, process.env); // Create a copy of process.env
+    // Add your custom environment variables here
+    env.COULD_DB = cloudDB ? "true" : "false";
+
+    // Pass environment variables to the server process
+    const serverProcess = fork(serverPath, [], {
+      env: env,
+    });
+
+    serverProcess.on("exit", (code, signal) => {
+      if (code !== 0) {
+        log.error(
+          `Server process exited with code ${code} and signal ${signal}`
+        );
+        reject();
+      }
+    });
+
+    serverProcess.on("message", (message) => {
+      log.info(`Recieved message from server: ${message}`);
+      if (message.includes("Connection to DB successful")) resolve();
+      if (message.includes("Disconnected from DB")) {
+        //add some logic here to allow for a retry**
+      }
+    });
+  });
+}
+
 async function createWindow() {
   await readConfigSettings();
+  const cloudDbFlag = process.argv.includes("--CloudDB");
+  await startNodeServer(cloudDbFlag);
 
   mainWindow = new BrowserWindow({
     show: false,

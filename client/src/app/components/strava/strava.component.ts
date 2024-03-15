@@ -10,45 +10,36 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 export class StravaComponent {
   constructor(
     private stravaService: StravaService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {}
 
-  stravaCode: string | null = localStorage.getItem('stravaCode');
+  accessToken: string = '';
 
   ngOnInit() {
     console.log('STRAVA ON INIT');
     this.activatedRoute.queryParams.subscribe((params) => {
       console.log('PARAMS::', params);
       if (params['code']) {
-        console.log('THE CODE IS::', params['code']);
-        localStorage.setItem('stravaCode', params['code']);
-        this.stravaService.exchangeAuthorizationCode(params['code']);
+        let code = params['code'];
+        console.log('THE CODE IS::', code);
+        localStorage.setItem('stravaCode', code);
+        this.stravaService.exchangeAuthorizationCode(code);
+        //clear query params as we have our token
+        const urlWithoutCode = window.location.pathname;
+        window.history.replaceState({}, document.title, urlWithoutCode);
       } else {
         localStorage.setItem('stravaCode', '');
         this.initiateOAuthFlow();
       }
     });
-
-    if (localStorage.getItem('accessToken')) {
-      console.log(
-        'we have an access token to use::',
-        localStorage.getItem('accessToken')
-      );
-    }
   }
 
   initiateOAuthFlow(): void {
     console.log('auth with strava');
-    // this.activatedRoute.queryParams.subscribe(async (params) => {
-    //   const stravaCode = params['code'];
-    //   console.log('strava code::', stravaCode);
-    //check local storage for auth code and electron config file***
-    if (this.stravaService.stravaCode) {
-      //store code somewhere
-      console.log('ALREADY AUTHORISED');
-    } else {
+    localStorage.setItem('accessToken', '');
+    if (!localStorage.getItem('accessToken')) {
       this.stravaService.initiateOAuthFlow();
     }
-    // });
   }
 }

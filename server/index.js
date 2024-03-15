@@ -4,11 +4,23 @@ const cors = require('cors');
 const multer = require('multer');
 const fs = require('fs');
 var path = require('path');
+var sqlite3 = require('sqlite3');
 const app = express();
 const API_PORT = 3001;
 
 app.use(express.json());
 app.use(cors());
+
+const couldDB = process.env.COULD_DB === 'true';
+
+// Now you can use the `conorDev` variable in your server logic
+if (couldDB) {
+  console.log('Running in Cloud DB mode.');
+  startServer(true);
+} else {
+  console.log('Running in Sqlite mode.');
+  isDbCreated();
+}
 
 //API routes
 
@@ -353,13 +365,59 @@ app.get('/raceDays', async (req, res) => {
   res.status(404);
 });
 
-app.listen(3001, () => {
-  try {
-    db.connect();
-    console.log(`listening on port ${API_PORT}`);
-  } catch (err) {
-    console.log('Error on port: ', err);
+function isDbCreated() {
+  console.log('Checking file location for the database...');
+  new sqlite3.Database(
+    path.join(__dirname, 'tmr.db'),
+    sqlite3.OPEN_READWRITE,
+    async (err) => {
+      if (err && err.code === 'SQLITE_CANTOPEN') {
+        await createDatabaseWithRetry();
+      } else if (err) {
+        console.error('Error while accessing the database:', err);
+      } else {
+        console.log('Database is present');
+        startServer();
+      }
+    }
+  );
+}
+
+async function createDatabaseWithRetry(retryCount = 3, delayMs = 1000) {
+  if (retryCount === 0) {
+    console.error('Database creation failed after multiple attempts');
+    return;
   }
-});
+
+  console.log(`Attempting to create the database. Retries left: ${retryCount}`);
+
+  try {
+    await db.createDatabase();
+    console.log('Database created successfully');
+    startServer();
+  } catch (error) {
+    console.error('Creating the database failed:', error);
+    await sleep(delayMs); // Wait for a specified delay before retrying
+    await createDatabaseWithRetry(retryCount - 1, delayMs);
+  }
+}
+
+function startServer(cloudDB = false) {
+  app.listen(3001, () => {
+    try {
+      if (cloudDB) {
+        console.log('ITS CLOUD DB');
+        db.connect();
+      }
+      console.log(`listening on port ${API_PORT}`);
+    } catch (err) {
+      console.log('Error on port: ', err);
+    }
+  });
+}
+
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
 
 module.exports = app;
