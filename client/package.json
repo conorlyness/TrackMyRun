@@ -27,7 +27,7 @@
     "test": "ng test",
     "server-start": "cd ../server && npm start",
     "startAll": "concurrently \"npm run server-start\" \"ng s -o\"",
-    "electron": "ng build && electron --no-sandbox .",
+    "electron": "ng build && electron --no-sandbox --CloudDB .",
     "package": "electron-packager . --icon=./src/assets/TMR.ico --extra-resource=C:/Users/conor/Desktop/TrackMyRun/server --overwrite ",
     "electron-build-win": "electron-builder --win"
   },

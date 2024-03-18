@@ -11,10 +11,12 @@ const API_PORT = 3001;
 app.use(express.json());
 app.use(cors());
 
-const couldDB = process.env.COULD_DB === 'true';
+const cloudDB = process.env.CLOUD_DB === 'true';
+//uncomment when running server standalone and wishing to use cloud DB
+// const cloudDB = true;
 
-// Now you can use the `conorDev` variable in your server logic
-if (couldDB) {
+// if cloud flag passed we use that db instead
+if (cloudDB) {
   console.log('Running in Cloud DB mode.');
   startServer(true);
 } else {
@@ -377,6 +379,7 @@ function isDbCreated() {
         console.error('Error while accessing the database:', err);
       } else {
         console.log('Database is present');
+        db.connectSqlite();
         startServer();
       }
     }

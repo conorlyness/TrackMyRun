@@ -1,78 +1,83 @@
-var config = require('./config');
+let config = require('./config');
+const winston = require('winston');
+const { combine, timestamp, printf, colorize, align } = winston.format;
 const path = require('path');
 const { Client } = require('pg');
-const sqlite3 = require('sqlite3');
+const sqlite3 = require('sqlite3').verbose();
 const analyticsQueries = require('./sqlQueries/analytics');
 const { coreQueries, coreQueriesSqlite } = require('./sqlQueries/core');
 let tmrDB;
-const couldDB = process.env.COULD_DB === 'true';
+const cloudDB = process.env.CLOUD_DB === 'true';
+//uncomment when running server standalone and wishing to use cloud DB
+// const cloudDB = true;
+
+// WINSTON SETUP
+// Path for our server logs, same location as electron logs
+const logFilePath = path.join(
+  process.env.APPDATA,
+  'track-my-run',
+  'logs',
+  'server.log'
+);
+
+// Create logger instance
+const logger = winston.createLogger({
+  level: process.env.LOG_LEVEL || 'info',
+  format: combine(
+    timestamp({
+      format: 'DD-MM-YYYY hh:mm:ss.SSS A',
+    }),
+    align(),
+    printf((info) => `[${info.timestamp}] ${info.level}: ${info.message}`)
+  ),
+  transports: [
+    new winston.transports.File({
+      filename: logFilePath,
+    }),
+    new winston.transports.Console(),
+  ],
+});
+
+// Log file creation success
+logger.info(`Server log file created at ${logFilePath}`);
+
+// Log any error during file creation
+logger.on('error', (err) => {
+  console.error('Error occurred during log file creation:', err);
+});
+// END OF WINSTON SETUP
 class Database {
   constructor() {
-    if (couldDB) {
-      console.log('Running in Cloud DB mode.');
+    if (cloudDB) {
+      logger.info('Running in Cloud DB mode.');
       this.client = null;
     } else {
-      console.log('Running in Sqlite mode.');
-      // Initialize the SQLite database connection
-      this.tmrDB = new sqlite3.Database('tmr.db');
+      logger.info('Running in Sqlite mode.');
+      this.tmrDB = null;
     }
   }
 
   createDatabase = async () => {
     return new Promise((resolve, reject) => {
-      tmrDB = new sqlite3.Database(path.join(__dirname, 'tmr.db'), (err) => {
-        if (err) {
-          console.log('Getting error ' + err);
-          reject(err);
+      this.tmrDB = new sqlite3.Database(
+        path.join(__dirname, 'tmr.db'),
+        (err) => {
+          if (err) {
+            logger.error(`Getting error::${err}`);
+            reject(err);
+          }
+          this.createTables(this.tmrDB);
+          resolve();
         }
-        this.createTables(tmrDB);
-        resolve();
-      });
+      );
     });
   };
 
   createTables = (tmrDB) => {
-    tmrDB.exec(
-      `CREATE TABLE runlog (
-  rundate DATE,
-  distance TEXT, 
-  notes TEXT, 
-  rpe INT,
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  shoe TEXT 
-);
-
-CREATE TABLE personalbests (
-  distance TEXT, 
-  time TEXT 
-);
-
-CREATE TABLE shoes (
-  brand TEXT, 
-  name TEXT, 
-  distance REAL,
-  active BOOLEAN
-);
-
-CREATE TABLE Images (
-  Url TEXT, 
-  description TEXT,
-  tags TEXT 
-);
-
-CREATE TABLE RunSchedule (
-  Date DATE,
-  Distance TEXT,
-  Notes TEXT, 
-  Completed BOOLEAN,
-  Race BOOLEAN,
-  Incomplete BOOLEAN
-);`
-    );
+    tmrDB.exec(coreQueriesSqlite.createTables);
   };
 
   connect = async () => {
-    console.log('inside the connect func');
     try {
       this.client = new Client({
         user: config.user,
@@ -83,8 +88,9 @@ CREATE TABLE RunSchedule (
         ssl: config.ssl,
       });
       await this.client.connect();
-      console.log('Connected to database successfully.');
-      process.send('Connection to DB successful');
+      logger.info('Connected to cloud database successfully.');
+      if (process.send) process.send('Disconnected from DB');
+      // if (process.send) process.send('Connection to DB successful');
       //we keep pinging the db to ensure the connection is kept alive
       setInterval(() => {
         this.keepConnectionAlive();
@@ -94,23 +100,23 @@ CREATE TABLE RunSchedule (
       //on connections to the db.
       setTimeout(() => {
         this.client.end((err) => {
-          console.log('disconnected from db');
+          logger.info('disconnected from db');
           if (err) {
-            console.log('error disconnecting from db: ', err);
-            process.send('Disconnected from DB');
+            logger.error(`error disconnecting from db::${err}`);
+            if (process.send) process.send('Disconnected from DB');
           }
         });
       }, 50 * 60 * 1000);
 
       //we listen for the end event and then reconnect
       this.client.on('end', async () => {
-        console.log('Connection to db has ended. Reconnecting...');
+        logger.error('Connection to db has ended. Reconnecting...');
         await this.connect();
       });
 
       //if there is an error emitted then we reconnect
       this.client.on('error', async () => {
-        console.log('Error with the db. Reconnecting...');
+        logger.error('Error with the db. Reconnecting...');
         await this.connect();
       });
     } catch (err) {
@@ -118,17 +124,51 @@ CREATE TABLE RunSchedule (
     }
   };
 
+  connectSqlite() {
+    logger.info('connecting to sqlite db');
+    this.tmrDB = new sqlite3.Database(
+      path.join(__dirname, 'tmr.db'),
+      sqlite3.OPEN_READWRITE,
+      (err) => {
+        if (err) {
+          logger.error(err.message);
+          if (process.send) process.send('DB Connection error');
+        }
+        logger.info('Connected to the TMR database.');
+        if (process.send) process.send('Connection to DB successful');
+      }
+    );
+  }
+
   viewAllRuns = async () => {
     try {
-      const result = await this.client.query(coreQueries.viewAllRuns);
+      let result;
+      console.log('CLOUD DB FOR VIEW ALL RUNS???::', cloudDB);
 
-      //need to add logic so we execute the query based on if its cloud db or sqlite
-      const result2 = this.tmrDB.all(coreQueriesSqlite.viewAllRuns);
-      console.log('result2::', result2);
+      const query = cloudDB
+        ? coreQueries.viewAllRuns
+        : coreQueriesSqlite.viewAllRuns;
 
-      return result.rows;
+      if (cloudDB) {
+        result = (await this.client.query(query)).rows;
+      } else {
+        result = await new Promise((resolve, reject) => {
+          this.tmrDB.all(query, (err, rows) => {
+            if (err) {
+              logger.error(`Error executing query::${err.message}`);
+              reject(err);
+            } else {
+              logger.log('Rows retrieved:', rows);
+              resolve(rows);
+            }
+          });
+        });
+      }
+
+      return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
+      return [];
     }
   };
 
@@ -144,13 +184,16 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
   logRun = async (run) => {
     try {
-      let query = coreQueries.logRun.replace(
+      let queryToReplace = cloudDB
+        ? coreQueries.logRun
+        : coreQueriesSqlite.logRun;
+      let query = queryToReplace.replace(
         /({run.date})|({run.distance})|({run.notes})|({run.rpe})|({run.shoes})|({run.tags})/g,
         function (match) {
           if (match === '{run.date}') return run.date;
@@ -161,10 +204,26 @@ CREATE TABLE RunSchedule (
           if (match === '{run.tags}') return run.tags;
         }
       );
-      const result = await this.client.query(query);
+
+      let result;
+      if (cloudDB) {
+        result = await this.client.query(query);
+      } else {
+        result = await new Promise((resolve, reject) => {
+          this.tmrDB.all(query, (err, rows) => {
+            if (err) {
+              logger.error(`Error executing query::${err.message}`);
+              reject(err);
+            } else {
+              logger.info(`Rows retrieved::${rows}`);
+              resolve(rows);
+            }
+          });
+        });
+      }
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -185,7 +244,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -204,7 +263,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -213,7 +272,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(analyticsQueries.distanceByDay);
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -229,7 +288,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -245,7 +304,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -254,7 +313,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(analyticsQueries.totalDistanceRan);
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -263,7 +322,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(analyticsQueries.longestRun);
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -274,7 +333,7 @@ CREATE TABLE RunSchedule (
       );
       return result.rows[0];
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -285,7 +344,7 @@ CREATE TABLE RunSchedule (
       );
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -296,7 +355,7 @@ CREATE TABLE RunSchedule (
       );
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -304,7 +363,7 @@ CREATE TABLE RunSchedule (
     try {
       // send a simple query to the database
       await this.client.query('SELECT 1');
-      console.log('Keep-alive query sent');
+      logger.info('Keep-alive query sent');
     } catch (error) {
       console.error(`Error sending keep-alive query: ${error}`);
     }
@@ -315,7 +374,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(coreQueries.viewAllPersonalBests);
       return result.rows;
     } catch (error) {
-      console.log(error);
+      logger.info(error);
     }
   };
 
@@ -331,16 +390,35 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows;
     } catch (error) {
-      console.log(error);
+      logger.info(error);
     }
   };
 
   getAllShoes = async () => {
     try {
-      const result = await this.client.query(coreQueries.viewAllShoes);
-      return result.rows;
+      let result;
+      const query = cloudDB
+        ? coreQueries.viewAllShoes
+        : coreQueriesSqlite.viewAllShoes;
+      console.log('SHOES QUERY::', query);
+      if (cloudDB) {
+        result = (await this.client.query(query)).rows;
+      } else {
+        result = await new Promise((resolve, reject) => {
+          this.tmrDB.all(query, (err, rows) => {
+            if (err) {
+              console.error('Error executing query:', err.message);
+              reject(err);
+            } else {
+              logger.info(`Rows retrieved::${rows}`);
+              resolve(rows);
+            }
+          });
+        });
+      }
+      return result;
     } catch (error) {
-      console.log(error);
+      logger.info(error);
     }
   };
 
@@ -354,16 +432,20 @@ CREATE TABLE RunSchedule (
         }
       );
       const result = await this.client.query(query);
-      console.log(result);
+      logger.info(result);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
   increaseShoeDistance = async (shoe) => {
     try {
-      let query = coreQueries.increaseShoeDistance.replace(
+      let result;
+      let queryToReplace = cloudDB
+        ? coreQueries.increaseShoeDistance
+        : coreQueriesSqlite.increaseShoeDistance;
+      let query = queryToReplace.replace(
         /({shoe.distance})|({shoe.brand})|({shoe.name})/g,
         function (match) {
           if (match === '{shoe.distance}') return shoe.distance;
@@ -371,10 +453,25 @@ CREATE TABLE RunSchedule (
           if (match === '{shoe.name}') return shoe.name;
         }
       );
-      const result = await this.client.query(query);
+
+      if (cloudDB) {
+        result = await this.client.query(query);
+      } else {
+        result = await new Promise((resolve, reject) => {
+          this.tmrDB.all(query, (err, rows) => {
+            if (err) {
+              console.error('Error executing query:', err.message);
+              reject(err);
+            } else {
+              logger.info(`Rows retrieved::${rows}`);
+              resolve(rows);
+            }
+          });
+        });
+      }
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -391,7 +488,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -407,7 +504,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -423,7 +520,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -439,7 +536,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -456,7 +553,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -466,7 +563,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -483,7 +580,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -503,7 +600,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -521,7 +618,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -536,7 +633,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -551,7 +648,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -567,7 +664,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 
@@ -577,7 +674,7 @@ CREATE TABLE RunSchedule (
       const result = await this.client.query(query);
       return result.rows;
     } catch (err) {
-      console.log(err);
+      logger.error(err);
     }
   };
 }

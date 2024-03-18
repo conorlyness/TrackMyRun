@@ -1,0 +1,27 @@
+.failedContainer {
+  height: 100vh;
+  background-color: #101820ff;
+}
+
+.serverFailedContent {
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  overflow: hidden;
+}
+
+.info {
+  color: white;
+  display: block;
+  text-align: center;
+}
+
+img {
+  width: 200px;
+  height: 150px;
+}
+
+.okBtn {
+  width: 40%;
+}

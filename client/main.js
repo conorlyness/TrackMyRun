@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Tray, Menu } = require("electron");
+const { app, BrowserWindow, ipcMain, Tray, Menu, shell } = require("electron");
 const { fork } = require("child_process");
 const dotenv = require("dotenv");
 const path = require("path");
@@ -20,6 +20,8 @@ log.transports.file.maxDays = 7; // Max number of days to keep log files
 
 let splashWindow;
 let mainWindow;
+
+const cloudDbFlag = process.argv.includes("--CloudDB");
 
 function readConfigSettings() {
   log.info("Getting config settings");
@@ -49,8 +51,10 @@ function readConfigSettings() {
   });
 }
 
+let retryCount = 0;
 function startNodeServer(cloudDB) {
   log.info("Starting express server");
+  const maxRetries = 3;
   return new Promise((resolve, reject) => {
     const serverPath = path.join(__dirname, "../server", "index.js");
     log.info("server path::", serverPath);
@@ -58,7 +62,7 @@ function startNodeServer(cloudDB) {
     dotenv.config({ path: path.join(__dirname, "../server", ".env") });
     const env = Object.assign({}, process.env); // Create a copy of process.env
     // Add your custom environment variables here
-    env.COULD_DB = cloudDB ? "true" : "false";
+    env.CLOUD_DB = cloudDB ? "true" : "false";
 
     // Pass environment variables to the server process
     const serverProcess = fork(serverPath, [], {
@@ -77,16 +81,27 @@ function startNodeServer(cloudDB) {
     serverProcess.on("message", (message) => {
       log.info(`Recieved message from server: ${message}`);
       if (message.includes("Connection to DB successful")) resolve();
-      if (message.includes("Disconnected from DB")) {
-        //add some logic here to allow for a retry**
+      if (message.includes("Disconnected from DB" || "DB Connection error")) {
+        if (retryCount < maxRetries) {
+          log.info(`Attempting to restart the server. Attempt ${retryCount}`);
+          retryCount++;
+          restartServer(serverProcess);
+        } else {
+          log.error("max retires reached, server failed to start");
+          createServerFailedWindow();
+        }
       }
     });
   });
 }
 
+async function restartServer(childProcess) {
+  childProcess.kill(); // Terminate the current server process
+  await startNodeServer(cloudDbFlag); // Start a new server process
+}
+
 async function createWindow() {
   await readConfigSettings();
-  const cloudDbFlag = process.argv.includes("--CloudDB");
   await startNodeServer(cloudDbFlag);
 
   mainWindow = new BrowserWindow({
@@ -161,12 +176,75 @@ function createSplashWindow() {
   });
 }
 
+let serverFailedWindow = null;
+
+function createServerFailedWindow() {
+  splashWindow.close();
+  serverFailedWindow = new BrowserWindow({
+    width: 400,
+    height: 200,
+    frame: false,
+    transparent: false,
+    backgroundColor: "#101820ff",
+    alwaysOnTop: true,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      webSecurity: false,
+      preload: path.resolve(path.join(__dirname, "./preload.js")),
+      enableRemoteModule: true,
+    },
+  });
+
+  const failedUrl = url.format({
+    pathname: path.join(
+      __dirname,
+      "angular-electron",
+      "dist",
+      "angular-electron",
+      "index.html"
+    ),
+    protocol: "file:",
+    slashes: true,
+    hash: "serverFailed",
+  });
+
+  serverFailedWindow.loadURL(failedUrl);
+
+  // Wait for the window to finish loading
+  serverFailedWindow.webContents.on("did-finish-load", () => {
+    // Send a message to the renderer process with the desired route
+    serverFailedWindow.webContents.send("route", "serverFailed");
+    setTimeout(() => {
+      serverFailedWindow.show();
+    }, 1000);
+  });
+
+  // Close the application when the window is closed
+  serverFailedWindow.on("closed", () => {
+    serverFailedWindow = null;
+    app.quit();
+  });
+}
+
 let tray = null;
 app.whenReady().then(() => {
   tray = new Tray(path.join(__dirname, "./src/assets/TMR.ico"));
   const contextMenu = Menu.buildFromTemplate([
     // leave out the show more tray menu option until component is completed
     // { label: "More Info", click: () => showMoreInfoWindow() },
+    {
+      label: "Logs",
+      click: () => {
+        const logsFolder = path.join(
+          app.getPath("appData"),
+          "track-my-run",
+          "logs"
+        );
+        shell.openPath(logsFolder);
+      },
+    },
+    { type: "separator" },
     { label: "Quit", click: () => app.quit() },
   ]);
   tray.setContextMenu(contextMenu);
@@ -285,5 +363,12 @@ ipcMain.on("setScheduleMonthView", (event, value) => {
 ipcMain.on("closeMoreInfoWindow", () => {
   if (moreInfoWindow) {
     moreInfoWindow.close();
+  }
+});
+
+ipcMain.on("closeServerFailedWindow", () => {
+  if (serverFailedWindow) {
+    serverFailedWindow.close();
+    app.quit();
   }
 });
