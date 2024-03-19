@@ -25,7 +25,7 @@ let coreQueries = {
 };
 
 let coreQueriesSqlite = {
-  viewAllRuns: `SELECT * FROM runlog ORDER BY rundate DESC;`,
+  viewAllRuns: `SELECT * FROM runlog ORDER BY rundate DESC`,
   viewAllRunsInRange: `SELECT rundate, distance, notes, rpe, tags, shoe FROM runlog WHERE rundate >= '{start}' AND rundate <= '{end}';`,
   logRun: `INSERT INTO runlog (rundate, distance, notes, rpe, shoe, tags) VALUES ('{run.date}', '{run.distance}', '{run.notes}', '{run.rpe}', '{run.shoes}', '{run.tags}');`,
   editRun: `UPDATE runlog SET distance = '{run.distance}', notes = '{run.notes}', rpe = '{run.rpe}', shoe = '{run.shoe}', tags = '{run.tags}' WHERE rundate = '{run.date}' AND id = '{run.id}';`,
@@ -48,6 +48,42 @@ let coreQueriesSqlite = {
   markScheduleAsIncomplete: `UPDATE runschedule SET incomplete = 1 WHERE date = '{run.date}';`,
   deleteSchedule: `DELETE FROM runschedule WHERE date = '{run.date}' AND distance = '{run.distance}';`,
   getAllRaces: `SELECT * FROM runschedule WHERE race = 1 ORDER BY date ASC;`,
+  createTables: `CREATE TABLE runlog (
+  rundate DATE,
+  distance TEXT, 
+  notes TEXT, 
+  rpe INT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  shoe TEXT,
+  tags TEXT 
+);
+
+CREATE TABLE personalbests (
+  distance TEXT, 
+  time TEXT 
+);
+
+CREATE TABLE shoes (
+  brand TEXT, 
+  name TEXT, 
+  distance REAL,
+  active BOOLEAN
+);
+
+CREATE TABLE Images (
+  Url TEXT, 
+  description TEXT,
+  tags TEXT 
+);
+
+CREATE TABLE RunSchedule (
+  Date DATE,
+  Distance TEXT,
+  Notes TEXT, 
+  Completed BOOLEAN,
+  Race BOOLEAN,
+  Incomplete BOOLEAN
+);`,
 };
 
 module.exports = { coreQueries, coreQueriesSqlite };
